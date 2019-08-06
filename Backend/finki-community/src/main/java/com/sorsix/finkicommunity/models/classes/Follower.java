@@ -1,15 +1,12 @@
 package com.sorsix.finkicommunity.models.classes;
 
 import javax.naming.Name;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Follower {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "user_id")

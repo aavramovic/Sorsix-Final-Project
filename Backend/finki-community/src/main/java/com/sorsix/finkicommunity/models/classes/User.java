@@ -2,16 +2,13 @@ package com.sorsix.finkicommunity.models.classes;
 
 import com.sorsix.finkicommunity.models.enumerations.Authority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Column(name = "user_id")
