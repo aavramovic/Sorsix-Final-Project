@@ -1,6 +1,5 @@
 package com.sorsix.finkicommunity.models.classes;
 
-import javax.naming.Name;
 import javax.persistence.*;
 
 @Entity
