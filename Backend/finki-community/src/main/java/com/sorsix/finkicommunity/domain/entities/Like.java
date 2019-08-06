@@ -1,16 +1,15 @@
-package com.sorsix.finkicommunity.models.classes;
+package com.sorsix.finkicommunity.domain.entities;
 
-import com.sorsix.finkicommunity.models.classes.customIdClasses.LikeCompositeId;
+import com.sorsix.finkicommunity.domain.entities.composite_ids.LikeId;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**Who liked the post
  * Which post*/
 @Entity
 @Table(name="likes")
-@IdClass(LikeCompositeId.class)
-public class Like implements Serializable {
+@IdClass(LikeId.class)
+public class Like {
     @Id
     @Column(name = "post_id")
     private long postId;

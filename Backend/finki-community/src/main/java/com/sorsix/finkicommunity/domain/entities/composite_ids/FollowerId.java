@@ -1,16 +1,16 @@
-package com.sorsix.finkicommunity.models.classes.customIdClasses;
+package com.sorsix.finkicommunity.domain.entities.composite_ids;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class FollowerCompositeId implements Serializable {
+public class FollowerId implements Serializable {
     private long userId;
     private long followerId;
 
-    public FollowerCompositeId() {
+    public FollowerId() {
     }
 
-    public FollowerCompositeId(long userId, long followerId) {
+    public FollowerId(long userId, long followerId) {
         this.userId = userId;
         this.followerId = followerId;
     }
@@ -19,7 +19,7 @@ public class FollowerCompositeId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FollowerCompositeId that = (FollowerCompositeId) o;
+        FollowerId that = (FollowerId) o;
         return userId == that.userId &&
                 followerId == that.followerId;
     }

@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.models.classes;
+package com.sorsix.finkicommunity.domain.entities;
 
 
 import javax.persistence.*;

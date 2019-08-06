@@ -1,16 +1,16 @@
-package com.sorsix.finkicommunity.models.classes.customIdClasses;
+package com.sorsix.finkicommunity.domain.entities.composite_ids;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ReplyCompositeId implements Serializable {
+public class ReplyId implements Serializable {
     private long basePostId;
     private long replyPostId;
 
-    public ReplyCompositeId() {
+    public ReplyId() {
     }
 
-    public ReplyCompositeId(long basePostId, long replyPostId) {
+    public ReplyId(long basePostId, long replyPostId) {
         this.basePostId = basePostId;
         this.replyPostId = replyPostId;
     }
@@ -19,7 +19,7 @@ public class ReplyCompositeId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReplyCompositeId that = (ReplyCompositeId) o;
+        ReplyId that = (ReplyId) o;
         return basePostId == that.basePostId &&
                 replyPostId == that.replyPostId;
     }

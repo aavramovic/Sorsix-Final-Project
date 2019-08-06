@@ -1,6 +1,6 @@
-package com.sorsix.finkicommunity.models.classes;
+package com.sorsix.finkicommunity.domain.entities;
 
-import com.sorsix.finkicommunity.models.enumerations.Authority;
+import com.sorsix.finkicommunity.domain.enumerations.Authority;
 
 import javax.persistence.*;
 
@@ -17,8 +17,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", unique = true)
-    private int userId;
-
+    private long userId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -37,7 +36,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String name, String lastName, String password, String email) {
+    public User(long userId, String name, String lastName, String password, String email) {
         this.userId = userId;
         this.firstName = name;
         this.lastName = lastName;
@@ -52,7 +51,7 @@ public class User {
         this.authority = authority;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 

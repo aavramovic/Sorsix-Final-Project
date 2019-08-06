@@ -1,17 +1,17 @@
-package com.sorsix.finkicommunity.models.classes;
+package com.sorsix.finkicommunity.domain.entities;
 
-import com.sorsix.finkicommunity.models.classes.customIdClasses.FollowerCompositeId;
+import com.sorsix.finkicommunity.domain.entities.composite_ids.FollowerId;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "followers")
-@IdClass(FollowerCompositeId.class)
-public class Follower implements Serializable {
+@IdClass(FollowerId.class)
+public class Follower {
     @Id
     @Column(name = "user_id")
     private long userId;
+
     @Id
     @Column(name = "follower_id")
     private long followerId;

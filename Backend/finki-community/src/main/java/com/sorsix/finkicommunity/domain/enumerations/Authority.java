@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.models.enumerations;
+package com.sorsix.finkicommunity.domain.enumerations;
 
 public enum Authority {
     REGULAR,

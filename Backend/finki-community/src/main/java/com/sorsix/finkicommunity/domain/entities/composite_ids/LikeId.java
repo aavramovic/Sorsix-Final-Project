@@ -1,16 +1,16 @@
-package com.sorsix.finkicommunity.models.classes.customIdClasses;
+package com.sorsix.finkicommunity.domain.entities.composite_ids;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class LikeCompositeId implements Serializable {
+public class LikeId implements Serializable {
     private long postId;
     private long userId;
 
-    public LikeCompositeId() {
+    public LikeId() {
     }
 
-    public LikeCompositeId(long postId, long userId) {
+    public LikeId(long postId, long userId) {
         this.postId = postId;
         this.userId = userId;
     }
@@ -19,7 +19,7 @@ public class LikeCompositeId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LikeCompositeId that = (LikeCompositeId) o;
+        LikeId that = (LikeId) o;
         return postId == that.postId &&
                 userId == that.userId;
     }
