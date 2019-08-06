@@ -1,27 +1,26 @@
 package com.sorsix.finkicommunity.models.classes;
 
+import com.sorsix.finkicommunity.models.classes.customIdClasses.FollowerCompositeId;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="followers")
+@Table(name = "followers")
+@IdClass(FollowerCompositeId.class)
 public class Follower {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
     @Column(name = "user_id")
     private long userId;
+    @Id
     @Column(name = "follower_id")
     private long followerId;
 
-    public Follower() {}
+    public Follower() {
+    }
 
     public Follower(int userId, int followerId) {
         this.userId = userId;
         this.followerId = followerId;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public long getUserId() {
