@@ -6,14 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Set;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue
     private int id;
-
     @Column(name = "user_id")
     private int userId;
     @Column(name = "name")
@@ -30,6 +28,9 @@ public class User {
     private String pictureUrl;
     @Column(name = "number_of_posts")
     private int numberOfPosts;
+
+    public User() {
+    }
 
     public User(int userId, String name, String lastName, String password, String email) {
         this.userId = userId;
