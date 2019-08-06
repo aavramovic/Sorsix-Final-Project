@@ -13,8 +13,7 @@ public class Follower {
     @Column(name = "follower_id")
     private long followerId;
 
-    public Follower() {
-    }
+    public Follower() {}
 
     public Follower(int userId, int followerId) {
         this.userId = userId;

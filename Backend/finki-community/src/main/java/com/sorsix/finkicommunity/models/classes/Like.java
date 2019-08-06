@@ -12,6 +12,13 @@ public class Like {
     @Column(name = "user_id")
     private long userId;
 
+    public Like(){}
+
+    public Like(long postId, long userId) {
+        this.postId = postId;
+        this.userId = userId;
+    }
+
     public long getId() {
         return id;
     }

@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="posts")
 public class Post {
+    @Id
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -17,7 +18,7 @@ public class Post {
     @Column(name="number_of_replies")
     private int numberOfReplies;
 
-
+    public Post(){}
 
     public Post(long userId, int numberOfLikes, int numberOfReplies) {
         this.userId = userId;
