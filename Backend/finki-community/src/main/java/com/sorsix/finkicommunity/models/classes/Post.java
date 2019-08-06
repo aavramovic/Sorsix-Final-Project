@@ -9,7 +9,7 @@ public class Post {
     @Id
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long postId;
 
     @Column(name="user_id")
     private long userId;
@@ -26,8 +26,8 @@ public class Post {
         this.numberOfReplies = numberOfReplies;
     }
 
-    public long getId() {
-        return id;
+    public long getPostId() {
+        return postId;
     }
 
     public long getUserId() {

@@ -7,6 +7,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    Course getCourseById(long id);
     Course getCourseByCourseId(long courseId);
 }
