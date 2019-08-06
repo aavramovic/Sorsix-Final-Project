@@ -1,15 +1,20 @@
 package com.sorsix.finkicommunity.models.classes;
 
-import javax.persistence.*;
+import com.sorsix.finkicommunity.models.classes.customIdClasses.LikeCompositeId;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+/**Who liked the post
+ * Which post*/
 @Entity
 @Table(name="likes")
-public class Like {
+@IdClass(LikeCompositeId.class)
+public class Like implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
     @Column(name = "post_id")
     private long postId;
+    @Id
     @Column(name = "user_id")
     private long userId;
 
@@ -18,10 +23,6 @@ public class Like {
     public Like(long postId, long userId) {
         this.postId = postId;
         this.userId = userId;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public long getPostId() {
