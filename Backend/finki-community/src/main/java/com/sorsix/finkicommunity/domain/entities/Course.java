@@ -1,5 +1,7 @@
 package com.sorsix.finkicommunity.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,11 +10,15 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "course_id")
+    @JsonProperty("course_id")
     private long courseId;
 
-    @Column(name = "name_of_course")
+    @Column(name = "course_name")
+    @JsonProperty("course_name")
     private String nameOfCourse;
+
     @Column(name = "course_description")
+    @JsonProperty("course_description")
     private String courseDescription;
 
 
@@ -37,5 +43,17 @@ public class Course {
 
     public String getCourseDescription() {
         return courseDescription;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setNameOfCourse(String nameOfCourse) {
+        this.nameOfCourse = nameOfCourse;
+    }
+
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
 }

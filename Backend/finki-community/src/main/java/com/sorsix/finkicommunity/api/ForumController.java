@@ -2,6 +2,7 @@ package com.sorsix.finkicommunity.api;
 
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
+import com.sorsix.finkicommunity.domain.requests.errors.MalFormedNewCourseRequest;
 import com.sorsix.finkicommunity.services.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -36,17 +37,19 @@ public class ForumController {
     public ResponseEntity getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id)
                 .map(course -> ResponseEntity.ok(course))
-                .orElseGet(()->ResponseEntity.notFound().build());
+                .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/courses/new")
-    public ResponseEntity createNewCourse(@RequestBody @Valid NewCourseRequest newCourseRequest, BindingResult result){
+    public ResponseEntity createNewCourse(@RequestBody @Valid Course newCourse, BindingResult result){
         if(result.hasErrors()){
             return ResponseEntity
                     .badRequest()
                     .body(
-                            new MalFormedNewCourseRequest();
-                    )
+                            new MalFormedNewCourseRequest()
+                    );
+        }else{
+            return ResponseEntity.ok(courseService.createNewCourse(newCourse));
         }
 
     }
