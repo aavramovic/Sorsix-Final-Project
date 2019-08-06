@@ -44,4 +44,40 @@ public class User {
     void changeLevelOfAuthority(Authority authority) {
         this.authority = authority;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Authority getAuthority() {
+        return authority;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public int getNumberOfPosts() {
+        return numberOfPosts;
+    }
 }

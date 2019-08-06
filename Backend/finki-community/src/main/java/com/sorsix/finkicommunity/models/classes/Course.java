@@ -5,10 +5,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "courses")
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     @Column(name = "course_id")
     private long courseId;
     @Column(name = "name_of_course")

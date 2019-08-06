@@ -17,6 +17,8 @@ public class Post {
     @Column(name="number_of_replies")
     private int numberOfReplies;
 
+
+
     public Post(long userId, int numberOfLikes, int numberOfReplies) {
         this.userId = userId;
         this.numberOfLikes = numberOfLikes;

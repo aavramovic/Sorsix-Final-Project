@@ -8,7 +8,6 @@ public class Follower {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     @Column(name = "user_id")
     private long userId;
     @Column(name = "follower_id")
@@ -22,5 +21,15 @@ public class Follower {
         this.followerId = followerId;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public long getFollowerId() {
+        return followerId;
+    }
 }

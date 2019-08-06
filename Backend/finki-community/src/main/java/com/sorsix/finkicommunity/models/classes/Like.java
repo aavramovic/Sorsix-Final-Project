@@ -7,9 +7,20 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     @Column(name = "post_id")
     private long postId;
     @Column(name = "user_id")
     private long userId;
+
+    public long getId() {
+        return id;
+    }
+
+    public long getPostId() {
+        return postId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
 }
