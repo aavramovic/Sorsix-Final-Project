@@ -1,23 +1,22 @@
 package com.sorsix.finkicommunity.models.classes;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name="courses")
+@Table(name = "courses")
 public class Course {
-
-    @Column(name="course_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name="name_of_course")
+    @Column(name = "course_id")
+    private long courseId;
+    @Column(name = "name_of_course")
     private String nameOfCourse;
-
-    @Column(name="course_description")
+    @Column(name = "course_description")
     private String courseDescription;
 
-    public Course(){
+    public Course() {
 
     }
 

@@ -8,10 +8,11 @@ public class Follower {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @Column(name = "user_id")
-    private int userId;
+    private long userId;
     @Column(name = "follower_id")
-    private int followerId;
+    private long followerId;
 
     public Follower() {
     }
