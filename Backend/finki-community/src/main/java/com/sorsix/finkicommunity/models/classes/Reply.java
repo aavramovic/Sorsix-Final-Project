@@ -1,32 +1,32 @@
 package com.sorsix.finkicommunity.models.classes;
 
 import javax.persistence.*;
-
+/**@Id should be a combination on
+ * Long basePostID (Id of the post that was replied to)
+ * Long replyPostID (Id of the reply post)
+ * */
 @Entity
 @Table(name="replies")
 public class Reply {
     @Id
-    @Column(name="post_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(name="post_id_replied")
-    private long postIdReplied;
-    @Column(name="post_id_replier")
-    private long postIdReplier;
+    @Column(name="base_post_id")
+    private long basePostId;
+    @Id
+    @Column(name="reply_post_id")
+    private long replyPostId;
 
     public Reply() {}
 
-    public Reply(long postIdReplied, long postIdReplier) {
-        this.postIdReplied = postIdReplied;
-        this.postIdReplier = postIdReplier;
+    public Reply(long basePostId, long replyPostId) {
+        this.basePostId = basePostId;
+        this.replyPostId = replyPostId;
     }
 
-    public long getPostIdReplied() {
-        return postIdReplied;
+    public long getBasePostId() {
+        return basePostId;
     }
 
-    public long getPostIdReplier() {
-        return postIdReplier;
+    public long getReplyPostId() {
+        return replyPostId;
     }
 }

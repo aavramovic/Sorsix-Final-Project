@@ -4,17 +4,22 @@ import com.sorsix.finkicommunity.models.enumerations.Authority;
 
 import javax.persistence.*;
 
+/**
+ * User ID - unique primary key
+ * First Name - String firstName (only letters)
+ * Last Name -
+ * Password
+ * Authority
+ */
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique = true)
     private int userId;
-    @Column(name = "name")
-    private String name;
+
+    @Column(name = "first_name")
+    private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "password")
@@ -33,7 +38,7 @@ public class User {
 
     public User(int userId, String name, String lastName, String password, String email) {
         this.userId = userId;
-        this.name = name;
+        this.firstName = name;
         this.lastName = lastName;
         this.password = password;
         this.authority = Authority.REGULAR;
@@ -46,16 +51,12 @@ public class User {
         this.authority = authority;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public int getUserId() {
         return userId;
     }
 
     public String getName() {
-        return name;
+        return firstName;
     }
 
     public String getLastName() {
