@@ -36,7 +36,7 @@ public class ForumController {
     @GetMapping("/courses/{id}")
     public ResponseEntity getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id)
-                .map(course -> ResponseEntity.ok(course))
+                .map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
