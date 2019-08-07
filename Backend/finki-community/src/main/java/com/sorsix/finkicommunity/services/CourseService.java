@@ -1,7 +1,6 @@
 package com.sorsix.finkicommunity.services;
 
 import com.sorsix.finkicommunity.domain.entities.Course;
-import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +25,13 @@ public class CourseService {
 
     public Course createNewCourse(Course newCourse){
         return courseRepository.save(newCourse);
+    }
+
+    public Course getTopCourse(){
+        return courseRepository.findTopByOrderByCourseId();
+    }
+
+    public List<Course> getTop10Courses(){
+        return courseRepository.findTop10ByOrderByCourseId();
     }
 }

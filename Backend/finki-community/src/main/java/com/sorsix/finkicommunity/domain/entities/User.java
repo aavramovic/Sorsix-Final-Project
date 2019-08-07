@@ -1,8 +1,9 @@
 package com.sorsix.finkicommunity.domain.entities;
 
-import com.sorsix.finkicommunity.domain.enumerations.Authority;
+import com.sorsix.finkicommunity.domain.enums.Authority;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * User ID - unique primary key
@@ -32,19 +33,22 @@ public class User {
     private String pictureUrl;
     @Column(name = "number_of_posts")
     private int numberOfPosts;
+    @Column(name="birthdate")
+    private Date birthdate;
 
     public User() {
     }
 
-    public User(long userId, String name, String lastName, String password, String email) {
-        this.userId = userId;
-        this.firstName = name;
+    public User(String firstName, String lastName, String password, Authority authority,
+                String email, String pictureUrl, int numberOfPosts, Date birthdate) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
-        this.authority = Authority.REGULAR;
+        this.authority = authority;
         this.email = email;
-        this.pictureUrl = "#";
-        this.numberOfPosts = 0;
+        this.pictureUrl = pictureUrl;
+        this.numberOfPosts = numberOfPosts;
+        this.birthdate = birthdate;
     }
 
     void changeLevelOfAuthority(Authority authority) {

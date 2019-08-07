@@ -1,8 +1,12 @@
 package com.sorsix.finkicommunity.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.sorsix.finkicommunity.domain.enums.Program;
+import com.sorsix.finkicommunity.domain.enums.Semester;
+import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "courses")
@@ -10,50 +14,86 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "course_id")
-    @JsonProperty("course_id")
     private long courseId;
 
     @Column(name = "course_name")
-    @JsonProperty("course_name")
-    private String nameOfCourse;
+    @NotNull
+    @NotEmpty
+    private String courseName;
 
     @Column(name = "course_description")
-    @JsonProperty("course_description")
-    private String courseDescription;
+    @NotNull
+    @NotEmpty
+    private String courseDescriptionLink;
 
+    @Column(name = "study_year")
+    private StudyYear studyYear;
+
+    @Column(name = "semester")
+    private Semester semester;
+
+    @Column(name = "program")
+    private Program program;
 
     /*
         Needed for JPA auto table creation
      */
-    public Course() {
+    public Course(){
     }
 
-    public Course(String nameOfCourse, String courseDescription) {
-        this.nameOfCourse = nameOfCourse;
-        this.courseDescription = courseDescription;
+    public Course(String nameOfCourse, String courseDescriptionLink, StudyYear studyYear, Semester semester, Program program) {
+        this.courseName = courseName;
+        this.courseDescriptionLink = courseDescriptionLink;
+        this.studyYear = studyYear;
+        this.semester = semester;
+        this.program = program;
+    }
+
+    public StudyYear getStudyYear() {
+        return studyYear;
+    }
+
+    public void setStudyYear(StudyYear studyYear) {
+        this.studyYear = studyYear;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
+
+    public Program getProgram() {
+        return program;
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
     }
 
     public long getCourseId() {
         return courseId;
     }
 
-    public String getNameOfCourse() {
-        return nameOfCourse;
-    }
-
-    public String getCourseDescription() {
-        return courseDescription;
-    }
-
     public void setCourseId(long courseId) {
         this.courseId = courseId;
     }
 
-    public void setNameOfCourse(String nameOfCourse) {
-        this.nameOfCourse = nameOfCourse;
+    public String getCourseDescriptionLink() {
+        return courseDescriptionLink;
     }
 
-    public void setCourseDescription(String courseDescription) {
-        this.courseDescription = courseDescription;
+    public void setCourseDescriptionLink(String courseDescriptionLink) {
+        this.courseDescriptionLink = courseDescriptionLink;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }
