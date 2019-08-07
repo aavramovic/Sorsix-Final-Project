@@ -3,8 +3,12 @@ import {Course} from '../Classes/Course';
 import {User} from '../Classes/User';
 
 export interface Thread {
+  noOfLikes: number;
+  title: string;
   timeOfPost: string;
   content: string;
-  course: Course;
-  user: User
+
+  postId: number;
+  userId: number;
+  courseId: number;
 }

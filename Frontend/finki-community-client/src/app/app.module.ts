@@ -8,11 +8,9 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { CourseComponent } from './Components/AtomicComponents/course/course.component';
 import { ThreadComponent } from './Components/AtomicComponents/thread/thread.component';
 import { ThreadsComponent } from './Components/SetsOfAtomicComponents/threads/threads.component';
-import { LoginComponent } from './Components/Views/login-screen/login.component';
 import {RouterModule} from '@angular/router';
 import {Ng2BootstrapModule} from 'ng-bootstrap';
 import { StandardViewComponent } from './Components/Views/standard-view/standard-view.component';
-import { MenuComponent } from './Components/ContainerComponents/menu-bar/menu.component';
 import { HeaderComponent } from './Components/ContainerComponents/1-header/header.component';
 import { CoursesComponent } from './Components/SetsOfAtomicComponents/courses/courses.component';
 import { MenuBarComponent } from './Components/ContainerComponents/menu-bar/menu-bar.component';
@@ -29,9 +27,7 @@ import { LoginScreenComponent } from './Components/Views/login-screen/login-scre
     CourseComponent,
     ThreadComponent,
     ThreadsComponent,
-    LoginComponent,
     StandardViewComponent,
-    MenuComponent,
     HeaderComponent,
     CoursesComponent,
     MenuBarComponent,

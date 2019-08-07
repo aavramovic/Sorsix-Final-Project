@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Thread} from '../../../Models/Interfaces/Thread';
+import {Course} from '../../../Models/Classes/Course';
+import {User} from '../../../Models/Classes/User';
 
 @Component({
   selector: 'app-threads',
@@ -7,7 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ThreadsComponent implements OnInit {
 
-  constructor() { }
+  constructor(thread: Thread) {
+  }
 
   ngOnInit() {
   }

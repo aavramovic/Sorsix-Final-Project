@@ -13,11 +13,11 @@ export class ThreadService {
   constructor(private http: HttpClient) {
   }
 
-  getTop10Posts(): Observable<Thread> {
-    return this.http.get(this.originUrl + this.topPostsUrl);
+  getTop10Posts(): Observable<Thread []> {
+    return this.http.get<Thread []>(this.originUrl + this.topPostsUrl);
   }
 
   getTopNPosts(numberOfThreadsToShow: number): Observable<Thread>{
-    return this.http.get(this.originUrl + this.topPostsUrl+"/"+numberOfThreadsToShow);
+    return this.http.get<Thread>(this.originUrl + this.topPostsUrl+"/"+numberOfThreadsToShow);
   }
 }
