@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/forum")
+@RequestMapping("forum")
 
 // Enabling Cross Origin Requests for a RESTful Web Service
 @CrossOrigin(origins = "http://localhost:4200")
