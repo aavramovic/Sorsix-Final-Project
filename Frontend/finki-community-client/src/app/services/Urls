@@ -1,8 +1,0 @@
-Origin:
-http://localhost:8080
-
-/courses
-
-/courses/{id}
-
-/courses/new

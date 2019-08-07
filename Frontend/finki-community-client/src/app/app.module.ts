@@ -9,7 +9,6 @@ import { CourseComponent } from './Components/AtomicComponents/course/course.com
 import { ThreadComponent } from './Components/AtomicComponents/thread/thread.component';
 import { ThreadsComponent } from './Components/SetsOfAtomicComponents/threads/threads.component';
 import {RouterModule} from '@angular/router';
-import {Ng2BootstrapModule} from 'ng-bootstrap';
 import { StandardViewComponent } from './Components/Views/standard-view/standard-view.component';
 import { HeaderComponent } from './Components/ContainerComponents/1-header/header.component';
 import { CoursesComponent } from './Components/SetsOfAtomicComponents/courses/courses.component';
@@ -40,7 +39,6 @@ import { LoginScreenComponent } from './Components/Views/login-screen/login-scre
   imports: [
     BrowserModule,
     AppRoutingModule,
-    Ng2BootstrapModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule

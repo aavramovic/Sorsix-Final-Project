@@ -11,6 +11,6 @@ export class CourseService {
   constructor(private http: HttpClient) { }
 
   getCourseByCourseId(courseId: number): Observable<Course> {
-    return this.http.get("curse/id");
+    return this.http.get<Course>("curse/id");
   }
 }
