@@ -1,9 +1,9 @@
 package com.sorsix.finkicommunity.api;
 
-import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
+import com.sorsix.finkicommunity.domain.requests.errors.NewFollowingRequest;
 import com.sorsix.finkicommunity.services.UserService;
-import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +25,21 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @PostMapping("/new")
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long userId){
+        return userService.getUserById(userId)
+                .map(ResponseEntity::ok)
+                .orElseGet(()->ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PostMapping("/new-user")
     public ResponseEntity<User> createNewUser(@RequestBody @Valid User user){
         return ResponseEntity.ok(userService.createNewUser(user));
+    }
+
+    @PostMapping("/new-following")
+    public ResponseEntity<Boolean> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest){
+        userService.addNewFollowing(newFollowingRequest);
+        return ResponseEntity.ok(true);
     }
 }

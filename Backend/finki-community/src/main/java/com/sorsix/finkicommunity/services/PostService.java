@@ -9,11 +9,8 @@ import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class PostService {
@@ -21,7 +18,10 @@ public class PostService {
     private PostRepository postRepository;
     private UserRepository userRepository;
 
-    public PostService(PostRepository postRepository, UserRepository userRepository, CourseRepository courseRepository) {
+    public PostService(
+            PostRepository postRepository,
+            UserRepository userRepository,
+            CourseRepository courseRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;

@@ -4,11 +4,13 @@ import com.sorsix.finkicommunity.domain.enums.Authority;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", unique = true)
@@ -43,7 +45,8 @@ public class User {
      */
     @ManyToMany(cascade = {
             CascadeType.ALL
-    })
+    }, fetch=FetchType.EAGER
+    )
     @JoinTable(
             name="user_follows_user",
             joinColumns = @JoinColumn(name="user_id_following"),
@@ -51,11 +54,13 @@ public class User {
     )
     private Set<User> follows;
 
-
     /*
         USER --- followed by --- USER   ManyToMany
      */
-    @ManyToMany(mappedBy = "follows")
+    @ManyToMany(
+            mappedBy = "follows",
+            fetch=FetchType.EAGER
+    )
     private Set<User> followedBy;
 
 
@@ -65,14 +70,17 @@ public class User {
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private Set<Post> posts;
 
     /*
         USER --- likes --- POST     ManyToMany
      */
-    @ManyToMany
+    @ManyToMany(
+            fetch = FetchType.EAGER
+    )
     @JoinTable(
             name="user_likes_post",
             joinColumns = @JoinColumn(name = "fk_user_id"),
@@ -183,6 +191,14 @@ public class User {
         return follows.remove(following);
     }
 
+    public boolean addNewFollowedBy(User newFollowedBy){
+        return followedBy.add(newFollowedBy);
+    }
+
+    public boolean removeFollowedBy(User followedBy){
+        return this.followedBy.remove(followedBy);
+    }
+
     public boolean addNewPost(Post newPost){
         return posts.add(newPost);
     }
@@ -193,5 +209,30 @@ public class User {
 
     public boolean addPostLiked(Post newPostLiked){
          return postsLiked.add(newPostLiked);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                numberOfPosts == user.numberOfPosts &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(birthdate, user.birthdate) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(pictureUrl, user.pictureUrl) &&
+                authority == user.authority &&
+                Objects.equals(follows, user.follows) &&
+                Objects.equals(followedBy, user.followedBy) &&
+                Objects.equals(posts, user.posts) &&
+                Objects.equals(postsLiked, user.postsLiked);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, firstName, lastName, birthdate, password, numberOfPosts, email, pictureUrl, authority, follows, followedBy, posts, postsLiked);
     }
 }

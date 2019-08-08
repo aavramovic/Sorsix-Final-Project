@@ -3,6 +3,7 @@ package com.sorsix.finkicommunity.domain.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,21 +42,15 @@ public class Post {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Set<Post> replies;
+    private Set<Post> replies = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_post_id_repliedTo")
     private Post repliedTo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_course_id")
     private Course course;
-
-    /*
-        USER --- followed by --- USER   ManyToMany
-     */
-    @ManyToMany(mappedBy = "follows")
-    private Set<User> followedBy;
 
 
     public Post(){}
@@ -124,6 +119,14 @@ public class Post {
         this.repliedTo = repliedTo;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public Course getCourse() {
         return course;
     }
@@ -132,19 +135,4 @@ public class Post {
         this.course = course;
     }
 
-    public Set<User> getFollowedBy() {
-        return followedBy;
-    }
-
-    public void setFollowedBy(Set<User> followedBy) {
-        this.followedBy = followedBy;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }

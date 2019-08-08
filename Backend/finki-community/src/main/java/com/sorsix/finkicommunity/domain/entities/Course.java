@@ -37,7 +37,7 @@ public class Course {
     private Program program;
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "course",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
