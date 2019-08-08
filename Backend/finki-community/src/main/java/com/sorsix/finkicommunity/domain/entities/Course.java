@@ -6,6 +6,7 @@ import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 
 @Entity
@@ -35,13 +36,22 @@ public class Course {
     @Column(name = "program")
     private Program program;
 
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Post> posts;
+
+
+
     /*
         Needed for JPA auto table creation
      */
     public Course(){
     }
 
-    public Course(String nameOfCourse, String courseDescriptionLink, StudyYear studyYear, Semester semester, Program program) {
+    public Course(String courseName, String courseDescriptionLink, StudyYear studyYear, Semester semester, Program program) {
         this.courseName = courseName;
         this.courseDescriptionLink = courseDescriptionLink;
         this.studyYear = studyYear;

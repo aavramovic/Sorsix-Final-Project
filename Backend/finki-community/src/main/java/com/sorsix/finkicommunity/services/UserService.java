@@ -1,5 +1,6 @@
 package com.sorsix.finkicommunity.services;
 
+import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import org.springframework.stereotype.Service;
