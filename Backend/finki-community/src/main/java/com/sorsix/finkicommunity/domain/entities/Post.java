@@ -13,6 +13,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long postId;
 
+    @Column
+    private String content;
+
     @Column(name="timestamp")
     private LocalDateTime timestamp;
 
@@ -25,7 +28,7 @@ public class Post {
     @ManyToMany(mappedBy = "postsLiked")
     private Set<User> usersLiked;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_user_id_owner")
     private User user;
 
@@ -56,13 +59,6 @@ public class Post {
 
 
     public Post(){}
-
-    public Post(int numberOfLikes, int numberOfReplies, Set<User> usersLiked, User user) {
-        this.numberOfLikes = numberOfLikes;
-        this.numberOfReplies = numberOfReplies;
-        this.usersLiked = usersLiked;
-        this.user = user;
-    }
 
     public long getPostId() {
         return postId;
@@ -102,5 +98,53 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Set<Post> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(Set<Post> replies) {
+        this.replies = replies;
+    }
+
+    public Post getRepliedTo() {
+        return repliedTo;
+    }
+
+    public void setRepliedTo(Post repliedTo) {
+        this.repliedTo = repliedTo;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Set<User> getFollowedBy() {
+        return followedBy;
+    }
+
+    public void setFollowedBy(Set<User> followedBy) {
+        this.followedBy = followedBy;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
