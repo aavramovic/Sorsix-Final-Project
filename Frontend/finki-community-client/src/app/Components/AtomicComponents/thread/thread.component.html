@@ -7,7 +7,7 @@
     <div *ngIf="thread">
         <h3 *ngIf="thread.title">{{thread.title}}</h3>
         <div>{{thread.timeOfPost}}</div>
-        <div *ngIf="course">{{course.name}}</div>
+        <div *ngIf="course">{{course.courseName}}</div>
     </div>
     <div *ngIf="thread && thread.content"><p>{{thread.content}}</p></div>
     <!-- TODO: ako e premnogu dolgo da se skrati so opcija da se pushti prozorec ili da se extendne-->

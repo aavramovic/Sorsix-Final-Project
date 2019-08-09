@@ -1,7 +1,7 @@
 import {User} from './User';
 
 export class Course {
-    name: string;
+    courseName: string;
     private courseId: number;
     code: string;
     description: string;
@@ -10,7 +10,7 @@ export class Course {
 
     //test constructor
     constructor(name: string, courseId: number, code: string, description: string) {
-        this.name = name;
+        this.courseName = name;
         this.courseId = courseId;
         this.code = code;
         this.description = description;

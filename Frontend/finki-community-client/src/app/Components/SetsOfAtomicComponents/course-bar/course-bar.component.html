@@ -2,10 +2,10 @@
     <p>Courses</p>
     <hr>
     <div *ngIf="courses">
-        <ul>
+        <ul class="list-unstyled">
             <li *ngFor="let course of courses">
                 <div class="row">
-                    <div *ngIf="course.name" class="col-sm-6">{{course.name}}</div>
+                    <div *ngIf="course.courseName" class="col-sm-6">{{course.courseName}}</div>
                     <div *ngIf="course.code" class="col-sm-6">{{course.code}}</div>
                 </div>
                 <div *ngIf="course.description">
