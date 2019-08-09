@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'finki-community-client';
+  title = 'Finki Forum';
 }
+
+/*
+import { OpaqueToken } from "@angular/core";
+
+export let APP_CONFIG = new OpaqueToken("app.config");
+
+export interface IAppConfig {
+    apiEndpoint: string;
+}
+
+export const AppConfig: IAppConfig = {
+    apiEndpoint: "http://localhost:15422/api/"
+};*/

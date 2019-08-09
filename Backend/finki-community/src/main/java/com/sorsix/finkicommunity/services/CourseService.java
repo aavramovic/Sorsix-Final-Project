@@ -20,7 +20,7 @@ public class CourseService {
     }
 
     public Optional<Course> getCourseById(Long id){
-        return courseRepository.findById(id);
+        return courseRepository.findByCourseId(id);
     }
 
     public Course createNewCourse(Course newCourse){

@@ -1,5 +1,5 @@
-import { PostService } from './../services/post.service';
 import { Component, OnInit } from '@angular/core';
+import {ThreadService} from '../../../services/thread.service';
 
 @Component({
   selector: 'app-top-posts',
@@ -10,10 +10,10 @@ export class TopPostsComponent implements OnInit {
 
   topPosts: Array<any> = [];
 
-  constructor(private postService: PostService) { }
+  constructor(private threadService: ThreadService) { }
 
   ngOnInit() {
-    this.postService.getTop10Posts()
+    this.threadService.getTop10Posts()
         .subscribe(
           topPosts => this.topPosts = topPosts
         );
