@@ -3,7 +3,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {CourseBarComponent} from './Components/SetsOfAtomicComponents/course-bar/course-bar.component';
 
 const routes: Routes = [
-    {path: 'courses', component: CourseBarComponent}
+    {path: 'courses', component: CourseBarComponent},
+    {path: '', redirectTo: 'courses', pathMatch: 'full'}
 ];
 
 @NgModule({
