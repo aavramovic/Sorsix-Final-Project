@@ -1,4 +1,5 @@
 import {Authorization} from '../Enumeration/Authorization';
+import {Course} from './Course';
 
 export class User {
   private _username: string;
@@ -10,6 +11,8 @@ export class User {
   private pictureUrl: string;
   private numberOfPosts: string;
   private _imageUrl: string;
+  //ManyToMany
+  private courses: Course[];
 
 
   get username(): string {

@@ -1,1 +1,6 @@
-<p>course works!</p>
+<div *ngIf="course">
+    <h3 *ngIf="course.name">{{course.name}}</h3>
+    <span *ngIf="course.code">{{course.code}}</span>
+    <div *ngIf="course.description">{{course.description}}</div>
+    <div *ngIf="course.users">{{course.users.size}}</div>
+</div>

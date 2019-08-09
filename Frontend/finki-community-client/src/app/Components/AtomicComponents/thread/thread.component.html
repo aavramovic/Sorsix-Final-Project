@@ -1,17 +1,17 @@
-<div>
-  <div>
-    <span><img src="{{user.imageUrl}}" alt="Users image"></span>
-    <span>{{user.username}}</span>
-    <button>Follow User</button>
-  </div>
-  <div>
-    <h3>{{thread.title}}</h3>
-    {{thread.timeOfPost}}
-    {{course.name}}
-  </div>
-  <div><p>{{thread.content}}</p></div>
-  <!-- TODO: ako e premnogu dolgo da se skrati so opcija da se pushti prozorec ili da se extendne-->
-  <button>Like</button>
-  <div>{{thread.noOfLikes}}</div>
-  <button>LoadComments</button>
+<div *ngIf="thread">
+    <div *ngIf="user">
+        <span *ngIf="user.imageUrl"><img src="{{user.imageUrl}}" alt="Users image"></span>
+        <span *ngIf="user.username">{{user.username}}</span>
+        <button>Follow User</button>
+    </div>
+    <div *ngIf="thread">
+        <h3 *ngIf="thread.title">{{thread.title}}</h3>
+        <div>{{thread.timeOfPost}}</div>
+        <div *ngIf="course">{{course.name}}</div>
+    </div>
+    <div *ngIf="thread && thread.content"><p>{{thread.content}}</p></div>
+    <!-- TODO: ako e premnogu dolgo da se skrati so opcija da se pushti prozorec ili da se extendne-->
+    <button>Like</button>
+    <div *ngIf="thread.noOfLikes">{{thread.noOfLikes}}</div>
+    <button>LoadComments</button>
 </div>

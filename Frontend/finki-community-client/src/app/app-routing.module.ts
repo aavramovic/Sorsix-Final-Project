@@ -1,12 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {StandardViewComponent} from './Components/Views/standard-view/standard-view.component';
-import {ThreadComponent} from './Components/AtomicComponents/thread/thread.component';
-
+import {CourseBarComponent} from './Components/SetsOfAtomicComponents/course-bar/course-bar.component';
 
 const routes: Routes = [
-    {path: '', component: StandardViewComponent},
-    {path: 'test/thread', component: ThreadComponent}
+    {path: 'courses', component: CourseBarComponent}
 ];
 
 @NgModule({
