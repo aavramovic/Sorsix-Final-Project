@@ -1,0 +1,11 @@
+<div>
+
+</div>
+<div *ngIf="threads">
+    <ul class="list-unstyled">
+        <li *ngFor="let thread of threads">
+            <app-thread [thread]="thread"></app-thread>
+            <hr>
+        </li>
+    </ul>
+</div>

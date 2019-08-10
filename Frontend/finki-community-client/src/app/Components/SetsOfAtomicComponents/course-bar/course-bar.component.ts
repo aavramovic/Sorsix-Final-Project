@@ -9,7 +9,6 @@ import {Course} from '../../../Models/Classes/Course';
 })
 export class CourseBarComponent implements OnInit {
     courses: Set<Course>;
-    mockCourse: Course;
 
     constructor(private courseService: CourseService) {
         this.courses = new Set<Course>();
@@ -17,7 +16,6 @@ export class CourseBarComponent implements OnInit {
 
     ngOnInit() {
         this.courseService.getMockCourses().subscribe(courses => this.courses = courses);
-        this.mockCourse = this.courseService.getMockCourse('Tocak');
     }
 
 }

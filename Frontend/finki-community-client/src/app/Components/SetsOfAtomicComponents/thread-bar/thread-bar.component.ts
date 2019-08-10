@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Thread} from '../../../Models/Interfaces/Thread';
+import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 
 @Component({
@@ -8,12 +8,12 @@ import {ThreadService} from '../../../services/thread.service';
     styleUrls: ['./thread-bar.component.css']
 })
 export class ThreadBarComponent implements OnInit {
-    threads: Thread[];
+    threads: Set<Thread>;
     constructor(private threadService: ThreadService) {
     }
 
     ngOnInit() {
-        this.threadService.getTop10Posts().subscribe(threads => this.threads = threads);
+        this.threadService.getMockThreads().subscribe(threads => this.threads = threads);
     }
 
 }

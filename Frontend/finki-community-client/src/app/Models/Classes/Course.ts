@@ -2,14 +2,14 @@ import {User} from './User';
 
 export class Course {
     courseName: string;
-    private courseId: number;
+    private courseId: string;
     code: string;
     description: string;
     //ManyToMany
     private _users: Set<User>;
 
     //test constructor
-    constructor(name: string, courseId: number, code: string, description: string) {
+    constructor(name: string, courseId: string, code: string, description: string) {
         this.courseName = name;
         this.courseId = courseId;
         this.code = code;

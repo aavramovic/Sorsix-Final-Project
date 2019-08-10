@@ -6,7 +6,7 @@
     </div>
     <div *ngIf="thread">
         <h3 *ngIf="thread.title">{{thread.title}}</h3>
-        <div>{{thread.timeOfPost}}</div>
+        <div>{{thread.timeOfPost | date:"dd.MM.y"}}</div>
         <div *ngIf="course">{{course.courseName}}</div>
     </div>
     <div *ngIf="thread && thread.content"><p>{{thread.content}}</p></div>

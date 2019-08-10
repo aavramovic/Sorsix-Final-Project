@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Course} from '../Models/Classes/Course';
 import {HttpClient} from '@angular/common/http';
 import {MockClassesCreationService} from './mock-classes-creation.service';
@@ -13,15 +13,20 @@ export class CourseService {
                 private mock: MockClassesCreationService) {
     }
 
-    getCourseByCourseId(courseId: number): Observable<Course> {
+    getCourseByCourseId(courseId: string): Observable<Course> {
         return this.http.get<Course>('course/id');
     }
+
 
     getMockCourses(): Observable<Set<Course>> {
         return this.mock.getMockCourses();
     }
 
-    getMockCourse(name: string) {
+    getMockCourse(name: string): Course {
         return this.mock.getMockCourse(name);
+    }
+
+    getMockCourseByCourseId(courseId: string): Observable<Course> {
+        return of(this.mock.getMockCourseByCourseId(courseId));
     }
 }
