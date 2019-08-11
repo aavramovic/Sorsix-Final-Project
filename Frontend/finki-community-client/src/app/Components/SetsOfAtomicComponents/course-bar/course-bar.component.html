@@ -2,10 +2,9 @@
     <h5>Courses</h5>
     <hr>
     <div *ngIf="courses">
-        <ul class="list-unstyled">
-            <li *ngFor="let course of courses">
+        <ul class="list-group">
+            <li *ngFor="let course of courses" class="list-group-item">
                 <app-course [course]="course"></app-course>
-                <hr>
             </li>
         </ul>
     </div>

@@ -2,10 +2,9 @@
 
 </div>
 <div *ngIf="threads">
-    <ul class="list-unstyled">
-        <li *ngFor="let thread of threads">
+    <ul class="list-group">
+        <li *ngFor="let thread of threads" class="list-group-item">
             <app-thread [thread]="thread"></app-thread>
-            <hr class="accessory">
         </li>
     </ul>
 </div>
