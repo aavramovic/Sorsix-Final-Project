@@ -1,10 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {TopPostsComponent} from './Components/ContainerComponents/top-posts/top-posts.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {CourseComponent} from './Components/AtomicComponents/course/course.component';
 import {ThreadComponent} from './Components/AtomicComponents/thread/thread.component';
 import {RouterModule} from '@angular/router';
@@ -18,6 +17,7 @@ import {LoginBarComponent} from './Components/ContainerComponents/login-bar/logi
 import {LoginScreenComponent} from './Components/Views/login-screen/login-screen.component';
 import {CourseBarComponent} from './Components/SetsOfAtomicComponents/course-bar/course-bar.component';
 import {ThreadBarComponent} from './Components/SetsOfAtomicComponents/thread-bar/thread-bar.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -41,7 +41,8 @@ import {ThreadBarComponent} from './Components/SetsOfAtomicComponents/thread-bar
         AppRoutingModule,
         AppRoutingModule,
         HttpClientModule,
-        RouterModule
+        RouterModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

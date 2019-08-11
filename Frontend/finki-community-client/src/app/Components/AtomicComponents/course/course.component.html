@@ -1,6 +1,14 @@
 <div *ngIf="course">
-    <h3 *ngIf="course.courseName">{{course.courseName}}</h3>
-    <span *ngIf="course.code">{{course.code}}</span>
-    <div *ngIf="course.description">{{course.description}}</div>
-    <div *ngIf="course.users">{{course.users.size}}</div>
+    <div class="row">
+        <div *ngIf="course.courseName" class="col h6">
+            {{course.courseName}}
+        </div>
+        <div *ngIf="course.code" class="col font-weight-light">
+            {{course.code}}
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="course.description" class="col font-weight-light">{{course.description}}</div>
+        <div *ngIf="course.users" class="col font-weight-light">Followers: {{course.users.size}}</div>
+    </div>
 </div>

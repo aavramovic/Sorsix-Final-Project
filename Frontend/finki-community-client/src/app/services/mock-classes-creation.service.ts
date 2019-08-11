@@ -52,7 +52,8 @@ export class MockClassesCreationService {
             Math.round(Math.random() * 100).toString(),
             Math.round(Math.random() * 100).toString(),
             new Date('1970-01-01'),
-            content);
+            content,
+            'Title');
     }
 
     getMockUsers(): Observable<Set<User>> {

@@ -1,17 +1,11 @@
 <div class="container-fluid">
-    <p>Courses</p>
+    <h5>Courses</h5>
     <hr>
     <div *ngIf="courses">
         <ul class="list-unstyled">
             <li *ngFor="let course of courses">
-                <div class="row">
-                    <div *ngIf="course.courseName" class="col-sm-6">{{course.courseName}}</div>
-                    <div *ngIf="course.code" class="col-sm-6">{{course.code}}</div>
-                </div>
-                <div *ngIf="course.description">
-                    {{course.description}}
-                </div>
-                <br>
+                <app-course [course]="course"></app-course>
+                <hr>
             </li>
         </ul>
     </div>

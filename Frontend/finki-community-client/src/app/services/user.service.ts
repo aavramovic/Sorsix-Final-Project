@@ -21,7 +21,7 @@ export class UserService {
     }
 
     public getMockUserByUserId(userId: string): Observable<User>{
-        return of(this.mock.getMockUser(userId));
+        return of(this.mock.getMockUserByUserId(userId));
     }
 
     public getMockCourseButCourseId(courseId: string): Observable<Course>{

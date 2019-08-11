@@ -9,7 +9,6 @@ export class User {
     private password: string;
     private _authorization: Authorization;
     private email: string;
-    private pictureUrl: string;
     private numberOfPosts: number;
     private _imageUrl: string;
     //ManyToMany
@@ -24,7 +23,7 @@ export class User {
         this.email = email;
         this.userId = userId;
         this._authorization = Authorization.VISITOR;
-        this.pictureUrl = '#';
+        this._imageUrl = 'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_1280.png';
         this.numberOfPosts = 0;
         this.courses = new Set<Course>();
     }

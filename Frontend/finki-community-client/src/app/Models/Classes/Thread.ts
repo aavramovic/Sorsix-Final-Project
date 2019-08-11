@@ -17,7 +17,7 @@ export class Thread {
         this.postId = postId;
         this.userId = userId;
         this.courseId = courseId;
-        this.noOfLikes = 0;
+        this.noOfLikes = 10;
         this.comments = new Set<Thread>();
     }
 }

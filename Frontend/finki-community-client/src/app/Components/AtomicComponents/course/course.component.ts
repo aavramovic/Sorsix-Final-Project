@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Course} from '../../../Models/Classes/Course';
 
 @Component({
@@ -7,9 +7,10 @@ import {Course} from '../../../Models/Classes/Course';
     styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit {
+    @Input()
     private course: Course;
-    constructor(course: Course) {
-        this.course=course;
+
+    constructor() {
     }
 
     ngOnInit() {
