@@ -23,7 +23,7 @@ export class ThreadService {
         return this.http.get<Thread>(this._API_URL + this._TOP_POSTS_URL + '/' + numberOfThreadsToShow);
     }
 
-    getMockThreads(): Observable<Set<Thread>>{
+    getMockThreads(): Observable<Thread[]>{
         return this.mock.getMockThreads();
     }
 

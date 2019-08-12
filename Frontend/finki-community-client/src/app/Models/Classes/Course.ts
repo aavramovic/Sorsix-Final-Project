@@ -1,12 +1,8 @@
-import {User} from './User';
-
 export class Course {
     courseName: string;
     private courseId: string;
     code: string;
     description: string;
-    //ManyToMany
-    private _users: Set<User>;
 
     //test constructor
     constructor(name: string, courseId: string, code: string, description: string) {
@@ -14,19 +10,16 @@ export class Course {
         this.courseId = courseId;
         this.code = code;
         this.description = description;
-        this._users = new Set<User>();
     }
 
-    get users(): Set<User> {
-        return this._users;
+//TODO ova treba da se napravi preku request
+    //
+/*    addUserToCourse(user: User): void{
+        if(!this._users.includes(user))
+         this._users.push(user);
     }
 
-    addUserToCourse(user: User): void{
-        if(!this._users.has(user))
-         this._users.add(user);
-    }
-
-    deleteUserFromCourse(user: User): boolean{
-        return this._users.delete(user);
-    }
+    deleteUserFromCourse(user: User) {
+        this._users = this._users.filter(item => item !== user);
+    }*/
 }

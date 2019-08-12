@@ -7,7 +7,7 @@ export class Thread {
     postId: string;
     userId: string;
     courseId: string;
-    comments: Set<Thread>;
+    comments: Thread[];
 
 
     constructor(postId: string, userId: string, courseId: string, timeOfPost: Date, content: string, title?: string) {
@@ -18,6 +18,6 @@ export class Thread {
         this.userId = userId;
         this.courseId = courseId;
         this.noOfLikes = 10;
-        this.comments = new Set<Thread>();
+        this.comments = [];
     }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
+import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
 
 @Component({
     selector: 'app-thread-bar',
@@ -8,12 +9,17 @@ import {ThreadService} from '../../../services/thread.service';
     styleUrls: ['./thread-bar.component.css']
 })
 export class ThreadBarComponent implements OnInit {
-    threads: Set<Thread>;
-    constructor(private threadService: ThreadService) {
+    threads: Thread[];
+
+    constructor(private threadService: ThreadService,
+                private mock: MockClassesCreationService) {
     }
 
     ngOnInit() {
-        this.threadService.getMockThreads().subscribe(threads => this.threads = threads);
+        //TODO:// trgni go delayot
+        this.mock.delay(2000).then(() =>
+            this.threadService.getMockThreads().subscribe(threads => this.threads = threads));
+        // this.threadService.getMockThreads().subscribe(threads => this.threads = threads);
     }
 
 }

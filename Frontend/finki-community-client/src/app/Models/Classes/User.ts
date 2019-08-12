@@ -1,5 +1,4 @@
 import {Authorization} from '../Enumeration/Authorization';
-import {Course} from './Course';
 
 export class User {
     private userId: string;
@@ -11,8 +10,6 @@ export class User {
     private email: string;
     private numberOfPosts: number;
     private _imageUrl: string;
-    //ManyToMany
-    private courses: Set<Course>;
 
 
     constructor(firstName: string, lastName: string, username: string, password: string, email: string, userId: string) {
@@ -25,7 +22,6 @@ export class User {
         this._authorization = Authorization.VISITOR;
         this._imageUrl = 'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_1280.png';
         this.numberOfPosts = 0;
-        this.courses = new Set<Course>();
     }
 
 

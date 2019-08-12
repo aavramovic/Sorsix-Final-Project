@@ -6,27 +6,34 @@ import {HttpClientModule} from '@angular/common/http';
 import {CourseComponent} from './Components/AtomicComponents/course/course.component';
 import {ThreadComponent} from './Components/AtomicComponents/thread/thread.component';
 import {RouterModule} from '@angular/router';
-import {StandardViewComponent} from './Components/Views/standard-view/standard-view.component';
-import {MenuBarComponent} from './Components/ContainerComponents/menu-bar/menu-bar.component';
-import {MainViewComponent} from './Components/ContainerComponents/main-view/main-view.component';
+import {MenuBarComponent} from './Components/Views/menu-bar/menu-bar.component';
+import {MainViewComponent} from './Components/Views/main-view/main-view.component';
 import {UserComponent} from './Components/AtomicComponents/user/user.component';
 import {LoginScreenComponent} from './Components/Views/login-screen/login-screen.component';
 import {CourseBarComponent} from './Components/SetsOfAtomicComponents/course-bar/course-bar.component';
 import {ThreadBarComponent} from './Components/SetsOfAtomicComponents/thread-bar/thread-bar.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule, MatIconModule} from '@angular/material';
+import { RegisterScreenComponent } from './Components/Views/register-screen/register-screen.component';
+import { UserBarComponent } from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         CourseComponent,
         ThreadComponent,
-        StandardViewComponent,
         MenuBarComponent,
         MainViewComponent,
         UserComponent,
         LoginScreenComponent,
         CourseBarComponent,
-        ThreadBarComponent
+        ThreadBarComponent,
+        RegisterScreenComponent,
+        UserBarComponent
     ],
     imports: [
         BrowserModule,
@@ -34,7 +41,14 @@ import {FormsModule} from '@angular/forms';
         AppRoutingModule,
         HttpClientModule,
         RouterModule,
-        FormsModule
+        FormsModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatButtonModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

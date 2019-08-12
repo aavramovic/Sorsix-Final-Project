@@ -4,7 +4,6 @@ import {User} from '../../../Models/Classes/User';
 import {Course} from '../../../Models/Classes/Course';
 import {UserService} from '../../../services/user.service';
 import {CourseService} from '../../../services/course.service';
-import {ThreadService} from '../../../services/thread.service';
 
 @Component({
     selector: 'app-thread',
@@ -14,8 +13,11 @@ import {ThreadService} from '../../../services/thread.service';
 export class ThreadComponent implements OnInit {
     @Input()
     private thread: Thread;
+
+    //TODO:// zavisi od backendot i databazata namesto ovie dve propery i onInit da se prakjaat ushte dva requesta da bide se vo thread elementot
     private user: User; //treba ili preku konstruktor ili na init spored user id i course id od postot da se izvadat
     private course: Course;
+
 
     constructor(
         private userService: UserService,

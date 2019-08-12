@@ -12,13 +12,13 @@ export class MockClassesCreationService {
     constructor() {
     }
 
-    getMockCourses(): Observable<Set<Course>> {
-        let courses: Set<Course> = new Set<Course>();
-        courses.add(this.getMockCourse('Калкулус'));
-        courses.add(this.getMockCourse('Дискретна Математика'));
-        courses.add(this.getMockCourse('Професионални Вештини'));
-        courses.add(this.getMockCourse('Структурно Програмирање'));
-        courses.add(this.getMockCourse('Објектно Програмирање'));
+    getMockCourses(): Observable<Course[]> {
+        let courses: Course[] = [];
+        courses.push(this.getMockCourse('Калкулус'));
+        courses.push(this.getMockCourse('Дискретна Математика'));
+        courses.push(this.getMockCourse('Професионални Вештини'));
+        courses.push(this.getMockCourse('Структурно Програмирање'));
+        courses.push(this.getMockCourse('Објектно Програмирање'));
         return of(courses);
     }
 
@@ -31,17 +31,17 @@ export class MockClassesCreationService {
 
     }
 
-    getMockThreads(): Observable<Set<Thread>> {
-        let threads: Set<Thread> = new Set<Thread>();
-        threads.add(this.getMockThread('First Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
+    getMockThreads(): Observable<Thread[]> {
+        let threads: Thread[] = [];
+        threads.push(this.getMockThread('First Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
             '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
-        threads.add(this.getMockThread('Second Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
+        threads.push(this.getMockThread('Second Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
             '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
-        threads.add(this.getMockThread('Third Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
+        threads.push(this.getMockThread('Third Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
             '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
-        threads.add(this.getMockThread('Fourth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
+        threads.push(this.getMockThread('Fourth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
             '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
-        threads.add(this.getMockThread('Fifth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
+        threads.push(this.getMockThread('Fifth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
             '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
         return of(threads);
     }
@@ -56,13 +56,13 @@ export class MockClassesCreationService {
             'Title');
     }
 
-    getMockUsers(): Observable<Set<User>> {
-        let users: Set<User> = new Set<User>();
-        users.add(this.getMockUser('John'));
-        users.add(this.getMockUser('Doe'));
-        users.add(this.getMockUser('Jane'));
-        users.add(this.getMockUser('Doe'));
-        users.add(this.getMockUser('Aang'));
+    getMockUsers(): Observable<User[]> {
+        let users: User[] = [];
+        users.push(this.getMockUser('John'));
+        users.push(this.getMockUser('Doe'));
+        users.push(this.getMockUser('Jane'));
+        users.push(this.getMockUser('Doe'));
+        users.push(this.getMockUser('Aang'));
         return of(users);
     }
 
@@ -87,5 +87,7 @@ export class MockClassesCreationService {
             userId);
     }
 
-
+    async delay(ms: number) {
+        await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
+    }
 }

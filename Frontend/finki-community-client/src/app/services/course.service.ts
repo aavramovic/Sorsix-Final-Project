@@ -14,11 +14,11 @@ export class CourseService {
     }
 
     getCourseByCourseId(courseId: string): Observable<Course> {
-        return this.http.get<Course>('course/id');
+        return this.http.get<Course>('course/' + courseId);
     }
 
 
-    getMockCourses(): Observable<Set<Course>> {
+    getMockCourses(): Observable<Course[]> {
         return this.mock.getMockCourses();
     }
 

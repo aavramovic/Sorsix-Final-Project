@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../../../services/course.service';
 import {Course} from '../../../Models/Classes/Course';
+import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
 
 @Component({
     selector: 'app-courses',
@@ -8,14 +9,18 @@ import {Course} from '../../../Models/Classes/Course';
     styleUrls: ['./course-bar.component.css']
 })
 export class CourseBarComponent implements OnInit {
-    courses: Set<Course>;
+    courses: Course[];
 
-    constructor(private courseService: CourseService) {
-        this.courses = new Set<Course>();
+    constructor(private courseService: CourseService,
+                private mock: MockClassesCreationService) {
     }
 
     ngOnInit() {
-        this.courseService.getMockCourses().subscribe(courses => this.courses = courses);
+        //TODO:// trgni go delayot
+        this.mock.delay(2000).then(() =>
+            this.courseService.getMockCourses().subscribe(courses => this.courses = courses));
+        // this.courseService.getMockCourses().subscribe(courses => this.courses = courses));
     }
 
 }
+
