@@ -4,6 +4,9 @@ export class Thread {
     timeOfPost: Date;
     content: string;
 
+    username: string;
+    courseName: string;
+
     postId: string;
     userId: string;
     courseId: string;

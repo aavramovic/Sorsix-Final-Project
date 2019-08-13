@@ -15,7 +15,7 @@ const routes: Routes = [
     {path: 'users', component: UserBarComponent},
     {path: 'login', component: LoginScreenComponent},
     {path: 'register', component: RegisterScreenComponent},
-
+    {path: '**', redirectTo: ''}
 ];
 
 @NgModule({

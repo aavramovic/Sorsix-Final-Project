@@ -87,7 +87,7 @@ export class MockClassesCreationService {
             userId);
     }
 
-    async delay(ms: number) {
-        await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
+    async delay() {
+        await new Promise(resolve => setTimeout(() => resolve(), 150)).then(() => console.log('fired'));
     }
 }

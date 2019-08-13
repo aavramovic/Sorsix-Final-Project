@@ -17,7 +17,7 @@ export class CourseBarComponent implements OnInit {
 
     ngOnInit() {
         //TODO:// trgni go delayot
-        this.mock.delay(2000).then(() =>
+        this.mock.delay().then(() =>
             this.courseService.getMockCourses().subscribe(courses => this.courses = courses));
         // this.courseService.getMockCourses().subscribe(courses => this.courses = courses));
     }

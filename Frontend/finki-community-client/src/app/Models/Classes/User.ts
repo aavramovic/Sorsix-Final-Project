@@ -12,7 +12,7 @@ export class User {
     private _imageUrl: string;
 
 
-    constructor(firstName: string, lastName: string, username: string, password: string, email: string, userId: string) {
+    constructor(firstName: string, lastName: string, username: string, password: string, email: string, userId?: string) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

@@ -17,7 +17,7 @@ export class ThreadBarComponent implements OnInit {
 
     ngOnInit() {
         //TODO:// trgni go delayot
-        this.mock.delay(2000).then(() =>
+        this.mock.delay().then(() =>
             this.threadService.getMockThreads().subscribe(threads => this.threads = threads));
         // this.threadService.getMockThreads().subscribe(threads => this.threads = threads);
     }

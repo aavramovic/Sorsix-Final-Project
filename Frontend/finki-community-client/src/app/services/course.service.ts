@@ -16,8 +16,12 @@ export class CourseService {
     getCourseByCourseId(courseId: string): Observable<Course> {
         return this.http.get<Course>('course/' + courseId);
     }
-
-
+    getCoursesByProperties(year?: number, program?: string, mandatory?: boolean){
+        return this.http
+    }
+    /**
+     * MOCK METHODS
+     * */
     getMockCourses(): Observable<Course[]> {
         return this.mock.getMockCourses();
     }
