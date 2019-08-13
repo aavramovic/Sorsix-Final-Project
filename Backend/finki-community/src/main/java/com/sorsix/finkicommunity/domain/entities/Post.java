@@ -1,6 +1,8 @@
 package com.sorsix.finkicommunity.domain.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,13 +28,14 @@ public class Post {
     @Column(name="number_of_replies")
     private int numberOfReplies;
 
-    @ManyToMany(mappedBy = "postsLiked")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "postsLiked", fetch = FetchType.EAGER)
     private Set<User> usersLiked;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_user_id_owner")
     private User user;
-
 
     /*
         POST --- repliedBy --- POST     OneToMany
@@ -40,7 +43,8 @@ public class Post {
     @OneToMany(
             mappedBy = "repliedTo",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private Set<Post> replies = new HashSet<>();
 
@@ -134,5 +138,4 @@ public class Post {
     public void setCourse(Course course) {
         this.course = course;
     }
-
 }

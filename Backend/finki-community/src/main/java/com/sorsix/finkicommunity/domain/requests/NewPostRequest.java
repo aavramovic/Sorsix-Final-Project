@@ -1,15 +1,18 @@
-package com.sorsix.finkicommunity.domain.requests.errors;
+package com.sorsix.finkicommunity.domain.requests;
 
+import org.springframework.lang.Nullable;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class NewPostRequest {
 
+    @NotNull
+    @NotEmpty
     private String content;
 
     @NotNull
     private Long courseId;
-
-    private Long postIdRepliedTo;
 
     @NotNull
     private Long userIdOwner;
@@ -20,10 +23,6 @@ public class NewPostRequest {
 
     public Long getCourseId() {
         return courseId;
-    }
-
-    public Long getPostIdRepliedTo() {
-        return postIdRepliedTo;
     }
 
     public Long getUserIdOwner() {

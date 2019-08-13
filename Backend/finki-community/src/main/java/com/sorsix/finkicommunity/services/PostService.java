@@ -4,7 +4,7 @@ package com.sorsix.finkicommunity.services;
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
-import com.sorsix.finkicommunity.domain.requests.errors.NewPostRequest;
+import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
@@ -37,13 +37,10 @@ public class PostService {
         return null;
     }
 
-    public User createNewPost(NewPostRequest newPostRequest){
+    public Post createNewPost(NewPostRequest newPostRequest){
 
         Course course = courseRepository.findById(newPostRequest.getCourseId()).get();
         Post repliedTo = null;
-        if(newPostRequest.getPostIdRepliedTo() != null){
-             repliedTo = postRepository.findById(newPostRequest.getPostIdRepliedTo()).get();
-        }
         User user = userRepository.findById(newPostRequest.getUserIdOwner()).get();
 
         Post newPost = new Post();
@@ -56,8 +53,7 @@ public class PostService {
         newPost.setNumberOfLikes(0);
         newPost.setNumberOfReplies(0);
 
-        user.addNewPost(newPost);
-        return user;
+        postRepository.save(newPost);
+        return newPost;
     }
-
 }

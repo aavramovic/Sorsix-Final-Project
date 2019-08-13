@@ -1,9 +1,9 @@
 package com.sorsix.finkicommunity.domain.entities;
 
 import com.sorsix.finkicommunity.domain.enums.Authority;
-
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,6 +16,15 @@ public class User {
     @Column(name = "user_id", unique = true)
     private long userId;
 
+    @Column(name="username", unique=true)
+    private String username;
+
+    @Column(name = "email", unique=true)
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -23,16 +32,10 @@ public class User {
     private String lastName;
 
     @Column(name="birthdate")
-    private Date birthdate;
-
-    @Column(name = "password")
-    private String password;
+    private LocalDate birthdate;
 
     @Column(name = "number_posts")
     private int numberOfPosts;
-
-    @Column(name = "email", unique = true)
-    private String email;
 
     @Column(name = "picture_url")
     private String pictureUrl;
@@ -40,33 +43,40 @@ public class User {
     @Column(name = "authority")
     private Authority authority;
 
+
+
     /*
-        USER --- follows --- USER     ManyToMany
-     */
-    @ManyToMany(cascade = {
-            CascadeType.ALL
-    }, fetch=FetchType.EAGER
+            USER --- follows --- USER     ManyToMany
+         */
+    @ManyToMany(cascade =
+            {
+                CascadeType.ALL
+            },
+            fetch=FetchType.EAGER
     )
     @JoinTable(
             name="user_follows_user",
             joinColumns = @JoinColumn(name="user_id_following"),
             inverseJoinColumns = @JoinColumn(name = "user_id_followed")
     )
-    private Set<User> follows;
+    private Set<User> follows = new HashSet<>();
+
+
 
     /*
-        USER --- followed by --- USER   ManyToMany
-     */
+            USER --- followed by --- USER   ManyToMany
+         */
     @ManyToMany(
+            cascade = CascadeType.ALL,
             mappedBy = "follows",
             fetch=FetchType.EAGER
     )
-    private Set<User> followedBy;
+    private Set<User> followedBy = new HashSet<>();
 
 
     /*
-        USER --- posts --- POST     OneToMany
-     */
+            USER --- posts --- POST     OneToMany
+         */
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -96,7 +106,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, Date birthdate, String password, int numberOfPosts, String email, String pictureUrl, Authority authority, Set<User> follows, Set<User> followedBy, Set<Post> posts, Set<Post> postsLiked) {
+    public User(String firstName, String lastName, LocalDate birthdate, String password, int numberOfPosts, String email, String pictureUrl, Authority authority, Set<User> follows, Set<User> followedBy, Set<Post> posts, Set<Post> postsLiked) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
@@ -135,11 +145,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -231,8 +241,7 @@ public class User {
                 Objects.equals(postsLiked, user.postsLiked);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, birthdate, password, numberOfPosts, email, pictureUrl, authority, follows, followedBy, posts, postsLiked);
+    public Set<User> getFollows() {
+        return follows;
     }
 }

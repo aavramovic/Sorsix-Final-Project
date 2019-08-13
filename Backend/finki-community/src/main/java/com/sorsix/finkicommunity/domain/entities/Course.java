@@ -4,8 +4,6 @@ import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 
@@ -17,15 +15,11 @@ public class Course {
     @Column(name = "course_id")
     private long courseId;
 
-    @Column(name = "course_name")
-    @NotNull
-    @NotEmpty
+    @Column(name = "course_name", unique = true)
     private String courseName;
 
     @Column(name = "course_description")
-    @NotNull
-    @NotEmpty
-    private String courseDescriptionLink;
+    private String courseDescription;
 
     @Column(name = "study_year")
     private StudyYear studyYear;
@@ -43,17 +37,15 @@ public class Course {
     )
     private Set<Post> posts;
 
-
-
     /*
         Needed for JPA auto table creation
      */
     public Course(){
     }
 
-    public Course(String courseName, String courseDescriptionLink, StudyYear studyYear, Semester semester, Program program) {
+    public Course(String courseName, String courseDescription, StudyYear studyYear, Semester semester, Program program) {
         this.courseName = courseName;
-        this.courseDescriptionLink = courseDescriptionLink;
+        this.courseDescription = courseDescription;
         this.studyYear = studyYear;
         this.semester = semester;
         this.program = program;
@@ -91,12 +83,12 @@ public class Course {
         this.courseId = courseId;
     }
 
-    public String getCourseDescriptionLink() {
-        return courseDescriptionLink;
+    public String getCourseDescription() {
+        return courseDescription;
     }
 
-    public void setCourseDescriptionLink(String courseDescriptionLink) {
-        this.courseDescriptionLink = courseDescriptionLink;
+    public void setCourseDescription(String courseDescriptionLink) {
+        this.courseDescription = courseDescriptionLink;
     }
 
     public String getCourseName() {

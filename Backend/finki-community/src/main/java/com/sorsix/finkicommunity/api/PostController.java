@@ -2,11 +2,10 @@ package com.sorsix.finkicommunity.api;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
-import com.sorsix.finkicommunity.domain.requests.errors.NewPostRequest;
+import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.services.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class PostController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<User> createNewPost(@RequestBody @Valid NewPostRequest newPostRequest){
+    public ResponseEntity<Post> createNewPost(@RequestBody @Valid NewPostRequest newPostRequest){
         return ResponseEntity.ok(postService.createNewPost(newPostRequest));
 
     }

@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.domain.requests.errors;
+package com.sorsix.finkicommunity.domain.requests;
 
 public class MalFormedNewCourseRequest {
     private final String ERROR = "Request should be JSON format with properties ...";

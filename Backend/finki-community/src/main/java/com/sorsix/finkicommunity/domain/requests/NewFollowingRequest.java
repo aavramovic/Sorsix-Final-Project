@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.domain.requests.errors;
+package com.sorsix.finkicommunity.domain.requests;
 
 public class NewFollowingRequest {
     private Long userIdFollowing;

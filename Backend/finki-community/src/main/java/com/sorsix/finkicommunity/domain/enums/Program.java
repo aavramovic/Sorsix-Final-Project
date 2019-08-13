@@ -1,20 +1,20 @@
 package com.sorsix.finkicommunity.domain.enums;
 
 public enum Program{
-    ProfesionalniStudiiPoInformatickiTehnologii,
-    ProfesionalniStudiiPoInformatika,
-    AkademskiStudiiPoInformatika,
-    InformatickiIKompjuterskoInzhenerstvo,
-    KompjuterskaEdukacijaOld,
-    MrezhniTehnologii,
-    PrimenaNaETehnologii,
-    KompjuterskiNaukiIInzhenerstvo,
+    PSIT,   // ProfesionalniStudiiPoInformatickiTehnologii,
+    PSI,    // ProfesionalniStudiiPoInformatika,
+    ASI,    // AkademskiStudiiPoInformatika,
+    IKI,    // InformatickiIKompjuterskoInzhenerstvo,
+    KE,    // KompjuterskaEdukacijaOld,
+    MT,     // MrezhniTehnologii,
+    PET,    // PrimenaNaETehnologii,
+    KNI,    // KompjuterskiNaukiIInzhenerstvo,
 
-    InternetMrezhiIBezbednost,
-    KompjuterskaEdukacijaNew,
-    KompjuterskiNauki,
-    KompjuterskoInzhenerstvo,
-    PrimenaNaInformatickiTehnologii,
-    SoftverskoInzhenerstvoIInformaciskiSistemi,
-    SoftwareEngineeringAndInformationSystems
+    IMB,    // InternetMrezhiIBezbednost,
+    //KE2,    // KompjuterskaEdukacijaNew,
+    KN,     // KompjuterskiNauki,
+    KI,     // KompjuterskoInzhenerstvo,
+    PIT,    // PrimenaNaInformatickiTehnologii,
+    SIIS,   // SoftverskoInzhenerstvoIInformaciskiSistemi,
+    SEIS,   // SoftwareEngineeringAndInformationSystems
 }
