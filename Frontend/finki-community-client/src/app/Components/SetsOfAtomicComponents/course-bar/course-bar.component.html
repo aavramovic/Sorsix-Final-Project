@@ -1,19 +1,8 @@
 <div class="container-fluid">
 
-
-    <div class="container">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </div>
+    <div class="row">
+        <app-multilevel-hover-dropdown class="col-auto" [courses]="courses"></app-multilevel-hover-dropdown>
     </div>
-
     <hr>
     <div *ngIf="!courses">
         <mat-spinner class="d-flex m-auto mt-xl-5 "></mat-spinner>

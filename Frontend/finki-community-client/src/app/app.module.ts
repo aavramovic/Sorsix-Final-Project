@@ -18,8 +18,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule, MatIconModule} from '@angular/material';
-import { RegisterScreenComponent } from './Components/Views/register-screen/register-screen.component';
-import { UserBarComponent } from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
+import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
+import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
+import {MultilevelHoverDropdownComponent} from './Components/AtomicComponents/multilevel-hover-dropdown/multilevel-hover-dropdown.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { UserBarComponent } from './Components/SetsOfAtomicComponents/user-bar/u
         CourseBarComponent,
         ThreadBarComponent,
         RegisterScreenComponent,
-        UserBarComponent
+        UserBarComponent,
+        MultilevelHoverDropdownComponent,
     ],
     imports: [
         BrowserModule,

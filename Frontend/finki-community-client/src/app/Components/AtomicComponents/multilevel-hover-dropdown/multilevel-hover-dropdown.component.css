@@ -1,0 +1,17 @@
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown > .dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+
+.dropdown-menu {
+    margin-left: 6vw;
+    margin-top: -10%;
+}
+
+
+
+

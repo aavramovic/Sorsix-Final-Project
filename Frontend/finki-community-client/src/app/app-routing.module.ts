@@ -6,10 +6,12 @@ import {LoginScreenComponent} from './Components/Views/login-screen/login-screen
 import {MainViewComponent} from './Components/Views/main-view/main-view.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
+import {MultilevelHoverDropdownComponent} from './Components/AtomicComponents/multilevel-hover-dropdown/multilevel-hover-dropdown.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'start', pathMatch: 'full'},
-    {path: 'start', component: MainViewComponent},
+    {path: 'start', component: MainViewComponent, pathMatch: 'full'},
+    {path: 'start/:id', component: MainViewComponent, pathMatch: 'full'},
     {path: 'courses', component: CourseBarComponent},
     {path: 'threads', component: ThreadBarComponent},
     {path: 'users', component: UserBarComponent},
