@@ -6,7 +6,7 @@
 
     <app-mat-select [options]="mandatory" [optionDescription]="'Type'" (option)="setType($event)"></app-mat-select>
 
-    <button class="btn btn-outline-dark" (click)="filterCourses()">Filter</button>
+    <button class="btn btn-outline-dark w-100" (click)="filterCourses()">Filter</button>
 
     <hr>
     <div *ngIf="!courses">
@@ -15,7 +15,7 @@
     <div *ngIf="courses">
         <ul class="list-group">
             <li *ngFor="let course of filteredCourses" class="list-group-item p-2">
-                <app-course [course]="course"></app-course>
+                <app-course [course]="course" (click)="setSelectedCourse(course)"></app-course>
             </li>
         </ul>
     </div>

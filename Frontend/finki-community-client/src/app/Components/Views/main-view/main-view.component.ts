@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Course} from '../../../Models/Classes/Course';
 
 @Component({
-  selector: 'app-main-view',
-  templateUrl: './main-view.component.html',
-  styleUrls: ['./main-view.component.css']
+    selector: 'app-main-view',
+    templateUrl: './main-view.component.html',
+    styleUrls: ['./main-view.component.css']
 })
 export class MainViewComponent implements OnInit {
+    selectedCourse: Course;
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
+    setSelectedCourses(course: Course) {
+        this.selectedCourse = course;
+    }
 }

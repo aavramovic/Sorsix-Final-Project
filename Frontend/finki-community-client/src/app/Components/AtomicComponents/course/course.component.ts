@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {Course} from '../../../Models/Classes/Course';
 
 @Component({
@@ -12,12 +12,17 @@ export class CourseComponent implements OnInit {
 
     programs;
 
+    @HostListener('click') onClick() {
+        // console.log('User Click using Host Listener: ' + this.course.courseName);
+    }
+
     constructor() {
     }
 
     ngOnInit() {
         this.programs = this.course.program.keys();
-        console.log(this.course.program);
+        // console.log(this.course.program);
     }
+
 
 }

@@ -5,7 +5,7 @@
 </div>
 <div *ngIf="threads">
     <ul class="list-group">
-        <li *ngFor="let thread of threads" class="list-group-item">
+        <li *ngFor="let thread of filteredThreads?filteredThreads:threads" class="list-group-item">
             <app-thread [thread]="thread"></app-thread>
         </li>
     </ul>

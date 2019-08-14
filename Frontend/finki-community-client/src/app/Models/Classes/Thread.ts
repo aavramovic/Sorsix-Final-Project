@@ -1,3 +1,5 @@
+import {Course} from './Course';
+
 export class Thread {
     noOfLikes: number;
     title: string;
@@ -10,6 +12,8 @@ export class Thread {
     postId: string;
     userId: string;
     courseId: string;
+    //eden thread ima eden course; eden course moze da ima povekje threadovi
+    course: Course;
     comments: Thread[];
 
 

@@ -1,5 +1,5 @@
 import {Program} from '../Enumeration/Program';
-import {Mandatory} from '../Enumeration/Mandatory';
+import {Type} from '../Enumeration/Type';
 
 export class Course {
     courseName: string;
@@ -8,17 +8,17 @@ export class Course {
     description: string;
     yearOfStudy: number;
     program: Program[];
-    isMandatory: Mandatory;
+    type: Type;
 
     //test constructor
-    constructor(name: string, courseId: string, code: string, description: string, yearOfStudy: number, program: Program[], isMandatory: Mandatory) {
+    constructor(name: string, courseId: string, code: string, description: string, yearOfStudy: number, program: Program[], type: Type) {
         this.courseName = name;
         this._courseId = courseId;
         this.code = code;
         this.description = description;
         this.yearOfStudy = yearOfStudy;
         this.program = program;
-        this.isMandatory = isMandatory;
+        this.type = type;
     }
 
 //TODO:// ova treba da se napravi preku request

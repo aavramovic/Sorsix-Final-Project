@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {User} from '../Models/Classes/User';
 import {Program} from '../Models/Enumeration/Program';
+import {Type} from '../Models/Enumeration/Type';
 
 @Injectable({
     providedIn: 'root'
@@ -15,45 +16,45 @@ export class MockClassesCreationService {
 
     getMockCourses(): Observable<Course[]> {
         let courses: Course[] = [];
-        courses.push(this.getMockCourse('Калкулус', 1, [Program.KNI, Program.KNIA], true));
-        courses.push(this.getMockCourse('Дискретна Математика', 2, [Program.IKI, Program.KNIA], true));
-        courses.push(this.getMockCourse('Професионални Вештини', 3, [Program.KNI, Program.MT], false));
-        courses.push(this.getMockCourse('Структурно Програмирање', 4, [Program.IKI, Program.MT], true));
-        courses.push(this.getMockCourse('Објектно Програмирање', 1, [Program.MT, Program.KNIA], true));
+        courses.push(this.getMockCourse('Калкулус', 1, [Program.KNI, Program.KNIA], Type.Mandatory, '1'));
+        courses.push(this.getMockCourse('Дискретна Математика', 2, [Program.IKI, Program.KNIA], Type.Optional, '2'));
+        courses.push(this.getMockCourse('Професионални Вештини', 3, [Program.KNI, Program.MT], Type.Mandatory, '3'));
+        courses.push(this.getMockCourse('Структурно Програмирање', 4, [Program.IKI, Program.MT], Type.Optional, '4'));
+        courses.push(this.getMockCourse('Објектно Програмирање', 1, [Program.MT, Program.KNIA], Type.Optional, '5'));
         courses.push(new Course('Веројатност и Статистика', 'courseId', 'CSEW101',
-            'Многу ez предмет', 2, [Program.KNI, Program.KNIA], true));
+            'Многу ez предмет', 2, [Program.KNI, Program.KNIA], Type.Mandatory));
         return of(courses);
     }
 
-    getMockCourse(name: string, yearOfStudy: number, program: Program[], isMandatory: boolean): Course {
-        return new Course(name, Math.random().toString(), 'Code', 'Description', yearOfStudy, program, isMandatory);
+    getMockCourse(name: string, yearOfStudy: number, program: Program[], type: Type, courseId: string): Course {
+        return new Course(name, courseId, 'Code', 'Description', yearOfStudy, program, type);
     }
 
     getMockCourseByCourseId(userId: string): Course {
-        return new Course('name', userId, 'Code', 'Description', 1, [Program.IKI], true);
+        return new Course('name', userId, 'Code', 'Description', 1, [Program.IKI], Type.Mandatory);
 
     }
 
     getMockThreads(): Observable<Thread[]> {
         let threads: Thread[] = [];
         threads.push(this.getMockThread('First Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '1'));
         threads.push(this.getMockThread('Second Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '2'));
         threads.push(this.getMockThread('Third Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '1'));
         threads.push(this.getMockThread('Fourth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '3'));
         threads.push(this.getMockThread('Fifth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '2'));
         return of(threads);
     }
 
-    getMockThread(content: string): Thread {
+    getMockThread(content: string, courseId: string): Thread {
         return new Thread(
             Math.round(Math.random() * 100).toString(),
             Math.round(Math.random() * 100).toString(),
-            Math.round(Math.random() * 100).toString(),
+            courseId,
             new Date('1970-01-01'),
             content,
             'Title');

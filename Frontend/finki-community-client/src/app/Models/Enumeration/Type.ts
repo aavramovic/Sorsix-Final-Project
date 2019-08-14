@@ -1,4 +1,4 @@
-export enum Mandatory {
+export enum Type {
     Mandatory,
     Optional
 }
