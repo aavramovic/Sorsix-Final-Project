@@ -1,4 +1,5 @@
 import {Program} from '../Enumeration/Program';
+import {Mandatory} from '../Enumeration/Mandatory';
 
 export class Course {
     courseName: string;
@@ -7,10 +8,10 @@ export class Course {
     description: string;
     yearOfStudy: number;
     program: Program[];
-    isMandatory: boolean;
+    isMandatory: Mandatory;
 
     //test constructor
-    constructor(name: string, courseId: string, code: string, description: string, yearOfStudy: number, program: Program[], isMandatory: boolean) {
+    constructor(name: string, courseId: string, code: string, description: string, yearOfStudy: number, program: Program[], isMandatory: Mandatory) {
         this.courseName = name;
         this._courseId = courseId;
         this.code = code;

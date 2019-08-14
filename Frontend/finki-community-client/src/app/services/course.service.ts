@@ -3,6 +3,7 @@ import {Observable, of} from 'rxjs';
 import {Course} from '../Models/Classes/Course';
 import {HttpClient} from '@angular/common/http';
 import {MockClassesCreationService} from './mock-classes-creation.service';
+import {Program} from '../Models/Enumeration/Program';
 
 @Injectable({
     providedIn: 'root'
@@ -16,9 +17,11 @@ export class CourseService {
     getCourseByCourseId(courseId: string): Observable<Course> {
         return this.http.get<Course>('course/' + courseId);
     }
-    getCoursesByProperties(year?: number, program?: string, mandatory?: boolean){
-        return this.http
+
+    getCoursesByProperties(year?: number, program?: string, mandatory?: boolean) {
+        return this.http;
     }
+
     /**
      * MOCK METHODS
      * */
@@ -27,7 +30,7 @@ export class CourseService {
     }
 
     getMockCourse(name: string): Course {
-        return this.mock.getMockCourse(name);
+        return this.mock.getMockCourse(name, 1, [Program.KNI], true);
     }
 
     getMockCourseByCourseId(courseId: string): Observable<Course> {

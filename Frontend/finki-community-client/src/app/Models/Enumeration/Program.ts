@@ -1,7 +1,6 @@
 export enum Program {
-    KNI,
-    KNIA,
-    MT,
-    IKI,
-    TEST
+    KNI = 0,
+    KNIA = 1,
+    MT = 2,
+    IKI = 3,
 }

@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {GlobalPathStaticVariables} from '../Models/Classes/GlobalPathStaticVariables';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Course} from '../Models/Classes/Course';
+import {Program} from '../Models/Enumeration/Program';
 
 @Injectable({
     providedIn: 'root'
@@ -20,11 +21,11 @@ export class UserService {
         return this.http.get<User>(this._API_URL + '/user/' + userId);
     }
 
-    public getMockUserByUserId(userId: string): Observable<User>{
+    public getMockUserByUserId(userId: string): Observable<User> {
         return of(this.mock.getMockUserByUserId(userId));
     }
 
-    public getMockCourseButCourseId(courseId: string): Observable<Course>{
-        return of(this.mock.getMockCourse(courseId));
+    public getMockCourseButCourseId(courseId: string): Observable<Course> {
+        return of(this.mock.getMockCourse(courseId, 1, [Program.KNI], true));
     }
 }

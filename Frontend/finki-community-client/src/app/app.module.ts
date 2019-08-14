@@ -17,10 +17,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatButtonToggleModule, MatIconModule, MatSelectModule} from '@angular/material';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
-import {MultilevelHoverDropdownComponent} from './Components/AtomicComponents/multilevel-hover-dropdown/multilevel-hover-dropdown.component';
+import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +35,7 @@ import {MultilevelHoverDropdownComponent} from './Components/AtomicComponents/mu
         ThreadBarComponent,
         RegisterScreenComponent,
         UserBarComponent,
-        MultilevelHoverDropdownComponent,
+        MatSelectComponent
     ],
     imports: [
         BrowserModule,
@@ -51,6 +51,8 @@ import {MultilevelHoverDropdownComponent} from './Components/AtomicComponents/mu
         ReactiveFormsModule,
         MatIconModule,
         MatButtonModule,
+        MatSelectModule,
+        MatButtonToggleModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

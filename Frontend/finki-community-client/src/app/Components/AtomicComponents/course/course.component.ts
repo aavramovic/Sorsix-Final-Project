@@ -10,10 +10,14 @@ export class CourseComponent implements OnInit {
     @Input()
     private course: Course;
 
+    programs;
+
     constructor() {
     }
 
     ngOnInit() {
+        this.programs = this.course.program.keys();
+        console.log(this.course.program);
     }
 
 }
