@@ -3,6 +3,7 @@ import {Course} from '../Models/Classes/Course';
 import {Observable, of} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {User} from '../Models/Classes/User';
+import {Program} from '../Models/Enumeration/Program';
 
 @Injectable({
     providedIn: 'root'
@@ -14,20 +15,22 @@ export class MockClassesCreationService {
 
     getMockCourses(): Observable<Course[]> {
         let courses: Course[] = [];
-        courses.push(this.getMockCourse('Калкулус'));
-        courses.push(this.getMockCourse('Дискретна Математика'));
-        courses.push(this.getMockCourse('Професионални Вештини'));
-        courses.push(this.getMockCourse('Структурно Програмирање'));
-        courses.push(this.getMockCourse('Објектно Програмирање'));
+        courses.push(this.getMockCourse('Калкулус', 1, [Program.KNI, Program.KNIA], true));
+        courses.push(this.getMockCourse('Дискретна Математика', 2, [Program.IKI, Program.KNIA], true));
+        courses.push(this.getMockCourse('Професионални Вештини', 3, [Program.KNI, Program.MT], false));
+        courses.push(this.getMockCourse('Структурно Програмирање', 4, [Program.IKI, Program.MT], true));
+        courses.push(this.getMockCourse('Објектно Програмирање', 1, [Program.MT, Program.KNIA], true));
+        courses.push(new Course('Веројатност и Статистика', 'courseId', 'CSEW101',
+            'Многу ez предмет', 2, [Program.KNI, Program.KNIA], true));
         return of(courses);
     }
 
-    getMockCourse(name: string): Course {
-        return new Course(name, Math.random().toString(), 'Code', 'Description');
+    getMockCourse(name: string, yearOfStudy: number, program: Program[], isMandatory: boolean): Course {
+        return new Course(name, Math.random().toString(), 'Code', 'Description', yearOfStudy, program, isMandatory);
     }
 
     getMockCourseByCourseId(userId: string): Course {
-        return new Course('name', userId, 'Code', 'Description');
+        return new Course('name', userId, 'Code', 'Description', 1, [Program.IKI], true);
 
     }
 

@@ -20,16 +20,18 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <!--TODO:// filter na courses i router link da se podesi toj call da vrakja toa isto so filter na start stranata-->
+                                <!--TODO:// !IMPORTANT da se ocluchi kolku i koi nivoa ke gi ima dropdownot da ne bidat mnogu leveli itn-->
                                 <a class="dropdown-item" routerLink='start/{{course.code}}'
-                                   *ngFor="let course of courses">{{course.courseName}}</a>
+                                   *ngFor="let course of getSubjectsByYearAndProgram(1,Program.KNI)">{{course.courseName}}</a>
                             </div>
                         </div>
                     </a>
-                    <a class="dropdown-item" href="#">
+
+                    <a class="dropdown-item" href="#" *ngFor="let program of programs">
                         <div class="dropdown">
                             <a data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                Optional
+                                {{program}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <!--TODO:// filter na courses i router link da se podesi toj call da vrakja toa isto so filter na start stranata-->
