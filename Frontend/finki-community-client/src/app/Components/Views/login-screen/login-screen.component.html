@@ -1,1 +1,19 @@
-<p>login-screen works!</p>
+<div class="container-fluid">
+    <mat-form-field>
+        <label>
+            <input matInput placeholder="Enter your email" [formControl]="email" required>
+        </label>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <label>
+            <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+        </label>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+            <i class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</i>
+        </button>
+    </mat-form-field>
+    <button type='submit'>Submit</button>
+</div>

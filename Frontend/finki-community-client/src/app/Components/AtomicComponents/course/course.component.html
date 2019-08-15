@@ -1,1 +1,13 @@
-<p>course works!</p>
+<div *ngIf="course">
+    <div class="row">
+        <div *ngIf="course.courseName" class="col-sm h6 m-auto">
+            {{course.courseName}}
+        </div>
+        <div *ngIf="course.code" class="col-sm font-weight-light text-right ">
+            {{course.code}}
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="course.description" class="col font-weight-light text-break">{{course.description}}</div>
+    </div>
+</div>
