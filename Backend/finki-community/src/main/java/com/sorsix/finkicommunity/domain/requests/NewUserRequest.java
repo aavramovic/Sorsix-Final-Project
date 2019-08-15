@@ -1,13 +1,17 @@
 package com.sorsix.finkicommunity.domain.requests;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 public class NewUserRequest {
+    @NotNull
+    @NotEmpty
+    private String username;
 
     @NotNull
     @NotEmpty
+    @Email
     private String email;
 
     @NotNull
@@ -22,9 +26,8 @@ public class NewUserRequest {
     @NotNull
     private String lastName;
 
-    @NotEmpty
     @NotNull
-    private String birthdate;
+    private long birthdate;
 
 
     public NewUserRequest() {
@@ -46,7 +49,11 @@ public class NewUserRequest {
         return lastName;
     }
 
-    public String getBirthdate() {
+    public long getBirthdate() {
         return birthdate;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

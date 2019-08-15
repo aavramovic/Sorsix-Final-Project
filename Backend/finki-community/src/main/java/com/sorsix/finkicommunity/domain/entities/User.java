@@ -3,27 +3,24 @@ package com.sorsix.finkicommunity.domain.entities;
 import com.sorsix.finkicommunity.domain.enums.Authority;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", unique = true)
+    @Column(name = "user_id")
     private long userId;
 
-    @Column(name="username", unique=true)
+    @Column(unique=true, nullable = false)
     private String username;
 
-    @Column(name = "email", unique=true)
-    private String email;
-
-    @Column(name = "password")
+    @Column(nullable = false)
     private String password;
+
+    @Column(unique=true)
+    private String email;
 
     @Column(name = "first_name")
     private String firstName;
@@ -31,23 +28,23 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name="birthdate")
-    private LocalDate birthdate;
+    private long birthdate;
 
-    @Column(name = "number_posts")
-    private int numberOfPosts;
+    @Column(name = "posts_number")
+    private int numberOfPosts = 0;
 
     @Column(name = "picture_url")
     private String pictureUrl;
 
-    @Column(name = "authority")
-    private Authority authority;
+    private String roles = "";
 
+    private String permissions = "";
 
+    private boolean active = true;
 
     /*
-            USER --- follows --- USER     ManyToMany
-         */
+           USER --- follows --- USER     ManyToMany
+    */
     @ManyToMany(cascade =
             {
                 CascadeType.ALL
@@ -106,19 +103,23 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, LocalDate birthdate, String password, int numberOfPosts, String email, String pictureUrl, Authority authority, Set<User> follows, Set<User> followedBy, Set<Post> posts, Set<Post> postsLiked) {
+    public User(String username, String password, String roles, String permissions){
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.permissions = permissions;
+    }
+
+    public User(String username, String password, String email, String firstName, String lastName, long birthdate, String pictureUrl, String roles, String permissions) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
-        this.password = password;
-        this.numberOfPosts = numberOfPosts;
-        this.email = email;
         this.pictureUrl = pictureUrl;
-        this.authority = authority;
-        this.follows = follows;
-        this.followedBy = followedBy;
-        this.posts = posts;
-        this.postsLiked = postsLiked;
+        this.roles = roles;
+        this.permissions = permissions;
     }
 
     public long getUserId() {
@@ -127,6 +128,14 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -145,11 +154,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthdate() {
+    public long getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(long birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -185,12 +194,21 @@ public class User {
         this.pictureUrl = pictureUrl;
     }
 
-    public Authority getAuthority() {
-        return authority;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setAuthority(Authority authority) {
-        this.authority = authority;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    // FUNCTIONS
+    public void incrementNumberOfPosts(){
+        numberOfPosts++;
+    }
+
+    public void decrementNumberOfPosts(){
+        numberOfPosts--;
     }
 
     public boolean addNewFollowing(User newFollowing){
@@ -218,30 +236,48 @@ public class User {
     }
 
     public boolean addPostLiked(Post newPostLiked){
-         return postsLiked.add(newPostLiked);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return userId == user.userId &&
-                numberOfPosts == user.numberOfPosts &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(birthdate, user.birthdate) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(pictureUrl, user.pictureUrl) &&
-                authority == user.authority &&
-                Objects.equals(follows, user.follows) &&
-                Objects.equals(followedBy, user.followedBy) &&
-                Objects.equals(posts, user.posts) &&
-                Objects.equals(postsLiked, user.postsLiked);
+        return postsLiked.add(newPostLiked);
     }
 
     public Set<User> getFollows() {
         return follows;
+    }
+
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    public List<String> getPermissionList(){
+        if(this.permissions.length() > 0){
+            return Arrays.asList(this.permissions.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    public boolean addRole(String role){
+        if(roles.contains(role))
+            return false;
+        if(roles.length() > 0){
+            roles += "," + role;
+        }else{
+            roles += role;
+        }
+        return true;
+    }
+
+    public boolean removeRole(String role){
+        String[] r = roles.split(",");
+        roles = "";
+
+        for(int i = 0; i < r.length; ++i){
+            if(!r[i].equals(role))
+                roles += role + ",";
+        }
+        roles = roles.substring(roles.length()-1);
+
+        return true;
     }
 }

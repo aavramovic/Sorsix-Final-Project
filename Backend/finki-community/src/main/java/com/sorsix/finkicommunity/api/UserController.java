@@ -1,6 +1,5 @@
 package com.sorsix.finkicommunity.api;
 
-import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
@@ -34,14 +33,17 @@ public class UserController {
                 .orElseGet(()->ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping("/new")
+    @PostMapping("/register")
     public ResponseEntity<User> createNewUser(@RequestBody @Valid NewUserRequest newUserRequest){
         return ResponseEntity.ok(userService.createNewUser(newUserRequest));
     }
 
     @PostMapping("/new-following")
-    public ResponseEntity<Boolean> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest){
-        userService.addNewFollowing(newFollowingRequest);
-        return ResponseEntity.ok(true);
+    public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest){
+        return userService.addNewFollowing(newFollowingRequest)
+                .map(ResponseEntity::ok)
+                .orElseGet(()-> ResponseEntity.badRequest().build());
+//                .map(user -> ResponseEntity.ok(user))
+//                .orElseGet(()->ResponseEntity.badRequest().build());
     }
 }

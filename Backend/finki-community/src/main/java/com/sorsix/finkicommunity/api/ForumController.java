@@ -1,6 +1,7 @@
 package com.sorsix.finkicommunity.api;
 
 
+import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class ForumController {
 
     @GetMapping
-    public ResponseEntity<String> welcome(){
+    public ResponseEntity<String> welcome() {
         return ResponseEntity.ok("Welcome to the forum FINKI-COMMUNITY");
     }
 }
