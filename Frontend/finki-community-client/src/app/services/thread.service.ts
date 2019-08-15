@@ -28,6 +28,6 @@ export class ThreadService {
     }
 
     getMockThread(content: string): Thread{
-        return  this.mock.getMockThread(content);
+        return  this.mock.getMockThread(content, "5");
     }
 }

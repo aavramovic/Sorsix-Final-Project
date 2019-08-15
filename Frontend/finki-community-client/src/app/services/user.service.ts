@@ -6,6 +6,7 @@ import {GlobalPathStaticVariables} from '../Models/Classes/GlobalPathStaticVaria
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Course} from '../Models/Classes/Course';
 import {Program} from '../Models/Enumeration/Program';
+import {Type} from '../Models/Enumeration/Type';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,6 @@ export class UserService {
     }
 
     public getMockCourseButCourseId(courseId: string): Observable<Course> {
-        return of(this.mock.getMockCourse(courseId, 1, [Program.KNI], true));
+        return of(this.mock.getMockCourse(courseId, 1, [Program.KNI], Type.Optional, '8'));
     }
 }

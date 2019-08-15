@@ -4,6 +4,7 @@ import {Course} from '../Models/Classes/Course';
 import {HttpClient} from '@angular/common/http';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Program} from '../Models/Enumeration/Program';
+import {Type} from '../Models/Enumeration/Type';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +31,7 @@ export class CourseService {
     }
 
     getMockCourse(name: string): Course {
-        return this.mock.getMockCourse(name, 1, [Program.KNI], true);
+        return this.mock.getMockCourse(name, 1, [Program.KNI], Type.Mandatory, "6");
     }
 
     getMockCourseByCourseId(courseId: string): Observable<Course> {
