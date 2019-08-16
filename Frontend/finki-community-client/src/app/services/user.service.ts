@@ -27,6 +27,6 @@ export class UserService {
     }
 
     public getMockCourseButCourseId(courseId: string): Observable<Course> {
-        return of(this.mock.getMockCourse(courseId, 1, [Program.KNI], Type.Optional, '8'));
+        return of(this.mock.getMockCourse(courseId, 1, [Program.KNI], Type.OPTIONAL, '8'));
     }
 }

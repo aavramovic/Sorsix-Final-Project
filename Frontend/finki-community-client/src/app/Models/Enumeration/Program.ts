@@ -1,6 +1,19 @@
 export enum Program {
-    KNI = 0,
     KNIA = 1,
-    MT = 2,
-    IKI = 3,
+    PSIT,   // ProfesionalniStudiiPoInformatickiTehnologii,
+    PSI,    // ProfesionalniStudiiPoInformatika,
+    ASI,    // AkademskiStudiiPoInformatika,
+    IKI,    // InformatickiIKompjuterskoInzhenerstvo,
+    KE,    // KompjuterskaEdukacijaOld,
+    MT,     // MrezhniTehnologii,
+    PET,    // PrimenaNaETehnologii,
+    KNI,    // KompjuterskiNaukiIInzhenerstvo,
+
+    IMB,    // InternetMrezhiIBezbednost,
+    //KE2,    // KompjuterskaEdukacijaNew,
+    KN,     // KompjuterskiNauki,
+    KI,     // KompjuterskoInzhenerstvo,
+    PIT,    // PrimenaNaInformatickiTehnologii,
+    SIIS,   // SoftverskoInzhenerstvoIInformaciskiSistemi,
+    SEIS,   // SoftwareEngineeringAndInformationSystems
 }

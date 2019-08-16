@@ -3,7 +3,7 @@
     <mat-select>
         <mat-option (onSelectionChange)="setOption($event)">None</mat-option>
         <mat-option *ngFor="let option of options" [value]="option" (onSelectionChange)="setOption($event)">
-            {{option}}
+            {{option|titlecase}}
         </mat-option>
     </mat-select>
 </mat-form-field>

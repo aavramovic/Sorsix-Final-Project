@@ -16,13 +16,13 @@ export class MockClassesCreationService {
 
     getMockCourses(): Observable<Course[]> {
         let courses: Course[] = [];
-        courses.push(this.getMockCourse('Калкулус', 1, [Program.KNI, Program.KNIA], Type.Mandatory, '1'));
-        courses.push(this.getMockCourse('Дискретна Математика', 2, [Program.IKI, Program.KNIA], Type.Optional, '2'));
-        courses.push(this.getMockCourse('Професионални Вештини', 3, [Program.KNI, Program.MT], Type.Mandatory, '3'));
-        courses.push(this.getMockCourse('Структурно Програмирање', 4, [Program.IKI, Program.MT], Type.Optional, '4'));
-        courses.push(this.getMockCourse('Објектно Програмирање', 1, [Program.MT, Program.KNIA], Type.Optional, '5'));
+        courses.push(this.getMockCourse('Калкулус', 1, [Program.KNI, Program.KNIA], Type.MANDATORY, '1'));
+        courses.push(this.getMockCourse('Дискретна Математика', 2, [Program.IKI, Program.KNIA], Type.OPTIONAL, '2'));
+        courses.push(this.getMockCourse('Професионални Вештини', 3, [Program.KNI, Program.MT], Type.MANDATORY, '3'));
+        courses.push(this.getMockCourse('Структурно Програмирање', 4, [Program.IKI, Program.MT], Type.OPTIONAL, '4'));
+        courses.push(this.getMockCourse('Објектно Програмирање', 1, [Program.MT, Program.KNIA], Type.OPTIONAL, '5'));
         courses.push(new Course('Веројатност и Статистика', 'courseId', 'CSEW101',
-            'Многу ez предмет', 2, [Program.KNI, Program.KNIA], Type.Mandatory));
+            'Многу ez предмет', 2, [Program.KNI, Program.KNIA], Type.MANDATORY));
         return of(courses);
     }
 
@@ -31,7 +31,7 @@ export class MockClassesCreationService {
     }
 
     getMockCourseByCourseId(userId: string): Course {
-        return new Course('name', userId, 'Code', 'Description', 1, [Program.IKI], Type.Mandatory);
+        return new Course('name', userId, 'Code', 'Description', 1, [Program.IKI], Type.MANDATORY);
 
     }
 

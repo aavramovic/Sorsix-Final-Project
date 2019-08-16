@@ -31,7 +31,7 @@ export class CourseService {
     }
 
     getMockCourse(name: string): Course {
-        return this.mock.getMockCourse(name, 1, [Program.KNI], Type.Mandatory, "6");
+        return this.mock.getMockCourse(name, 1, [Program.KNI], Type.MANDATORY, "6");
     }
 
     getMockCourseByCourseId(courseId: string): Observable<Course> {

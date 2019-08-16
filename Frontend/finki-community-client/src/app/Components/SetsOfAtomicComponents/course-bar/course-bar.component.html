@@ -4,6 +4,9 @@
 
     <app-mat-select [options]="years" [optionDescription]="'Year of study'" (option)="setYear($event)"></app-mat-select>
 
+    <app-mat-select [options]="semesters" [optionDescription]="'Semester'"
+                    (option)="setSemester($event)"></app-mat-select>
+
     <app-mat-select [options]="mandatory" [optionDescription]="'Type'" (option)="setType($event)"></app-mat-select>
 
     <button class="btn btn-outline-dark w-100" (click)="filterCourses()">Filter</button>
@@ -14,7 +17,8 @@
     </div>
     <div *ngIf="courses">
         <ul class="list-group">
-            <li *ngFor="let course of filteredCourses" class="list-group-item p-2">
+            <li *ngFor="let course of filteredCourses" class="list-group-item p-2 btn-outline-dark"
+                routerLinkActive="active">
                 <app-course [course]="course" (click)="setSelectedCourse(course)"></app-course>
             </li>
         </ul>

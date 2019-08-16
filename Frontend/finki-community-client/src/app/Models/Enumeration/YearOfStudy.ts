@@ -1,6 +1,6 @@
 export enum YearOfStudy {
-    "First year"=1,
-    "Second year"=2,
-    "Third year" = 3,
-    "Forth year"=4
+    'FIRST YEAR' = 1,
+    'SECOND YEAR' = 2,
+    'THIRD YEAR' = 3,
+    'FOURTH YEAR' = 4
 }

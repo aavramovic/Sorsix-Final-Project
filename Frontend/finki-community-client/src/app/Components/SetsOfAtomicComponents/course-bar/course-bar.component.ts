@@ -6,6 +6,7 @@ import {YearOfStudy} from '../../../Models/Enumeration/YearOfStudy';
 import {Program} from '../../../Models/Enumeration/Program';
 import {Type} from '../../../Models/Enumeration/Type';
 import {of, Subject} from 'rxjs';
+import {Semester} from '../../../Models/Enumeration/Semester';
 
 @Component({
     selector: 'app-courses',
@@ -16,10 +17,12 @@ export class CourseBarComponent implements OnInit {
     courses: Course[];
     programs: string[] = Object.keys(Program).splice(Object.keys(Program).length / 2);
     years: string[] = Object.keys(YearOfStudy).splice(Object.keys(YearOfStudy).length / 2);
+    semesters: string[] = Object.keys(Semester).splice(Object.keys(Semester).length / 2);
     mandatory: string[] = Object.keys(Type).splice(Object.keys(Type).length / 2);
     filteredCourses: Course[];
     year: string;
     program: string;
+    semester: string;
     type: string;
     @Output()
     selectedCourse = new Subject<Course>();
@@ -59,6 +62,10 @@ export class CourseBarComponent implements OnInit {
         // console.log('Year: ' + this.year);
     }
 
+    setSemester($event: string) {
+        this.semester = $event;
+    }
+
     setType($event?: string) {
         this.type = $event;
         // console.log('Type: ' + this.type);
@@ -67,5 +74,6 @@ export class CourseBarComponent implements OnInit {
     setSelectedCourse(course: Course) {
         this.selectedCourse.next(course);
     }
+
 }
 

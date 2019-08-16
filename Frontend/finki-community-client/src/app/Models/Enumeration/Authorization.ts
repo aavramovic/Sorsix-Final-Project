@@ -1,7 +1,6 @@
 export enum Authorization {
-  OWNER,
-  ADMIN,
-  MODERATOR,
-  REGULAR,
-  VISITOR
+    ADMIN,
+    MODERATOR,
+    REGULAR,
+    VISITOR
 }

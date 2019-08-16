@@ -1,3 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+.btn-outline-dark:hover {
+    background-color: rebeccapurple !important;
+    color: white !important;;
+    border-color: lightgray !important;;
+}
+
+.btn-outline-dark {
+    border-color: rebeccapurple !important;;
+    color: rebeccapurple !important;;
+}

@@ -1,5 +1,6 @@
 import {Program} from '../Enumeration/Program';
 import {Type} from '../Enumeration/Type';
+import {Semester} from '../Enumeration/Semester';
 
 export class Course {
     courseName: string;
@@ -9,6 +10,7 @@ export class Course {
     yearOfStudy: number;
     program: Program[];
     type: Type;
+    semester: Semester;
 
     //test constructor
     constructor(name: string, courseId: string, code: string, description: string, yearOfStudy: number, program: Program[], type: Type) {
