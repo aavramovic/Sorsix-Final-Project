@@ -1,6 +1,6 @@
 package com.sorsix.finkicommunity.domain.enums;
 
-public enum Authority {
+public enum Role {
     USER,
     MODERATOR,
     ADMIN

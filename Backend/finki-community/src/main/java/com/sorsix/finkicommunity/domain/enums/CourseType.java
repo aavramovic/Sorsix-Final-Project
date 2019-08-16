@@ -1,6 +1,6 @@
 package com.sorsix.finkicommunity.domain.enums;
 
 public enum CourseType {
-    REQUIRED,
-    ELECTIVE
+    MANDATORY,
+    OPTIONAL
 }

@@ -37,10 +37,11 @@ public class Course {
     @Column(name = "course_type")
     private CourseType courseType;
 
+    @Column(name = "number_of_posts")
+    private int numberOfPosts = 0;
+
     @OneToMany(
-            mappedBy = "course",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            mappedBy = "course"
     )
     private Set<Post> posts;
 
@@ -50,8 +51,9 @@ public class Course {
     public Course(){
     }
 
-    public Course(String courseName, String courseDescription, Program program,
+    public Course(String code, String courseName, String courseDescription, Program program,
                   StudyYear studyYear, Semester semester, CourseType courseType) {
+        this.code = code;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.studyYear = studyYear;
@@ -122,5 +124,13 @@ public class Course {
 
     public void setCourseType(CourseType courseType) {
         this.courseType = courseType;
+    }
+
+    public void incrementNumberOfPosts(){
+        numberOfPosts++;
+    }
+
+    public void decrementNumberOfPosts(){
+        numberOfPosts--;
     }
 }

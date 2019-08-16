@@ -1,6 +1,7 @@
 package com.sorsix.finkicommunity.services;
 
 import com.sorsix.finkicommunity.domain.entities.Course;
+import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
@@ -16,10 +17,6 @@ public class CourseService {
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-    }
-
-    public List<Course> getAllCourses(){
-        return courseRepository.findAll();
     }
 
     public Optional<Course> getCourseById(Long id){
@@ -45,10 +42,11 @@ public class CourseService {
         }
     }
 
-    public Optional<List<Course>> getCoursesByProgramStudyYearSemester(String _program, String _studyYear, String _semester){
+    public Optional<List<Course>> getCoursesByProgramStudyYearSemester(String _program, String _studyYear, String _semester, String _type){
         Program program;
         StudyYear studyYear;
         Semester semester;
+        CourseType type;
 
         try{
             if(_program != null){
@@ -58,6 +56,11 @@ public class CourseService {
 
                     if(_semester != null){
                         semester = Semester.valueOf(_semester.toUpperCase());
+
+                        if(_type != null){
+                            type = CourseType.valueOf(_type.toUpperCase());
+                            return Optional.of(courseRepository.findCoursesByProgramAndStudyYearAndSemesterAndCourseType(program, studyYear, semester, type));
+                        }
                         return Optional.of(courseRepository.findCoursesByProgramAndStudyYearAndSemester(program, studyYear, semester));
                     }
                     return Optional.of(courseRepository.findCoursesByProgramAndStudyYear(program, studyYear));
