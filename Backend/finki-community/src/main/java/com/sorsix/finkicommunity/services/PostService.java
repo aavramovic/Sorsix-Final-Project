@@ -10,6 +10,7 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Service
@@ -49,7 +50,7 @@ public class PostService {
         newPost.setUser(user);
         newPost.setRepliedTo(repliedTo);
 
-        newPost.setTimestamp(LocalDateTime.now());
+        newPost.setTimestamp(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
         newPost.setNumberOfLikes(0);
         newPost.setNumberOfReplies(0);
 

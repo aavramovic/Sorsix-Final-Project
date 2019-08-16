@@ -1,5 +1,6 @@
 package com.sorsix.finkicommunity.domain.entities;
 
+import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
@@ -14,6 +15,9 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "course_id")
     private long courseId;
+
+    @Column(unique = true, nullable = false)
+    private String code;
 
     @Column(name = "course_name", unique = true)
     private String courseName;
@@ -30,6 +34,9 @@ public class Course {
     @Column(name = "program")
     private Program program;
 
+    @Column(name = "course_type")
+    private CourseType courseType;
+
     @OneToMany(
             mappedBy = "course",
             cascade = CascadeType.ALL,
@@ -43,12 +50,14 @@ public class Course {
     public Course(){
     }
 
-    public Course(String courseName, String courseDescription, StudyYear studyYear, Semester semester, Program program) {
+    public Course(String courseName, String courseDescription, Program program,
+                  StudyYear studyYear, Semester semester, CourseType courseType) {
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.studyYear = studyYear;
         this.semester = semester;
         this.program = program;
+        this.courseType = courseType;
     }
 
     public StudyYear getStudyYear() {
@@ -97,5 +106,21 @@ public class Course {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public CourseType getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(CourseType courseType) {
+        this.courseType = courseType;
     }
 }

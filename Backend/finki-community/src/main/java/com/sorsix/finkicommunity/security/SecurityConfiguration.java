@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login","/forum/users/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/forum").permitAll()
+                .antMatchers(HttpMethod.GET, "/forum/**").permitAll()
                 .anyRequest().authenticated();
     }
 

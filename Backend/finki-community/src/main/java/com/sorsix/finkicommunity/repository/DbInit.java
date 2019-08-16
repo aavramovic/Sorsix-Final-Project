@@ -1,5 +1,7 @@
 package com.sorsix.finkicommunity.repository;
 
+import com.sorsix.finkicommunity.domain.entities.Course;
+import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,13 @@ public class DbInit implements CommandLineRunner {
         User moderator = new User("moderator", passwordEncoder.encode("moderator123"), "MODERATOR", "");
 
         List<User> users = Arrays.asList(fisnik, antonio, admin, moderator);
+
+        fisnik.addNewFollowing(antonio);
+        fisnik.addNewFollowing(admin);
+
+        Post post = new Post();
+
+        //fisnik.addNewPost()
 
         this.userRepository.saveAll(users);
     }

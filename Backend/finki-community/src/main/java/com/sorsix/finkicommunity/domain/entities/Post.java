@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name="posts")
 public class Post {
+
     @Id
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +21,7 @@ public class Post {
     private String content;
 
     @Column(name="timestamp")
-    private LocalDateTime timestamp;
+    private long timestamp;
 
     @Column(name="number_of_likes")
     private int numberOfLikes;
@@ -99,11 +100,11 @@ public class Post {
         this.user = user;
     }
 
-    public LocalDateTime getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

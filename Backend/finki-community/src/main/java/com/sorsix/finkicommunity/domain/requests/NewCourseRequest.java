@@ -1,5 +1,6 @@
 package com.sorsix.finkicommunity.domain.requests;
 
+import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 
 public class NewCourseRequest {
+
     @NotNull
     @NotEmpty
     private String courseName;
@@ -16,14 +18,13 @@ public class NewCourseRequest {
     @NotEmpty
     private String courseDescription;
 
-    @NotNull
+    private Program program;
+
     private StudyYear studyYear;
 
-    @NotNull
     private Semester semester;
 
-    @NotNull
-    private Program program;
+    private CourseType courseType;
 
 
     public NewCourseRequest() {
@@ -47,5 +48,9 @@ public class NewCourseRequest {
 
     public Program getProgram() {
         return program;
+    }
+
+    public CourseType getCourseType() {
+        return courseType;
     }
 }
