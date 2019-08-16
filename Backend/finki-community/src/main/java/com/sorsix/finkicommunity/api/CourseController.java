@@ -19,6 +19,12 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Course>> getAllCourses(){
+        return ResponseEntity.ok(courseService.getAllCourses());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id)
