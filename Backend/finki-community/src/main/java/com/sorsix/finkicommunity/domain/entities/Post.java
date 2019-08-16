@@ -24,10 +24,10 @@ public class Post {
     private long timestamp;
 
     @Column(name="number_of_likes")
-    private int numberOfLikes;
+    private int numberOfLikes = 0;
 
     @Column(name="number_of_replies")
-    private int numberOfReplies;
+    private int numberOfReplies = 0;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "postsLiked", fetch = FetchType.EAGER)
@@ -41,24 +41,70 @@ public class Post {
     /*
         POST --- repliedBy --- POST     OneToMany
      */
+    @JsonIgnore
     @OneToMany(
             mappedBy = "repliedTo",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
             fetch = FetchType.EAGER
     )
     private Set<Post> replies = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(name = "fk_post_id_repliedTo")
     private Post repliedTo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(name = "fk_course_id")
     private Course course;
 
 
     public Post(){}
+
+    // IF POST IS NEW
+    public Post(String content, long timestamp, User user, Course course) {
+        this.content = content;
+        this.timestamp = timestamp;
+        this.user = user;
+        this.repliedTo = null;
+        this.course = course;
+        user.incrementNumberOfPosts();
+        course.incrementNumberOfPosts();
+    }
+
+    // IF POST IS A REPLY
+    public Post(String content, long timestamp, User user, Post repliedTo) {
+        this.content = content;
+        this.timestamp = timestamp;
+        this.user = user;
+        this.repliedTo = repliedTo;
+        this.course = repliedTo.getCourse();
+        this.repliedTo.incrementNumberOfReplies();
+        this.user.incrementNumberOfPosts();
+    }
+
+    // IF POST IS ADDED TO A USER
+    public Post(String content, long timestamp, Post repliedTo) {
+        this.content = content;
+        this.timestamp = timestamp;
+        this.repliedTo = repliedTo;
+        this.course = repliedTo.getCourse();
+        this.repliedTo.incrementNumberOfReplies();
+    }
+
+    // IF POST IS ADDED TO A USER
+    public Post(String content, long timestamp, Course course) {
+        this.content = content;
+        this.timestamp = timestamp;
+        this.repliedTo = null;
+        this.course = course;
+        this.course.incrementNumberOfPosts();
+    }
+
 
     public long getPostId() {
         return postId;
@@ -138,5 +184,21 @@ public class Post {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public void incrementNumberOfLikes(){
+        numberOfLikes++;
+    }
+
+    public void decrementNumberOfLikes(){
+        numberOfLikes--;
+    }
+
+    public void incrementNumberOfReplies(){
+        numberOfReplies++;
+    }
+
+    public void decrementNumberOfReplies(){
+        numberOfReplies--;
     }
 }

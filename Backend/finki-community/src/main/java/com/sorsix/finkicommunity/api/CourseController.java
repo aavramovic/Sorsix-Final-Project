@@ -3,6 +3,7 @@ package com.sorsix.finkicommunity.api;
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
 import com.sorsix.finkicommunity.services.CourseService;
+import jdk.jfr.Frequency;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,6 @@ public class CourseController {
 
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
-    }
-
-
-    @GetMapping("/all")
-    public ResponseEntity<List<Course>> getAllCourses(){
-        return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @GetMapping("/{id}")
@@ -41,9 +36,11 @@ public class CourseController {
     ResponseEntity<List<Course>> getCoursesByProgramStudyYearSemester(
             @RequestParam(required = false) String program,
             @RequestParam(required = false) String studyYear,
-            @RequestParam(required = false) String semester)
+            @RequestParam(required = false) String semester,
+            @RequestParam(required = false) String type
+    )
     {
-        return courseService.getCoursesByProgramStudyYearSemester(program, studyYear, semester)
+        return courseService.getCoursesByProgramStudyYearSemester(program, studyYear, semester, type)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
     }

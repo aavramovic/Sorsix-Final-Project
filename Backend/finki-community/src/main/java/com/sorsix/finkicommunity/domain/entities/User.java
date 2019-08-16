@@ -1,8 +1,7 @@
 package com.sorsix.finkicommunity.domain.entities;
 
-import com.sorsix.finkicommunity.domain.enums.Authority;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -42,13 +41,15 @@ public class User {
 
     private boolean active = true;
 
+    private int numberOfFollowers = 0;
+
+    private int numberOfFollowings = 0;
+
     /*
            USER --- follows --- USER     ManyToMany
     */
-    @ManyToMany(cascade =
-            {
-                CascadeType.ALL
-            },
+    @ManyToMany(
+            cascade = CascadeType.ALL,
             fetch=FetchType.EAGER
     )
     @JoinTable(
@@ -76,24 +77,23 @@ public class User {
          */
     @OneToMany(
             mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
             fetch = FetchType.EAGER
     )
-    private Set<Post> posts;
+    private Set<Post> posts = new HashSet<>();
 
     /*
         USER --- likes --- POST     ManyToMany
      */
     @ManyToMany(
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
     )
     @JoinTable(
             name="user_likes_post",
             joinColumns = @JoinColumn(name = "fk_user_id"),
             inverseJoinColumns = @JoinColumn(name = "fk_post_id")
     )
-    private Set<Post> postsLiked;
+    private Set<Post> postsLiked = new HashSet<>();
 
 
     /*
@@ -202,6 +202,14 @@ public class User {
         this.active = active;
     }
 
+    public int getNumberOfFollowings() {
+        return numberOfFollowings;
+    }
+
+    public void setNumberOfFollowings(int numberOfFollowings) {
+        this.numberOfFollowings = numberOfFollowings;
+    }
+
     // FUNCTIONS
     public void incrementNumberOfPosts(){
         numberOfPosts++;
@@ -211,34 +219,67 @@ public class User {
         numberOfPosts--;
     }
 
+    public void incrementNumberOfFollowings(){numberOfFollowings++;}
+
+    public void decrementNumberOfFollowings(){numberOfFollowings--;}
+
+    public void incrementNumberOfFollowers(){numberOfFollowers++;}
+
+    public void decrementNumberOfFollowers(){numberOfFollowers--;}
+
     public boolean addNewFollowing(User newFollowing){
+        this.incrementNumberOfFollowings();
+        newFollowing.incrementNumberOfFollowers();
         return follows.add(newFollowing);
     }
 
     public boolean removeFollowing(User following){
+        this.decrementNumberOfFollowings();
+        following.decrementNumberOfFollowers();
         return follows.remove(following);
     }
 
     public boolean addNewFollowedBy(User newFollowedBy){
+        this.incrementNumberOfFollowers();
+        newFollowedBy.incrementNumberOfFollowings();
         return followedBy.add(newFollowedBy);
     }
 
     public boolean removeFollowedBy(User followedBy){
+        this.decrementNumberOfFollowers();
+        followedBy.decrementNumberOfFollowings();
         return this.followedBy.remove(followedBy);
     }
 
     public boolean addNewPost(Post newPost){
+        this.incrementNumberOfPosts();
         return posts.add(newPost);
     }
 
     public boolean removePost(Post post){
+        this.decrementNumberOfPosts();
         return posts.remove(post);
     }
 
     public boolean addPostLiked(Post newPostLiked){
+        newPostLiked.incrementNumberOfLikes();
         return postsLiked.add(newPostLiked);
     }
 
+    public boolean removePostLiked(Post postLiked){
+        postLiked.decrementNumberOfLikes();
+        return postsLiked.remove(postLiked);
+    }
+
+    public int getNumberOfFollowers() {
+        return numberOfFollowers;
+    }
+
+    public void setNumberOfFollowers(int numberOfFollowers) {
+        this.numberOfFollowers = numberOfFollowers;
+    }
+
+    @JsonIgnore
     public Set<User> getFollows() {
         return follows;
     }
@@ -268,15 +309,15 @@ public class User {
         return true;
     }
 
-    public boolean removeRole(String role){
+    public boolean removeRole(String roleParam){
         String[] r = roles.split(",");
-        roles = "";
+        StringBuilder stringBuilder = new StringBuilder();
 
-        for(int i = 0; i < r.length; ++i){
-            if(!r[i].equals(role))
-                roles += role + ",";
+        for(String role: r){
+            if(!role.equals(roleParam))
+                stringBuilder.append(role + ",");
         }
-        roles = roles.substring(roles.length()-1);
+        roles = stringBuilder.substring(0, stringBuilder.length()-1).toString();
 
         return true;
     }

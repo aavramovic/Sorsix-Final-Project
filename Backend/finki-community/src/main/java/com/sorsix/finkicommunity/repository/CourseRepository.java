@@ -1,6 +1,7 @@
 package com.sorsix.finkicommunity.repository;
 
 import com.sorsix.finkicommunity.domain.entities.Course;
+import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
@@ -16,4 +17,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findCoursesByProgram(Program program);
     List<Course> findCoursesByProgramAndStudyYear(Program program, StudyYear studyYear);
     List<Course> findCoursesByProgramAndStudyYearAndSemester(Program program, StudyYear studyYear, Semester semester);
+    List<Course> findCoursesByProgramAndStudyYearAndSemesterAndCourseType(Program program, StudyYear studyYear, Semester semester, CourseType courseType);
 }
