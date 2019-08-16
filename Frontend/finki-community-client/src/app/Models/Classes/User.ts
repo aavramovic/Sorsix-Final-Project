@@ -1,7 +1,7 @@
 import {Authorization} from '../Enumeration/Authorization';
 
 export class User {
-    private userId: string;
+    private userId: number;
     username: string;
     private firstName: string;
     private lastName: string;
@@ -12,7 +12,7 @@ export class User {
     private _imageUrl: string;
 
 
-    constructor(firstName: string, lastName: string, username: string, password: string, email: string, userId?: string) {
+    constructor(firstName: string, lastName: string, username: string, password: string, email: string, userId?: number) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

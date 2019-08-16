@@ -5,7 +5,7 @@ import {MockClassesCreationService} from '../../../services/mock-classes-creatio
 import {YearOfStudy} from '../../../Models/Enumeration/YearOfStudy';
 import {Program} from '../../../Models/Enumeration/Program';
 import {Type} from '../../../Models/Enumeration/Type';
-import {of, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {Semester} from '../../../Models/Enumeration/Semester';
 
 @Component({
@@ -16,7 +16,7 @@ import {Semester} from '../../../Models/Enumeration/Semester';
 export class CourseBarComponent implements OnInit {
     courses: Course[];
     programs: string[] = Object.keys(Program).splice(Object.keys(Program).length / 2);
-    years: string[] = Object.keys(YearOfStudy).splice(Object.keys(YearOfStudy).length / 2);
+    years: string[] = Object.keys(YearOfStudy);
     semesters: string[] = Object.keys(Semester).splice(Object.keys(Semester).length / 2);
     mandatory: string[] = Object.keys(Type).splice(Object.keys(Type).length / 2);
     filteredCourses: Course[];
@@ -32,12 +32,7 @@ export class CourseBarComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        //TODO:// trgni go delayot
-        this.mock.delay().then(() =>
-            this.courseService.getMockCourses().subscribe(courses => this.courses = courses));
-        // this.courseService.getMockCourses().subscribe(courses => this.courses = courses));
-
+        this.courseService.getCourses().subscribe(courses => this.courses = courses);
     }
 
     filterCourses() {

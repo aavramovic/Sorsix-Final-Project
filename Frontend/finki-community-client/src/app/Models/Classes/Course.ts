@@ -4,7 +4,7 @@ import {Semester} from '../Enumeration/Semester';
 
 export class Course {
     courseName: string;
-    _courseId: string;
+    courseId: number;
     code: string;
     description: string;
     yearOfStudy: number;
@@ -13,9 +13,9 @@ export class Course {
     semester: Semester;
 
     //test constructor
-    constructor(name: string, courseId: string, code: string, description: string, yearOfStudy: number, program: Program[], type: Type) {
+    constructor(name: string, courseId: number, code: string, description: string, yearOfStudy: number, program: Program[], type: Type) {
         this.courseName = name;
-        this._courseId = courseId;
+        this.courseId = courseId;
         this.code = code;
         this.description = description;
         this.yearOfStudy = yearOfStudy;

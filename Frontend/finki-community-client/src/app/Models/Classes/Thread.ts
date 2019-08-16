@@ -9,15 +9,15 @@ export class Thread {
     username: string;
     courseName: string;
 
-    postId: string;
-    userId: string;
-    courseId: string;
+    postId: number;
+    userId: number;
+    courseId: number;
     //eden thread ima eden course; eden course moze da ima povekje threadovi
     course: Course;
     comments: Thread[];
 
 
-    constructor(postId: string, userId: string, courseId: string, timeOfPost: Date, content: string, title?: string) {
+    constructor(postId: number, userId: number, courseId: number, timeOfPost: Date, content: string, title?: string) {
         this.title = title;
         this.timeOfPost = timeOfPost;
         this.content = content;

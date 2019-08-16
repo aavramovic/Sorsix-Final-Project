@@ -38,15 +38,15 @@ export class MockClassesCreationService {
     getMockThreads(): Observable<Thread[]> {
         let threads: Thread[] = [];
         threads.push(this.getMockThread('First Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '1'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '5'));
         threads.push(this.getMockThread('Second Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '2'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '6'));
         threads.push(this.getMockThread('Third Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '1'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '5'));
         threads.push(this.getMockThread('Fourth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '3'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '7'));
         threads.push(this.getMockThread('Fifth Post - Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad debitis eaque eligendi ex expedita in laboriosam minus\n' +
-            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '2'));
+            '    quae ratione soluta? Accusantium ad dolorum expedita id labore qui rem voluptate voluptatum.', '8'));
         return of(threads);
     }
 

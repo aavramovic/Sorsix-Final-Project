@@ -14,6 +14,7 @@ export class ThreadBarComponent implements OnInit {
     @Input()
     selectedCourse?: Course;
     filteredThreads: Thread[];
+    numberOfPostsByPage: number = 10;//TODO napravi komponenta ili delche za biranje na ova
 
     constructor(private threadService: ThreadService,
                 private mock: MockClassesCreationService) {
@@ -21,7 +22,10 @@ export class ThreadBarComponent implements OnInit {
 
     ngOnChanges() {
         // console.log('Change detected');
-        this.filteredThreads = this.selectedCourse ? this.threads.filter(thread => thread.courseId == this.selectedCourse._courseId) : this.threads;
+        this.filteredThreads =
+            this.selectedCourse ?
+                this.threadService.getTopNThreadsByCourse(this.numberOfPostsByPage, this.selectedCourse.courseId)
+                : this.threads;
     }
 
     ngOnInit() {

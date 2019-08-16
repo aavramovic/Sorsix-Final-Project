@@ -26,15 +26,10 @@ export class ThreadComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.getMockUserByUserId(this.thread.userId)
+        this.userService.getUserByUserId(this.thread.userId)
             .subscribe(user => this.user = user);
-        this.courseService.getMockCourseByCourseId(this.thread.courseId)
+
+        this.courseService.getCourseByCourseId(this.thread.courseId)
             .subscribe(course => this.course = course);
-
-
-        // this.userService.getUserByUserId(this.thread.userId)
-        //     .subscribe(user => this.user = user);
-        // this.courseService.getCourseByCourseId(this.thread.courseId)
-        //     .subscribe(course => this.course = course);
     }
 }
