@@ -7,9 +7,12 @@ import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
+import com.sorsix.finkicommunity.response.ClickedPostResponse;
+import com.sorsix.finkicommunity.response.PostResponse;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +31,7 @@ public class PostService {
     }
 
     public List<Post> getAllPosts(){
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByTimestampDescTitleAsc();
     }
 
     public List<Post> getAllPostsByUserId(Long userId){
@@ -58,10 +61,61 @@ public class PostService {
     }
 
     public Post getTopPost(){
-        return postRepository.findTopByOrderByTimestampDesc();
+        return postRepository.findTopByOrderByTimestampDescTitleAsc();
     }
 
-    public List<Post> getTop10Posts(){
-        return postRepository.findByRepliedToIsNullOrderByTimestampDesc();
+    public List<PostResponse> getTop10Posts(){
+        List<Post> posts = postRepository.findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
+        return convertFromPostToPostResponse(posts);
+    }
+
+    public List<PostResponse> getTop25Posts(){
+        List<Post> posts = postRepository.findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
+        return convertFromPostToPostResponse(posts);
+    }
+
+    public List<PostResponse> getTop50Posts(){
+        List<Post> posts = postRepository.findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
+        return convertFromPostToPostResponse(posts);
+    }
+
+
+    private List<PostResponse> convertFromPostToPostResponse(List<Post> posts){
+        List<PostResponse> postResponses = new ArrayList<PostResponse>();
+
+
+        for(Post post : posts){
+            postResponses.add(createPostResponseObject(post));
+        }
+
+        return postResponses;
+    }
+
+
+    public ClickedPostResponse getClickedPost(Long id){
+        Post post = postRepository.findByPostId(id);
+
+        ClickedPostResponse clickedPostResponse = new ClickedPostResponse();
+
+        clickedPostResponse.setPostResponse(createPostResponseObject(post));
+        clickedPostResponse.setReplies(post.getReplies());
+
+        return clickedPostResponse;
+    }
+
+    private PostResponse createPostResponseObject(Post post){
+
+        PostResponse postResponse = new PostResponse();
+
+        postResponse.setId(post.getPostId());
+        postResponse.setContent(post.getContent());
+        postResponse.setCourseName(post.getCourse().getCourseName());
+        postResponse.setNoOfComments(post.getNumberOfReplies());
+        postResponse.setNoOfLikes(post.getNumberOfLikes());
+        postResponse.setTimeOfPost(post.getTimestamp());
+        postResponse.setTitle(post.getTitle());
+        postResponse.setUsername(post.getUser().getUsername());
+
+        return postResponse;
     }
 }

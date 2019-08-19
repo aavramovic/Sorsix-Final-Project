@@ -1,12 +1,9 @@
 package com.sorsix.finkicommunity.domain.entities;
 
 import com.sorsix.finkicommunity.domain.enums.CourseType;
-import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 
@@ -42,7 +39,11 @@ public class Course {
     @Column(name = "number_of_posts")
     private int numberOfPosts = 0;
 
+    @Column(name = "number_of_replies")
+    private int numberOfReplies = 0;
+
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "course"
     )
     private Set<Post> posts;
@@ -128,6 +129,14 @@ public class Course {
         numberOfPosts--;
     }
 
+    public void incrementNumberOfReplies(){
+        numberOfReplies++;
+    }
+
+    public void decrementNumberOfReplies(){
+        numberOfReplies--;
+    }
+
     public void addProgram(String program){
         programs.concat("," + program);
     }
@@ -148,5 +157,25 @@ public class Course {
 
     public void setPrograms(String progs){
         programs = progs;
+    }
+
+    public int getNumberOfPosts() {
+        return numberOfPosts;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setNumberOfPosts(int numberOfPosts) {
+        this.numberOfPosts = numberOfPosts;
+    }
+
+    public int getNumberOfReplies() {
+        return numberOfReplies;
+    }
+
+    public void setNumberOfReplies(int numberOfReplies) {
+        this.numberOfReplies = numberOfReplies;
     }
 }

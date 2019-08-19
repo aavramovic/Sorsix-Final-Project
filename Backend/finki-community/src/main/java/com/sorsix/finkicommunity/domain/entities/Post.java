@@ -17,6 +17,9 @@ public class Post {
     private long postId;
 
     @Column
+    private String title;
+
+    @Column
     private String content;
 
     @Column(name="timestamp")
@@ -65,43 +68,30 @@ public class Post {
     public Post(){}
 
     // IF POST IS NEW
-    public Post(String content, long timestamp, User user, Course course) {
+    public Post(String title, String content, long timestamp, User user, Course course) {
+        this.title = title;
         this.content = content;
         this.timestamp = timestamp;
         this.user = user;
         this.repliedTo = null;
         this.course = course;
-        user.incrementNumberOfPosts();
-        course.incrementNumberOfPosts();
+
+        this.user.incrementNumberOfPosts();
+        this.course.incrementNumberOfPosts();
     }
 
     // IF POST IS A REPLY
-    public Post(String content, long timestamp, User user, Post repliedTo) {
+    public Post(String title, String content, long timestamp, User user, Post repliedTo) {
+        this.title = title;
         this.content = content;
         this.timestamp = timestamp;
         this.user = user;
         this.repliedTo = repliedTo;
         this.course = repliedTo.getCourse();
+
         this.repliedTo.incrementNumberOfReplies();
         this.user.incrementNumberOfPosts();
-    }
-
-    // IF POST IS ADDED TO A USER
-    public Post(String content, long timestamp, Post repliedTo) {
-        this.content = content;
-        this.timestamp = timestamp;
-        this.repliedTo = repliedTo;
-        this.course = repliedTo.getCourse();
-        this.repliedTo.incrementNumberOfReplies();
-    }
-
-    // IF POST IS ADDED TO A USER
-    public Post(String content, long timestamp, Course course) {
-        this.content = content;
-        this.timestamp = timestamp;
-        this.repliedTo = null;
-        this.course = course;
-        this.course.incrementNumberOfPosts();
+        this.course.incrementNumberOfReplies();
     }
 
 
@@ -151,6 +141,14 @@ public class Post {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Set<Post> getReplies() {

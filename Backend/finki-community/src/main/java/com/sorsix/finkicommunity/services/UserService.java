@@ -1,5 +1,6 @@
 package com.sorsix.finkicommunity.services;
 
+import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -66,5 +68,13 @@ public class UserService {
 //            Optional.of(newFollowingRequest);
 //        }
 //        return Optional.empty();
+    }
+
+    public Optional<Set<Post>> getUserPosts(Long id){
+        Optional<User> user = userRepository.findById(id);
+
+        return user.map(
+                u -> u.getPosts()
+        );
     }
 }

@@ -59,13 +59,10 @@ public class User {
     )
     private Set<User> follows = new HashSet<>();
 
-
-
     /*
             USER --- followed by --- USER   ManyToMany
          */
     @ManyToMany(
-            cascade = CascadeType.ALL,
             mappedBy = "follows",
             fetch=FetchType.EAGER
     )
@@ -210,6 +207,9 @@ public class User {
         this.numberOfFollowings = numberOfFollowings;
     }
 
+    public Set<Post> getPosts(){
+        return posts;
+    }
     // FUNCTIONS
     public void incrementNumberOfPosts(){
         numberOfPosts++;

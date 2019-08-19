@@ -7,8 +7,13 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+    List<Post> findAllByOrderByTimestampDescTitleAsc();
     List<Post> findAllByUser_UserId(Long id);
-    Post findTopByOrderByTimestampDesc();
+    Post findTopByOrderByTimestampDescTitleAsc();
     List<Post> findByRepliedToIsNullOrderByTimestampDesc();
-    List<Post> findTop10RepliedToIsNullByOrderByTimestampDesc();
+    List<Post> findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
+    List<Post> findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
+    List<Post> findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
+
+    Post findByPostId(Long postId);
 }
