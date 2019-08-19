@@ -9,6 +9,7 @@ import {GlobalPathStaticVariables} from '../Models/Classes/GlobalPathStaticVaria
 import {ICourse} from '../Models/Interfaces/ICourse';
 import {map} from 'rxjs/operators';
 import {YearOfStudy} from '../Models/Enumeration/YearOfStudy';
+import {Semester} from '../Models/Enumeration/Semester';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,7 @@ export class CourseService {
     constructor(private http: HttpClient,
                 private mock: MockClassesCreationService) {
     }
+
 
     getCourses<T>(): Observable<Course[]> {
         return this.http.get<ICourse[]>(this._API_URL + this._COURSE_LIST).pipe(
@@ -34,6 +36,7 @@ export class CourseService {
                             course.courseDescription,
                             YearOfStudy[course.studyYear],
                             [Program[course.program]],
+                            Semester[course.semester],
                             Type[course.courseType]
                         ));
                     });
@@ -50,20 +53,5 @@ export class CourseService {
 
     getCoursesByProperties(year?: number, program?: string, mandatory?: boolean) {
         return this.http;
-    }
-
-    /**
-     * MOCK METHODS
-     * */
-    getMockCourses(): Observable<Course[]> {
-        return this.mock.getMockCourses();
-    }
-
-    getMockCourse(name: string): Course {
-        return this.mock.getMockCourse(name, 1, [Program.KNI], Type.MANDATORY, '6');
-    }
-
-    getMockCourseByCourseId(courseId: string): Observable<Course> {
-        return of(this.mock.getMockCourseByCourseId(courseId));
     }
 }

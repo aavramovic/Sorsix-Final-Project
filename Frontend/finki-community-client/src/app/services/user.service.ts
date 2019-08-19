@@ -22,11 +22,5 @@ export class UserService {
         return this.http.get<User>(this._API_URL + '/user/' + userId);
     }
 
-    public getMockUserByUserId(userId: string): Observable<User> {
-        return of(this.mock.getMockUserByUserId(userId));
-    }
 
-    public getMockCourseButCourseId(courseId: string): Observable<Course> {
-        return of(this.mock.getMockCourse(courseId, 1, [Program.KNI], Type.OPTIONAL, '8'));
-    }
 }

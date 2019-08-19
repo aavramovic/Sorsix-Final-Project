@@ -12,6 +12,7 @@ const routes: Routes = [
     {path: 'start', component: MainViewComponent, pathMatch: 'full'},
     {path: 'start/:id', component: MainViewComponent, pathMatch: 'full'},
     {path: 'courses', component: CourseBarComponent},
+    {path: 'courses/:id', component: ThreadBarComponent},
     {path: 'threads', component: ThreadBarComponent},
     {path: 'users', component: UserBarComponent},
     {path: 'login', component: LoginScreenComponent},

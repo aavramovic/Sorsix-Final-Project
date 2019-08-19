@@ -1,6 +1,6 @@
 export enum YearOfStudy {
-    'FIRST YEAR' = 'FRESHMAN',
-    'SECOND YEAR' = 'SOPHOMORE',
-    'THIRD YEAR' = 'JUNIOR',
-    'FOURTH YEAR' = 'SENIOR'
+    FRESHMAN = 'First Year',
+    SOPHOMORE = 'Second Year',
+    JUNIOR = 'Third Year',
+    SENIOR = 'Fourth Year'
 }

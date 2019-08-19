@@ -7,6 +7,7 @@ import {Program} from '../../../Models/Enumeration/Program';
 import {Type} from '../../../Models/Enumeration/Type';
 import {Subject} from 'rxjs';
 import {Semester} from '../../../Models/Enumeration/Semester';
+import {toTitleCase} from 'codelyzer/util/utils';
 
 @Component({
     selector: 'app-courses',
@@ -16,9 +17,9 @@ import {Semester} from '../../../Models/Enumeration/Semester';
 export class CourseBarComponent implements OnInit {
     courses: Course[];
     programs: string[] = Object.keys(Program).splice(Object.keys(Program).length / 2);
-    years: string[] = Object.keys(YearOfStudy);
-    semesters: string[] = Object.keys(Semester).splice(Object.keys(Semester).length / 2);
-    mandatory: string[] = Object.keys(Type).splice(Object.keys(Type).length / 2);
+    years: string[] = Object.values(YearOfStudy);
+    semesters: string[] = Object.values(Semester);
+    mandatory: string[] = Object.values(Type);
     filteredCourses: Course[];
     year: string;
     program: string;
@@ -37,14 +38,33 @@ export class CourseBarComponent implements OnInit {
 
     filterCourses() {
         this.filteredCourses = this.courses;
-        // console.log('Before filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
-        this.filteredCourses = this.year ? this.filteredCourses.filter(course => course.yearOfStudy.toString() == YearOfStudy[this.year]) : this.filteredCourses;
-        // console.log('After year filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
-        this.filteredCourses = this.program ? this.filteredCourses.filter(course => course.program.includes(Program[this.program])) : this.filteredCourses;
-        // console.log('After program filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
-        this.filteredCourses = this.type ? this.filteredCourses.filter(course => course.type.toString() == Type[this.type]) : this.filteredCourses;
-        // console.log('After type filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
 
+        // console.log('Before filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
+
+        this.filteredCourses = this.year ?
+            this.filteredCourses.filter(course => course.yearOfStudy.toString() == this.year)
+            : this.filteredCourses;
+
+        // console.log('After year filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
+
+        this.filteredCourses = this.program ?
+            this.filteredCourses.filter(course => course.program.includes(Program[this.program]))
+            : this.filteredCourses;
+
+        // console.log('After program filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
+
+        this.filteredCourses = this.semester ?
+            this.filteredCourses.filter(course => course.semester.toString() == this.semester)
+            : this.filteredCourses;
+
+        //console.log('After semester filter - " + this.filteredCourses.length + ' : ' + this.filteredCourses);
+
+        this.filteredCourses = this.type ?
+            this.filteredCourses.filter(course => course.type.toString() == this.type)
+            : this.filteredCourses;
+
+        // console.log('After type filter - ' + this.filteredCourses.length + ' : ' + this.filteredCourses);
+        // this.filteredCourses.forEach(course => console.log(course));
     }
 
     setProgram($event?: string) {
