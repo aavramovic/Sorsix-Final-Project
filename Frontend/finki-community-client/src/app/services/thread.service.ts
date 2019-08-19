@@ -46,10 +46,13 @@ export class ThreadService {
         threads.forEach(thread => {
             tempThreads.push(new Thread(
                 thread.postId,
-                thread.userId,
-                thread.courseId,
+                thread.username,
+                thread.courseName,
                 new Date(thread.timestamp),
+                thread.numberOfLikes,
+                thread.numberOfComments,
                 thread.content,
+                'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_1280.png',
                 thread.title
             ));
         });

@@ -1,10 +1,16 @@
+import {Thread} from '../Classes/Thread';
+import {IUser} from './IUser';
+
 export interface IThread {
-    postId: number;
-    userId: number;
-    courseId: number;
-    title: string;
-    content: string;
-    timestamp: number;
-    numberOfLikes: number;
-    numberOfReplies: number;
+    postId: number,
+    username: string,
+    courseName: string,
+    timestamp: Date,
+    numberOfLikes: number,
+    numberOfComments: number,
+    content: string,
+    imageUrl: string,
+    title?: string,
+    replies?: IThread[],
+    usersLiked?:IUser[];
 }

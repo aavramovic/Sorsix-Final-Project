@@ -5,8 +5,8 @@ export class Thread {
     username: string;
     courseName: string;
     timeOfPost: Date;
-    noOfLikes: number;
-    noOfComments: number;
+    numberOfLikes: number;
+    numberOfComments: number;
     content: string;
     imageUrl: string;
     title: string;
@@ -26,10 +26,10 @@ export class Thread {
         this.username = username;
         this.courseName = courseName;
         this.timeOfPost = timeOfPost;
-        this.noOfLikes = noOfLikes;
-        this.noOfComments = noOfComments;
+        this.numberOfLikes = noOfLikes;
+        this.numberOfComments = noOfComments;
         this.content = content;
-        this.imageUrl = 'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_1280.png';
+        this.imageUrl = imageUrl;
         this.title = title;
 
         this.comments = [];
