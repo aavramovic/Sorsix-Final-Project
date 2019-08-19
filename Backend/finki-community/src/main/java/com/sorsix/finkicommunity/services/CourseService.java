@@ -32,7 +32,7 @@ public class CourseService {
         course.setCourseDescription(newCourseRequest.getCourseDescription());
         course.setSemester(newCourseRequest.getSemester());
         course.setStudyYear(newCourseRequest.getStudyYear());
-        course.setProgram(newCourseRequest.getProgram());
+        course.setPrograms(newCourseRequest.getProgram());
 
         try{
             return courseRepository.save(course);
@@ -59,13 +59,13 @@ public class CourseService {
 
                         if(_type != null){
                             type = CourseType.valueOf(_type.toUpperCase());
-                            return Optional.of(courseRepository.findCoursesByProgramAndStudyYearAndSemesterAndCourseType(program, studyYear, semester, type));
+                            return Optional.of(courseRepository.findCoursesByProgramsContainingAndStudyYearAndSemesterAndCourseType(program.toString(), studyYear, semester, type));
                         }
-                        return Optional.of(courseRepository.findCoursesByProgramAndStudyYearAndSemester(program, studyYear, semester));
+                        return Optional.of(courseRepository.findCoursesByProgramsContainingAndStudyYearAndSemester(program.toString(), studyYear, semester));
                     }
-                    return Optional.of(courseRepository.findCoursesByProgramAndStudyYear(program, studyYear));
+                    return Optional.of(courseRepository.findCoursesByProgramsContainingAndStudyYear(program.toString(), studyYear));
                 }
-                return Optional.of(courseRepository.findCoursesByProgram(program));
+                return Optional.of(courseRepository.findCoursesByProgramsContaining(program.toString()));
             }
             return Optional.of(courseRepository.findAll());
 

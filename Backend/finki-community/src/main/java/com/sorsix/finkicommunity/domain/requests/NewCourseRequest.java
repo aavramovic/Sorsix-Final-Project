@@ -18,7 +18,7 @@ public class NewCourseRequest {
     @NotEmpty
     private String courseDescription;
 
-    private Program program;
+    private String programs;
 
     private StudyYear studyYear;
 
@@ -46,8 +46,8 @@ public class NewCourseRequest {
         return semester;
     }
 
-    public Program getProgram() {
-        return program;
+    public String getProgram() {
+        return programs;
     }
 
     public CourseType getCourseType() {

@@ -11,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,27 +53,28 @@ public class DbInit implements CommandLineRunner {
 
         userRepository.saveAll(users);
 
-        Course course1 = new Course("code1", "course1", "courseDescription1", Program.KNI, StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
-        Course course2 = new Course("code2", "course2", "courseDescription2", Program.KNI, StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course3 = new Course("code3", "course3", "courseDescription3", Program.KNI, StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
-        Course course4 = new Course("code4", "course4", "courseDescription4", Program.KNI, StudyYear.FRESHMAN, Semester.WINTER, CourseType.OPTIONAL);
-        Course course5 = new Course("code5", "course5", "courseDescription1", Program.KNI, StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
-        Course course6 = new Course("code6", "course6", "courseDescription2", Program.KNI, StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course7 = new Course("code7", "course7", "courseDescription3", Program.KNI, StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
-        Course course8 = new Course("code8", "course8", "courseDescription4", Program.KNI, StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
+        Course course1 = new Course("code1", "course1", "courseDescription1", Program.KNI.toString() + "," + Program.IKI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
+        Course course2 = new Course("code2", "course2", "courseDescription2", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course3 = new Course("code3", "course3", "courseDescription3", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
+        Course course4 = new Course("code4", "course4", "courseDescription4", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.OPTIONAL);
+        Course course5 = new Course("code5", "course5", "courseDescription1", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
+        Course course6 = new Course("code6", "course6", "courseDescription2", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course7 = new Course("code7", "course7", "courseDescription3", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
+        Course course8 = new Course("code8", "course8", "courseDescription4", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
 
-        Course course9 = new Course("code9", "course9", "courseDescription1", Program.IKI, StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
-        Course course10 = new Course("code10", "course10", "courseDescription2", Program.IKI, StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course11 = new Course("code11", "course11", "courseDescription3", Program.IKI, StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
-        Course course12 = new Course("code12", "course12", "courseDescription4", Program.IKI, StudyYear.FRESHMAN, Semester.WINTER, CourseType.OPTIONAL);
-        Course course13 = new Course("code13", "course13", "courseDescription1", Program.IKI, StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
-        Course course14 = new Course("code14", "course14", "courseDescription2", Program.IKI, StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course15 = new Course("code15", "course15", "courseDescription3", Program.IKI, StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
-        Course course16 = new Course("code16", "course16", "courseDescription4", Program.IKI, StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
+        Course course9 = new Course("code9", "course9", "courseDescription1", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
+        Course course10 = new Course("code10", "course10", "courseDescription2", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course11 = new Course("code11", "course11", "courseDescription3", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
+        Course course12 = new Course("code12", "course12", "courseDescription4", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.OPTIONAL);
+        Course course13 = new Course("code13", "course13", "courseDescription1", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
+        Course course14 = new Course("code14", "course14", "courseDescription2", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course15 = new Course("code15", "course15", "courseDescription3", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
+        Course course16 = new Course("code16", "course16", "courseDescription4", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
 
 
         List<Course> courses = Arrays.asList(course1, course2, course3, course4, course5, course6, course7, course8, course9, course10, course11, course12, course13, course14, course15, course16);
 
+        Post post0 = new Post("Post0", 15662121439851L, fisnik, course10);
         Post post1 = new Post("Post1", System.currentTimeMillis(), fisnik, course1);
         Post post2 = new Post("Post2", System.currentTimeMillis(), fisnik, course2);
         Post post3 = new Post("Post3", System.currentTimeMillis(), antonio, post1);
@@ -86,7 +86,7 @@ public class DbInit implements CommandLineRunner {
         Post post9 = new Post("Post9", System.currentTimeMillis(), admin, post5);
         Post post10 = new Post("Post10", System.currentTimeMillis(), moderator, post5);
 
-        List<Post> posts = Arrays.asList(post1, post2, post3, post4, post5, post6, post7, post8, post9, post10);
+        List<Post> posts = Arrays.asList(post0, post1, post2, post3, post4, post5, post6, post7, post8, post9, post10);
 
 
         Post post11 = new Post("Post11", System.currentTimeMillis(), course7);

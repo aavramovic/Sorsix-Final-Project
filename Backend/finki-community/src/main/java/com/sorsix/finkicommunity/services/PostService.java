@@ -1,6 +1,5 @@
 package com.sorsix.finkicommunity.services;
 
-
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
@@ -56,5 +55,13 @@ public class PostService {
 
         postRepository.save(newPost);
         return newPost;
+    }
+
+    public Post getTopPost(){
+        return postRepository.findTopByOrderByTimestampDesc();
+    }
+
+    public List<Post> getTop10Posts(){
+        return postRepository.findByRepliedToIsNullOrderByTimestampDesc();
     }
 }
