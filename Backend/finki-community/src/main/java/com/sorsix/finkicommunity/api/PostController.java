@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.services.PostService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -34,6 +35,16 @@ public class PostController {
         else{
             return ResponseEntity.ok(result);
         }
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<Post> getTopPost(){
+        return ResponseEntity.ok(postService.getTopPost());
+    }
+
+    @GetMapping("/top/10")
+    public ResponseEntity<List<Post>> getTop10Posts(){
+        return ResponseEntity.ok(postService.getTop10Posts());
     }
 
     @PostMapping("/new")

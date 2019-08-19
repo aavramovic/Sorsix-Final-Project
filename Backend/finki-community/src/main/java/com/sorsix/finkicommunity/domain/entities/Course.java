@@ -5,6 +5,8 @@ import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -31,8 +33,8 @@ public class Course {
     @Column(name = "semester")
     private Semester semester;
 
-    @Column(name = "program")
-    private Program program;
+    @Column(name = "programs")
+    private String programs;
 
     @Column(name = "course_type")
     private CourseType courseType;
@@ -51,14 +53,14 @@ public class Course {
     public Course(){
     }
 
-    public Course(String code, String courseName, String courseDescription, Program program,
+    public Course(String code, String courseName, String courseDescription, String progs,
                   StudyYear studyYear, Semester semester, CourseType courseType) {
         this.code = code;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
+        this.programs = progs;
         this.studyYear = studyYear;
         this.semester = semester;
-        this.program = program;
         this.courseType = courseType;
     }
 
@@ -76,14 +78,6 @@ public class Course {
 
     public void setSemester(Semester semester) {
         this.semester = semester;
-    }
-
-    public Program getProgram() {
-        return program;
-    }
-
-    public void setProgram(Program program) {
-        this.program = program;
     }
 
     public long getCourseId() {
@@ -132,5 +126,27 @@ public class Course {
 
     public void decrementNumberOfPosts(){
         numberOfPosts--;
+    }
+
+    public void addProgram(String program){
+        programs.concat("," + program);
+    }
+
+    public void removeProgram(String program){
+        int ind = programs.indexOf(program);
+
+        if(ind > 0){
+            programs.replace(","+program, "");
+        }else{
+            programs.replace(program + ",", "");
+        }
+    }
+
+    public String getPrograms() {
+        return programs;
+    }
+
+    public void setPrograms(String progs){
+        programs = progs;
     }
 }

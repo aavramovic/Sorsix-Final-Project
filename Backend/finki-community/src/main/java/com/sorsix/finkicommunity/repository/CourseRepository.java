@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     boolean existsCourseByCourseName(String courseName);
-    List<Course> findCoursesByProgram(Program program);
-    List<Course> findCoursesByProgramAndStudyYear(Program program, StudyYear studyYear);
-    List<Course> findCoursesByProgramAndStudyYearAndSemester(Program program, StudyYear studyYear, Semester semester);
-    List<Course> findCoursesByProgramAndStudyYearAndSemesterAndCourseType(Program program, StudyYear studyYear, Semester semester, CourseType courseType);
+    List<Course> findCoursesByProgramsContaining(String program);
+    List<Course> findCoursesByProgramsContainingAndStudyYear(String program, StudyYear studyYear);
+    List<Course> findCoursesByProgramsContainingAndStudyYearAndSemester(String program, StudyYear studyYear, Semester semester);
+    List<Course> findCoursesByProgramsContainingAndStudyYearAndSemesterAndCourseType(String program, StudyYear studyYear, Semester semester, CourseType courseType);
 }
