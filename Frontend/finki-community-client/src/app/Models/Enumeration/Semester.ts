@@ -1,4 +1,4 @@
 export enum Semester {
-    WINTER,
-    SUMMER
+    WINTER = 'Winter',
+    SUMMER = 'Summer'
 }

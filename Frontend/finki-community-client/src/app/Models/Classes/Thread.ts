@@ -1,30 +1,37 @@
 import {Course} from './Course';
 
 export class Thread {
-    noOfLikes: number;
-    title: string;
-    timeOfPost: Date;
-    content: string;
-
+    threadId: number;
     username: string;
     courseName: string;
+    timeOfPost: Date;
+    noOfLikes: number;
+    noOfComments: number;
+    content: string;
+    imageUrl: string;
+    title: string;
 
-    postId: number;
-    userId: number;
-    courseId: number;
-    //eden thread ima eden course; eden course moze da ima povekje threadovi
-    course: Course;
     comments: Thread[];
 
-
-    constructor(postId: number, userId: number, courseId: number, timeOfPost: Date, content: string, title?: string) {
-        this.title = title;
+    constructor(threadId: number,
+                username: string,
+                courseName: string,
+                timeOfPost: Date,
+                noOfLikes: number,
+                noOfComments: number,
+                content: string,
+                imageUrl: string,
+                title?: string) {
+        this.threadId = threadId;
+        this.username = username;
+        this.courseName = courseName;
         this.timeOfPost = timeOfPost;
+        this.noOfLikes = noOfLikes;
+        this.noOfComments = noOfComments;
         this.content = content;
-        this.postId = postId;
-        this.userId = userId;
-        this.courseId = courseId;
-        this.noOfLikes = 10;
+        this.imageUrl = 'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_1280.png';
+        this.title = title;
+
         this.comments = [];
     }
 }
