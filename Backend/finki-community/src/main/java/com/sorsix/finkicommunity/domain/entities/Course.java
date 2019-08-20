@@ -25,16 +25,16 @@ public class Course {
     private String courseDescription;
 
     @Column(name = "study_year")
-    private StudyYear studyYear;
+    private String studyYear;
 
     @Column(name = "semester")
-    private Semester semester;
+    private String semester;
 
     @Column(name = "programs")
     private String programs;
 
     @Column(name = "course_type")
-    private CourseType courseType;
+    private String courseType;
 
     @Column(name = "number_of_posts")
     private int numberOfPosts = 0;
@@ -60,24 +60,24 @@ public class Course {
         this.courseName = courseName;
         this.courseDescription = courseDescription;
         this.programs = progs;
-        this.studyYear = studyYear;
-        this.semester = semester;
-        this.courseType = courseType;
+        this.studyYear = studyYear.toString();
+        this.semester = semester.toString();
+        this.courseType = courseType.toString();
     }
 
-    public StudyYear getStudyYear() {
+    public String getStudyYear() {
         return studyYear;
     }
 
-    public void setStudyYear(StudyYear studyYear) {
+    public void setStudyYear(String studyYear) {
         this.studyYear = studyYear;
     }
 
-    public Semester getSemester() {
+    public String getSemester() {
         return semester;
     }
 
-    public void setSemester(Semester semester) {
+    public void setSemester(String semester) {
         this.semester = semester;
     }
 
@@ -113,11 +113,11 @@ public class Course {
         this.code = code;
     }
 
-    public CourseType getCourseType() {
+    public String getCourseType() {
         return courseType;
     }
 
-    public void setCourseType(CourseType courseType) {
+    public void setCourseType(String courseType) {
         this.courseType = courseType;
     }
 

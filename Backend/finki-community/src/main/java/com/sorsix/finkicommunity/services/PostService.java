@@ -7,8 +7,8 @@ import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
-import com.sorsix.finkicommunity.response.ClickedPostResponse;
-import com.sorsix.finkicommunity.response.PostResponse;
+import com.sorsix.finkicommunity.domain.response.ClickedPostResponse;
+import com.sorsix.finkicommunity.domain.response.PostResponse;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -41,7 +41,6 @@ public class PostService {
     }
 
     public Post createNewPost(NewPostRequest newPostRequest){
-
         Course course = courseRepository.findById(newPostRequest.getCourseId()).get();
         Post repliedTo = null;
         User user = userRepository.findById(newPostRequest.getUserIdOwner()).get();
@@ -79,19 +78,6 @@ public class PostService {
         return convertFromPostToPostResponse(posts);
     }
 
-
-    private List<PostResponse> convertFromPostToPostResponse(List<Post> posts){
-        List<PostResponse> postResponses = new ArrayList<PostResponse>();
-
-
-        for(Post post : posts){
-            postResponses.add(createPostResponseObject(post));
-        }
-
-        return postResponses;
-    }
-
-
     public ClickedPostResponse getClickedPost(Long id){
         Post post = postRepository.findByPostId(id);
 
@@ -103,8 +89,11 @@ public class PostService {
         return clickedPostResponse;
     }
 
-    private PostResponse createPostResponseObject(Post post){
 
+    /*
+    HELPER METHODS
+     */
+    private PostResponse createPostResponseObject(Post post){
         PostResponse postResponse = new PostResponse();
 
         postResponse.setId(post.getPostId());
@@ -117,5 +106,15 @@ public class PostService {
         postResponse.setUsername(post.getUser().getUsername());
 
         return postResponse;
+    }
+
+    private List<PostResponse> convertFromPostToPostResponse(List<Post> posts){
+        List<PostResponse> postResponses = new ArrayList<PostResponse>();
+
+        for(Post post : posts){
+            postResponses.add(createPostResponseObject(post));
+        }
+
+        return postResponses;
     }
 }
