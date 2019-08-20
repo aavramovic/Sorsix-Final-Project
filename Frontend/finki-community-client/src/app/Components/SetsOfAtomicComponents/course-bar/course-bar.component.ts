@@ -9,6 +9,7 @@ import {Subject} from 'rxjs';
 import {Semester} from '../../../Models/Enumeration/Semester';
 import {toTitleCase} from 'codelyzer/util/utils';
 import {switchMap} from 'rxjs/operators';
+import {EnumService} from '../../../services/enum.service';
 
 @Component({
     selector: 'app-courses',
@@ -17,10 +18,10 @@ import {switchMap} from 'rxjs/operators';
 })
 export class CourseBarComponent implements OnInit {
     courses: Course[];
-    programs: string[] = Object.keys(Program).splice(Object.keys(Program).length / 2);
-    years: string[] = Object.values(YearOfStudy);
-    semesters: string[] = Object.values(Semester);
-    mandatory: string[] = Object.values(Type);
+    programs: string[] = EnumService.getPrograms();
+    years: string[] = EnumService.getYears();
+    semesters: string[] = EnumService.getSemesters();
+    mandatory: string[] = EnumService.getTypes();
 
     year: string;
     program: string;
@@ -30,7 +31,8 @@ export class CourseBarComponent implements OnInit {
     filter = new Subject();
 
     constructor(private courseService: CourseService,
-                private mock: MockClassesCreationService) {
+                private mock: MockClassesCreationService,
+                private enumService: EnumService) {
     }
 
     ngOnInit() {

@@ -6,10 +6,13 @@ import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Program} from '../Models/Enumeration/Program';
 import {Type} from '../Models/Enumeration/Type';
 import {ICourse} from '../Models/Interfaces/ICourse';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {getKeyByValue, YearOfStudy} from '../Models/Enumeration/YearOfStudy';
 import {Semester} from '../Models/Enumeration/Semester';
-import {API_URL, COURSE_LIST} from '../Models/Classes/GlobalPathStaticVariables';
+import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/Classes/GlobalPathStaticVariables';
+import {IPostCourse} from '../Models/Interfaces/IPostCourse';
+import {PostCourse} from '../Models/Classes/PostCourse';
+
 
 @Injectable({
     providedIn: 'root'
@@ -64,7 +67,21 @@ export class CourseService {
         return this.http.get<Course>(API_URL + COURSE_LIST + courseId);
     }
 
-    getCoursesByProperties(year?: number, program?: string, mandatory?: boolean) {
-        return this.http;
+    postCourse(courseName: string, courseDescription: string, programs: Program[], studyYear: YearOfStudy, semester: Semester, courseType: Type)/*:Observable<ICourse>*/{
+        let postRequest: PostCourse = new PostCourse(courseName, courseDescription, courseType, programs, semester, studyYear);
+        console.log(postRequest);
+        let httpOptions;
+
+        // return this.http.post<IPostCourse>(API_URL+POST_COURSE,postRequest, httpOptions)
+        //     .pipe(
+        //         catchError(this.handleError('addCourse', postRequest))
+        //     )
+    }
+
+
+    private handleError(addCourse: string, postRequest: PostCourse) {
+        return function(p1: any, p2: Observable<unknown>) {
+            return undefined;
+        };
     }
 }

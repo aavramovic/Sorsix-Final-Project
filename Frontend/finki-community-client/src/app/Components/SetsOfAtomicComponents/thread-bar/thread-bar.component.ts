@@ -5,7 +5,7 @@ import {MockClassesCreationService} from '../../../services/mock-classes-creatio
 import {Course} from '../../../Models/Classes/Course';
 import {Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {NavigationStart, Router} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {UrlService} from '../../../services/url.service';
 
@@ -30,6 +30,10 @@ export class ThreadBarComponent implements OnInit {
     urlChange() {
         this.selectedCourse = this.url.getLastPartOfUrl();
 
+        if (this.selectedCourse == 'start') {
+            this.selectedCourse = '';
+        }
+
         this.threadByCourse$.next();
     }
 
@@ -40,11 +44,14 @@ export class ThreadBarComponent implements OnInit {
         // this.thread$.next();
 
         this.router.events.subscribe(e => {
-            if (e instanceof NavigationStart && this.url.containsStartInUrl()) {
+            if (e instanceof NavigationEnd && this.url.containsStartInUrl()) {
                 this.urlChange();
             }
         });
         this.selectedCourse = this.url.getLastPartOfUrl();
+        if (this.selectedCourse == 'start') {
+            this.selectedCourse = '';
+        }
 
         this.threadByCourse$.pipe(switchMap(() =>
             this.threadService.getTopNThreadsByCourse(this.numberOfPostsByPage, this.selectedCourse)))

@@ -6,6 +6,7 @@ import {LoginScreenComponent} from './Components/Views/login-screen/login-screen
 import {MainViewComponent} from './Components/Views/main-view/main-view.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
+import {AdminComponent} from './Components/Views/admin/admin.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'start', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path: 'users', component: UserBarComponent},
     {path: 'login', component: LoginScreenComponent},
     {path: 'register', component: RegisterScreenComponent},
+    {path: 'admin', component: AdminComponent},
     {path: '**', redirectTo: ''}
 ];
 
