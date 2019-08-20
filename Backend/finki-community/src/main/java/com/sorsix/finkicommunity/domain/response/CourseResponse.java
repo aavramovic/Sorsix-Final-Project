@@ -6,10 +6,10 @@ public class CourseResponse {
     private String courseName;
     private String courseDescription;
 
-    private String program;
-    private String studyYear;
-    private String semester;
-    private String courseType;
+//    private String program;
+//    private String studyYear;
+//    private String semester;
+//    private String courseType;
 
     public long getCourseId() {
         return courseId;
@@ -43,35 +43,35 @@ public class CourseResponse {
         this.courseDescription = courseDescription;
     }
 
-    public String getProgram() {
-        return program;
-    }
+//    public String getProgram() {
+//        return program;
+//    }
+//
+//    public void setProgram(String program) {
+//        this.program = program;
+//    }
+//
+//    public String getStudyYear() {
+//        return studyYear;
+//    }
+//
+//    public void setStudyYear(String studyYear) {
+//        this.studyYear = studyYear;
+//    }
+//
+//    public String getSemester() {
+//        return semester;
+//    }
 
-    public void setProgram(String program) {
-        this.program = program;
-    }
-
-    public String getStudyYear() {
-        return studyYear;
-    }
-
-    public void setStudyYear(String studyYear) {
-        this.studyYear = studyYear;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
-
-    public String getCourseType() {
-        return courseType;
-    }
-
-    public void setCourseType(String courseType) {
-        this.courseType = courseType;
-    }
+//    public void setSemester(String semester) {
+//        this.semester = semester;
+//    }
+//
+//    public String getCourseType() {
+//        return courseType;
+//    }
+//
+//    public void setCourseType(String courseType) {
+//        this.courseType = courseType;
+//    }
 }

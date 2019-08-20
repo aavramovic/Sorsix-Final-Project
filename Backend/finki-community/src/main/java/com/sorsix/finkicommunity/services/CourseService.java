@@ -94,10 +94,10 @@ public class CourseService {
             courseResponse.setCode(course.getCode());
             courseResponse.setCourseDescription(course.getCourseDescription());
             courseResponse.setCourseName(course.getCourseName());
-            courseResponse.setProgram(course.getPrograms());
-            courseResponse.setStudyYear(course.getStudyYear());
-            courseResponse.setSemester(course.getSemester());
-            courseResponse.setCourseType(course.getCourseType());
+//            courseResponse.setProgram(course.getPrograms());
+//            courseResponse.setStudyYear(course.getStudyYear());
+//            courseResponse.setSemester(course.getSemester());
+//            courseResponse.setCourseType(course.getCourseType());
 
             courseResponses.add(courseResponse);
         }
