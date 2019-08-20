@@ -1,7 +1,6 @@
 package com.sorsix.finkicommunity.domain.response;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
-
 import java.util.HashSet;
 import java.util.Set;
 

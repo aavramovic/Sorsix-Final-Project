@@ -6,10 +6,9 @@ import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
-import com.sorsix.finkicommunity.domain.response.CourseResponse;
+import com.sorsix.finkicommunity.domain.response.SimpleCourseResponse;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.domain.response.ClickedCourseResponse;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class CourseService {
         }
     }
 
-    public Optional<List<CourseResponse>> getCoursesByProgramStudyYearSemesterCourseType(String _program, String _studyYear, String _semester, String _type){
+    public Optional<List<SimpleCourseResponse>> getCoursesByProgramStudyYearSemesterCourseType(String _program, String _studyYear, String _semester, String _type){
         String program = null;
         String studyYear = null;
         String semester = null;
@@ -79,54 +78,13 @@ public class CourseService {
             return Optional.empty();
         }
 
-
         List<Course> courses = courseRepository.findCoursesByProgramsContainingAndStudyYearContainingAndSemesterContainingAndCourseTypeContaining(
                 program,studyYear,semester,type
         );
 
-
-        List<CourseResponse> courseResponses = new ArrayList<>();
-        CourseResponse courseResponse;
-        for(Course course : courses){
-            courseResponse = new CourseResponse();
-
-            courseResponse.setCourseId(course.getCourseId());
-            courseResponse.setCode(course.getCode());
-            courseResponse.setCourseDescription(course.getCourseDescription());
-            courseResponse.setCourseName(course.getCourseName());
-//            courseResponse.setProgram(course.getPrograms());
-//            courseResponse.setStudyYear(course.getStudyYear());
-//            courseResponse.setSemester(course.getSemester());
-//            courseResponse.setCourseType(course.getCourseType());
-
-            courseResponses.add(courseResponse);
-        }
+        List<SimpleCourseResponse> courseResponses = convertCourseToSimpleCourseResponse(courses);
 
         return Optional.of(courseResponses);
-//        try{
-//            if(_program != null){
-//                program = Program.valueOf(_program.toUpperCase());
-//                if(_studyYear != null){
-//                    studyYear = StudyYear.valueOf(_studyYear.toUpperCase());
-//
-//                    if(_semester != null){
-//                        semester = Semester.valueOf(_semester.toUpperCase());
-//
-//                        if(_type != null){
-//                            type = CourseType.valueOf(_type.toUpperCase());
-//                            return Optional.of(courseRepository.findCoursesByProgramsContainingAndStudyYearAndSemesterAndCourseType(program.toString(), studyYear, semester, type));
-//                        }
-//                        return Optional.of(courseRepository.findCoursesByProgramsContainingAndStudyYearAndSemester(program.toString(), studyYear, semester));
-//                    }
-//                    return Optional.of(courseRepository.findCoursesByProgramsContainingAndStudyYear(program.toString(), studyYear));
-//                }
-//                return Optional.of(courseRepository.findCoursesByProgramsContaining(program.toString()));
-//            }
-//            return Optional.of(courseRepository.findAll());
-//
-//        }catch(IllegalArgumentException ex){
-//            return Optional.empty();
-//        }
     }
 
     public Optional<ClickedCourseResponse> getPostsOfCourseByCourseName(String courseName, Long noOfPosts){
@@ -155,5 +113,26 @@ public class CourseService {
         }else{
             return Optional.empty();
         }
+    }
+
+    // HELPER METHODS
+    public List<SimpleCourseResponse> convertCourseToSimpleCourseResponse(List<Course> courses){
+        List<SimpleCourseResponse> courseResponses = new ArrayList<>();
+        SimpleCourseResponse courseResponse;
+        for(Course course : courses){
+            courseResponse = new SimpleCourseResponse();
+
+            courseResponse.setCourseId(course.getCourseId());
+            courseResponse.setCode(course.getCode());
+            courseResponse.setCourseDescription(course.getCourseDescription());
+            courseResponse.setCourseName(course.getCourseName());
+//            courseResponse.setProgram(course.getPrograms());
+//            courseResponse.setStudyYear(course.getStudyYear());
+//            courseResponse.setSemester(course.getSemester());
+//            courseResponse.setCourseType(course.getCourseType());
+
+            courseResponses.add(courseResponse);
+        }
+        return courseResponses;
     }
 }
