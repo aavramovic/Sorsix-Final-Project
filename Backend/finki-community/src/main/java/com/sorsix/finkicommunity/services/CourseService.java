@@ -50,6 +50,8 @@ public class CourseService {
         Semester semester;
         CourseType type;
 
+
+
         try{
             if(_program != null){
                 program = Program.valueOf(_program.toUpperCase());

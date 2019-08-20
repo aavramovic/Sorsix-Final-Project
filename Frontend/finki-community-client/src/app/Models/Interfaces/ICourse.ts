@@ -5,9 +5,9 @@ export interface ICourse {
     code: string;
     courseName: string;
     courseDescription: string;
+
     studyYear: string;
     semester: string;
     program: string;
     courseType: string;
-
 }

@@ -24,16 +24,8 @@ export class Course {
         this.type = type;
     }
 
-//TODO:// ova treba da se napravi preku request
-    //
-    /*    addUserToCourse(user: User): void{
-            if(!this._users.includes(user))
-             this._users.push(user);
-        }
+//TODO:// add user, delete user
 
-        deleteUserFromCourse(user: User) {
-            this._users = this._users.filter(item => item !== user);
-        }*/
 
     toString(): string {
         return this.type;

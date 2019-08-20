@@ -19,4 +19,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findCoursesByProgramsContainingAndStudyYearAndSemester(String program, StudyYear studyYear, Semester semester);
     List<Course> findCoursesByProgramsContainingAndStudyYearAndSemesterAndCourseType(String program, StudyYear studyYear, Semester semester, CourseType courseType);
     Course findCourseByCourseName(String courseName);
+
 }
