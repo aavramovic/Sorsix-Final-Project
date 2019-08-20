@@ -28,20 +28,27 @@ public class PostController {
         return ResponseEntity.ok(postService.getAllPosts());
     }
 
-    @GetMapping("/top/10")
-    public ResponseEntity<List<PostResponse>> getTop10Posts(){
-        return ResponseEntity.ok(postService.getTop10Posts());
+    @GetMapping("/top")
+    public ResponseEntity<List<PostResponse>> getTopPosts(
+            @RequestParam(required = false) Integer noOfPosts   // If absent, default will be 10
+    ){
+        return ResponseEntity.ok(postService.getTopPosts(noOfPosts));
     }
 
-    @GetMapping("/top/25")
-    public ResponseEntity<List<PostResponse>> getTop25Posts(){
-        return ResponseEntity.ok(postService.getTop25Posts());
-    }
-
-    @GetMapping("/top/50")
-    public ResponseEntity<List<PostResponse>> getTop50Posts(){
-        return ResponseEntity.ok(postService.getTop50Posts());
-    }
+//    @GetMapping("/top/10")
+//    public ResponseEntity<List<PostResponse>> getTop10Posts(){
+//        return ResponseEntity.ok(postService.getTop10Posts());
+//    }
+//
+//    @GetMapping("/top/25")
+//    public ResponseEntity<List<PostResponse>> getTop25Posts(){
+//        return ResponseEntity.ok(postService.getTop25Posts());
+//    }
+//
+//    @GetMapping("/top/50")
+//    public ResponseEntity<List<PostResponse>> getTop50Posts(){
+//        return ResponseEntity.ok(postService.getTop50Posts());
+//    }
 
     @GetMapping("/clicked")
     public ResponseEntity<ClickedPostResponse> getClickedPost(

@@ -15,5 +15,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
     List<Post> findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
 
+
+    // List<Post> findAllByRepliedToIsNullOrderByTimestampDescTitleAsc(Pageable pageable);
+
     Post findByPostId(Long postId);
 }

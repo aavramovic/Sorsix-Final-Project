@@ -9,6 +9,7 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.response.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.response.PostResponse;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -61,6 +62,20 @@ public class PostService {
 
     public Post getTopPost(){
         return postRepository.findTopByOrderByTimestampDescTitleAsc();
+    }
+
+
+    public List<PostResponse> getTopPosts(Integer noOfPosts){
+        if(noOfPosts == null || noOfPosts.intValue() == 10){
+            return getTop10Posts();
+        }
+        else if(noOfPosts.intValue() == 25) {
+            return getTop25Posts();
+        }else if(noOfPosts.intValue() == 50){
+            return getTop50Posts();
+        }else{
+            return getTop10Posts();
+        }
     }
 
     public List<PostResponse> getTop10Posts(){

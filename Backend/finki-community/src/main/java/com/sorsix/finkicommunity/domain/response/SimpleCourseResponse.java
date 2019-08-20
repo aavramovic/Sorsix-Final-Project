@@ -1,6 +1,6 @@
 package com.sorsix.finkicommunity.domain.response;
 
-public class CourseResponse {
+public class SimpleCourseResponse {
     private long courseId;
     private String code;
     private String courseName;
