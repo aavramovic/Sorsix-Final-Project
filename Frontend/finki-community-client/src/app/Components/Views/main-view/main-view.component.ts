@@ -7,15 +7,10 @@ import {Course} from '../../../Models/Classes/Course';
     styleUrls: ['./main-view.component.css']
 })
 export class MainViewComponent implements OnInit {
-    selectedCourse: Course;
 
     constructor() {
     }
 
     ngOnInit() {
-    }
-
-    setSelectedCourses(course: Course) {
-        this.selectedCourse = course;
     }
 }

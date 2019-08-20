@@ -10,6 +10,6 @@ export class UrlService {
 
 
     getLastPartOfUrl() {
-        return location.normalize(location.path()).split('/').pop();
+        return this.location.normalize(this.location.path()).split('/').pop();
     }
 }

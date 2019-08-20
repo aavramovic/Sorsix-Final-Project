@@ -19,8 +19,7 @@
         <ul class="list-group">
             <li *ngFor="let course of courses" class="list-group-item p-2 btn-light"
                 routerLinkActive="active">
-                <app-course [course]="course" routerLink="/start/{{course.courseId}}"
-                            (click)="setSelectedCourse(course)"></app-course>
+                <app-course [course]="course" routerLink="/start/{{course.courseName}}"></app-course>
             </li>
         </ul>
     </div>

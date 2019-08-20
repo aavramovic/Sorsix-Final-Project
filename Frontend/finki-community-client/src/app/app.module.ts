@@ -21,6 +21,7 @@ import {MatButtonModule, MatButtonToggleModule, MatIconModule, MatSelectModule} 
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
+import { AdminComponent } from './Components/Views/admin/admin.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-s
         ThreadBarComponent,
         RegisterScreenComponent,
         UserBarComponent,
-        MatSelectComponent
+        MatSelectComponent,
+        AdminComponent
     ],
     imports: [
         BrowserModule,

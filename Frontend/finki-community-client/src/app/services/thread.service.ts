@@ -16,21 +16,19 @@ export class ThreadService {
                 private mock: MockClassesCreationService) {
     }
 
-    getTop10Posts(): Observable<Thread[]> {
-
-        return this.http.get<Thread[]>(API_URL + THREAD_LIST_10);
+    private getTopNPosts(numberOfPosts: number): Observable<Thread[]> {
+        return this.http.get<Thread[]>(API_URL + THREAD_LIST + numberOfPosts);
     }
 
-    //TODO-SERVICE:: /forum/posts/null/:number || /forum/posts/:number
-    // vrakja top postovi od site kursevi
 
-
-    getTopNThreadsByCourse(courseName?: string): Observable<Thread[]> {
+    getTopNThreadsByCourse(numberOfPosts: number, courseName?: string): Observable<Thread[]> {
         if (!courseName) {
-            this.getTop10Posts();
+            console.log();
+            this.getTopNPosts(numberOfPosts);
         } else {
-            return this.http.get<IThread[]>(API_URL + 'courses/clicked?courseName=' +  courseName).pipe(
-                map(threads => this.mapIThreadsToThreads(threads)));
+
+            return this.http.get<IThread[]>(API_URL + 'forum/courses/clicked?courseName=' + courseName + '&noOfPosts=' + numberOfPosts)
+                .pipe(map(threads => this.mapIThreadsToThreads(threads)));
         }
     }
 

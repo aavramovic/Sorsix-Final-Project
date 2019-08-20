@@ -26,8 +26,6 @@ export class CourseBarComponent implements OnInit {
     program: string;
     semester: string;
     type: string;
-    @Output()
-    selectedCourse = new Subject<Course>();
 
     filter = new Subject();
 
@@ -64,9 +62,6 @@ export class CourseBarComponent implements OnInit {
         // console.log('Type: ' + this.type);
     }
 
-    setSelectedCourse(course: Course) {
-        this.selectedCourse.next(course);
-    }
 
 }
 
