@@ -13,4 +13,5 @@ export class MainViewComponent implements OnInit {
 
     ngOnInit() {
     }
+
 }

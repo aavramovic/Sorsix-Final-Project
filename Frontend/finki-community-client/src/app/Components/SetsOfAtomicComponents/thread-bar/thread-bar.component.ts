@@ -18,7 +18,7 @@ export class ThreadBarComponent implements OnInit {
     threads: Thread[];
     selectedCourse: string = '';
     numberOfPostsByPage: number = 10;//TODO napravi komponenta ili delche za biranje na ova
-    thread$ = new Subject();
+    // thread$ = new Subject();
     threadByCourse$ = new Subject();
 
     constructor(private threadService: ThreadService,
@@ -29,9 +29,7 @@ export class ThreadBarComponent implements OnInit {
 
     urlChange() {
         this.selectedCourse = this.url.getLastPartOfUrl();
-        if (this.selectedCourse == 'start') {
-            this.selectedCourse = '';
-        }
+
         this.threadByCourse$.next();
     }
 
@@ -42,14 +40,16 @@ export class ThreadBarComponent implements OnInit {
         // this.thread$.next();
 
         this.router.events.subscribe(e => {
-            if (e instanceof NavigationStart) {
+            if (e instanceof NavigationStart && this.url.containsStartInUrl()) {
                 this.urlChange();
             }
         });
+        this.selectedCourse = this.url.getLastPartOfUrl();
 
         this.threadByCourse$.pipe(switchMap(() =>
             this.threadService.getTopNThreadsByCourse(this.numberOfPostsByPage, this.selectedCourse)))
             .subscribe(threads => this.threads = threads);
+
         this.threadByCourse$.next();
     }
 }

@@ -22,21 +22,21 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId){
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId)
                 .map(ResponseEntity::ok)
-                .orElseGet(()->ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @GetMapping("/posts")
     public ResponseEntity getUserPosts(
             @RequestParam Long userId
-    ){
+    ) {
         return ResponseEntity.ok(
                 userService.getUserPosts(userId)
         );
@@ -44,15 +44,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> createNewUser(@RequestBody @Valid NewUserRequest newUserRequest){
+    public ResponseEntity<User> createNewUser(@RequestBody @Valid NewUserRequest newUserRequest) {
         return ResponseEntity.ok(userService.createNewUser(newUserRequest));
     }
 
     @PostMapping("/new-following")
-    public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest){
+    public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
         return userService.addNewFollowing(newFollowingRequest)
                 .map(ResponseEntity::ok)
-                .orElseGet(()-> ResponseEntity.badRequest().build());
+                .orElseGet(() -> ResponseEntity.badRequest().build());
 //                .map(user -> ResponseEntity.ok(user))
 //                .orElseGet(()->ResponseEntity.badRequest().build());
     }

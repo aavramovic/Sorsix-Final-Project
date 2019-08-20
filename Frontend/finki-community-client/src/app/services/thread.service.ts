@@ -6,6 +6,7 @@ import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
 import {map} from 'rxjs/operators';
 import {API_URL, COURSE_LIST, THREAD_LIST, THREAD_LIST_10, THREAD_REPLIES} from '../Models/Classes/GlobalPathStaticVariables';
+import {IClickedCourse} from '../Models/Interfaces/IClickedCourse';
 
 @Injectable({
     providedIn: 'root'
@@ -16,19 +17,21 @@ export class ThreadService {
                 private mock: MockClassesCreationService) {
     }
 
-    private getTopNPosts(numberOfPosts: number): Observable<Thread[]> {
+    getTopNPosts(numberOfPosts: number): Observable<Thread[]> {
         return this.http.get<Thread[]>(API_URL + THREAD_LIST + numberOfPosts);
     }
 
 
     getTopNThreadsByCourse(numberOfPosts: number, courseName?: string): Observable<Thread[]> {
-        if (!courseName) {
-            console.log();
-            this.getTopNPosts(numberOfPosts);
+
+        if (courseName.length == 0) {
+            return this.getTopNPosts(numberOfPosts);
         } else {
 
-            return this.http.get<IThread[]>(API_URL + 'forum/courses/clicked?courseName=' + courseName + '&noOfPosts=' + numberOfPosts)
-                .pipe(map(threads => this.mapIThreadsToThreads(threads)));
+            return this.http.get<IClickedCourse>(API_URL + 'forum/courses/clicked?courseName=' + courseName + '&noOfPosts=' + numberOfPosts)
+                .pipe(map(course => {
+                    return this.mapIThreadsToThreads(course.posts);
+                }));
         }
     }
 
