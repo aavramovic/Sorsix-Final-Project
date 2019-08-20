@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.response;
+package com.sorsix.finkicommunity.domain.response;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sorsix.finkicommunity.domain.entities.Post;

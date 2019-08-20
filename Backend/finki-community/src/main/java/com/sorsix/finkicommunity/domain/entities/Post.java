@@ -1,6 +1,5 @@
 package com.sorsix.finkicommunity.domain.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,7 +18,7 @@ public class Post {
     @Column
     private String title;
 
-    @Column
+    @Column(length = 1000)
     private String content;
 
     @Column(name="timestamp")

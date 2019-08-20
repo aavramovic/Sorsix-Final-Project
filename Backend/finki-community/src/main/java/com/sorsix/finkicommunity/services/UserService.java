@@ -36,7 +36,6 @@ public class UserService {
         user.setLastName(newUserRequest.getLastName());
         user.setBirthdate(newUserRequest.getBirthdate());
         user.addRole("USER");
-
         try{
             return userRepository.save(user);
         }catch(RuntimeException ex){

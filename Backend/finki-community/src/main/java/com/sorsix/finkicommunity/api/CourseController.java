@@ -2,7 +2,10 @@ package com.sorsix.finkicommunity.api;
 
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
+import com.sorsix.finkicommunity.domain.response.CourseResponse;
+import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.services.CourseService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -18,11 +21,7 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-
-    /*
-    THIS IS USED ONLY FOR TESTING.
-    IT MAY GET REMOVED IN THE END.
-     */
+    // GET METHODS
     @GetMapping("/{id}")
     public ResponseEntity getCourseById(@PathVariable Long id)
     {
@@ -32,32 +31,35 @@ public class CourseController {
     }
 
     @GetMapping("/filter")
-    ResponseEntity<List<Course>> getCoursesByProgramStudyYearSemester(
+    ResponseEntity<List<CourseResponse>> getCoursesByProgramStudyYearSemesterCourseType(
             @RequestParam(required = false) String program,
             @RequestParam(required = false) String studyYear,
             @RequestParam(required = false) String semester,
             @RequestParam(required = false) String type
     )
     {
-        return courseService.getCoursesByProgramStudyYearSemester(program, studyYear, semester, type)
+        //return ResponseEntity.ok(program + " " + studyYear + " " + semester + " " + type);
+        return courseService.getCoursesByProgramStudyYearSemesterCourseType(program, studyYear, semester, type)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
-    }
 
-
-    @PostMapping("/new")
-    public ResponseEntity createNewCourse(@RequestBody @Valid NewCourseRequest newCourseRequest){
-        return ResponseEntity.ok(courseService.createNewCourse(newCourseRequest));
+        //return ResponseEntity.ok(courseService.getCoursesByProgramStudyYearSemesterCourseType(program, studyYear, semester, type));
     }
 
     @GetMapping("/clicked")
     public ResponseEntity getCourseByCourseName(
-            @RequestParam(required = true) String courseName,
+            @RequestParam String courseName,
             @RequestParam(required = false) Long noOfPosts
     )
     {
             return courseService.getPostsOfCourseByCourseName(courseName, noOfPosts)
                     .map(ResponseEntity::ok)
                     .orElseGet(()-> ResponseEntity.notFound().build());
+    }
+
+    // POST METHODS
+    @PostMapping("/new")
+    public ResponseEntity createNewCourse(@RequestBody @Valid NewCourseRequest newCourseRequest){
+        return ResponseEntity.ok(courseService.createNewCourse(newCourseRequest));
     }
 }

@@ -1,6 +1,5 @@
 package com.sorsix.finkicommunity.api;
 
-import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/forum/users")

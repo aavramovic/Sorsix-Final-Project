@@ -20,11 +20,11 @@ public class NewCourseRequest {
 
     private String programs;
 
-    private StudyYear studyYear;
+    private String studyYear;
 
-    private Semester semester;
+    private String semester;
 
-    private CourseType courseType;
+    private String courseType;
 
 
     public NewCourseRequest() {
@@ -38,11 +38,11 @@ public class NewCourseRequest {
         return courseDescription;
     }
 
-    public StudyYear getStudyYear() {
+    public String getStudyYear() {
         return studyYear;
     }
 
-    public Semester getSemester() {
+    public String getSemester() {
         return semester;
     }
 
@@ -50,7 +50,7 @@ public class NewCourseRequest {
         return programs;
     }
 
-    public CourseType getCourseType() {
+    public String getCourseType() {
         return courseType;
     }
 }

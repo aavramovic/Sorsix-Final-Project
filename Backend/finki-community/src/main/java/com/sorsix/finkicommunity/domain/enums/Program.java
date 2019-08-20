@@ -9,6 +9,7 @@ public enum Program{
     MT,     // MrezhniTehnologii,
     PET,    // PrimenaNaETehnologii,
     KNI,    // KompjuterskiNaukiIInzhenerstvo,
+    KNIA,   // KompjuterskiNaukiIInzhenerstvoAngliski
 
     IMB,    // InternetMrezhiIBezbednost,
     //KE2,    // KompjuterskaEdukacijaNew,

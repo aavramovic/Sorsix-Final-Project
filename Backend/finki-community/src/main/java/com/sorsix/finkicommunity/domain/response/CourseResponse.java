@@ -1,22 +1,23 @@
-package com.sorsix.finkicommunity.response;
-
-import com.sorsix.finkicommunity.domain.entities.Post;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.sorsix.finkicommunity.domain.response;
 
 public class CourseResponse {
+    private long courseId;
     private String code;
     private String courseName;
     private String courseDescription;
+
+    private String program;
     private String studyYear;
     private String semester;
-    private String programs;
     private String courseType;
-    private int numberOfPosts;
-    private int numberOfReplies;
 
-    Set<Post> posts = new HashSet<>();
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
 
     public String getCode() {
         return code;
@@ -42,6 +43,14 @@ public class CourseResponse {
         this.courseDescription = courseDescription;
     }
 
+    public String getProgram() {
+        return program;
+    }
+
+    public void setProgram(String program) {
+        this.program = program;
+    }
+
     public String getStudyYear() {
         return studyYear;
     }
@@ -58,43 +67,11 @@ public class CourseResponse {
         this.semester = semester;
     }
 
-    public String getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(String programs) {
-        this.programs = programs;
-    }
-
     public String getCourseType() {
         return courseType;
     }
 
     public void setCourseType(String courseType) {
         this.courseType = courseType;
-    }
-
-    public int getNumberOfPosts() {
-        return numberOfPosts;
-    }
-
-    public void setNumberOfPosts(int numberOfPosts) {
-        this.numberOfPosts = numberOfPosts;
-    }
-
-    public int getNumberOfReplies() {
-        return numberOfReplies;
-    }
-
-    public void setNumberOfReplies(int numberOfReplies) {
-        this.numberOfReplies = numberOfReplies;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
     }
 }

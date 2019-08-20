@@ -1,6 +1,4 @@
-package com.sorsix.finkicommunity.response;
-
-import com.fasterxml.jackson.annotation.JsonGetter;
+package com.sorsix.finkicommunity.domain.response;
 
 public class PostResponse {
     private long id;
