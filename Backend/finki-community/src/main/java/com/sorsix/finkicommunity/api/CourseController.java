@@ -1,8 +1,9 @@
 package com.sorsix.finkicommunity.api;
 
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
-import com.sorsix.finkicommunity.domain.response.SimpleCourseResponse;
+import com.sorsix.finkicommunity.domain.response.course.SimpleCourseResponse;
 import com.sorsix.finkicommunity.services.CourseService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -18,15 +19,9 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    // GET METHODS
-//    @GetMapping("/{id}")
-//    public ResponseEntity getCourseById(@PathVariable Long id)
-//    {
-//        return courseService.getCourseById(id)
-//                    .map(ResponseEntity::ok)
-//                    .orElseGet(()-> ResponseEntity.notFound().build());
-//    }
-
+    /*
+    GET METHODS
+     */
     @GetMapping("/filter")
     ResponseEntity<List<SimpleCourseResponse>> getCoursesByProgramStudyYearSemesterCourseType(
             @RequestParam(required = false) String program,
@@ -49,9 +44,13 @@ public class CourseController {
                 .orElseGet(()-> ResponseEntity.notFound().build());
     }
 
-    // POST METHODS
+    /*
+    POST METHODS
+     */
     @PostMapping("/new")
     public ResponseEntity createNewCourse(@RequestBody @Valid NewCourseRequest newCourseRequest){
-        return ResponseEntity.ok(courseService.createNewCourse(newCourseRequest));
+        return courseService.createNewCourse(newCourseRequest)
+                .map(courseRequest -> ResponseEntity.status(HttpStatus.CREATED).body(courseRequest))
+                .orElseGet(()-> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 }

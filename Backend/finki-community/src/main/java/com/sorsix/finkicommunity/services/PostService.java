@@ -7,9 +7,8 @@ import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
-import com.sorsix.finkicommunity.domain.response.ClickedPostResponse;
-import com.sorsix.finkicommunity.domain.response.PostResponse;
-import org.springframework.data.domain.PageRequest;
+import com.sorsix.finkicommunity.domain.response.post.ClickedPostResponse;
+import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -65,7 +64,7 @@ public class PostService {
     }
 
 
-    public List<PostResponse> getTopPosts(Integer noOfPosts){
+    public List<SimplePostResponse> getTopPosts(Integer noOfPosts){
         if(noOfPosts == null || noOfPosts.intValue() == 10){
             return getTop10Posts();
         }
@@ -78,17 +77,17 @@ public class PostService {
         }
     }
 
-    public List<PostResponse> getTop10Posts(){
+    public List<SimplePostResponse> getTop10Posts(){
         List<Post> posts = postRepository.findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    public List<PostResponse> getTop25Posts(){
+    public List<SimplePostResponse> getTop25Posts(){
         List<Post> posts = postRepository.findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    public List<PostResponse> getTop50Posts(){
+    public List<SimplePostResponse> getTop50Posts(){
         List<Post> posts = postRepository.findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
@@ -108,8 +107,8 @@ public class PostService {
     /*
     HELPER METHODS
      */
-    private PostResponse createPostResponseObject(Post post){
-        PostResponse postResponse = new PostResponse();
+    private SimplePostResponse createPostResponseObject(Post post){
+        SimplePostResponse postResponse = new SimplePostResponse();
 
         postResponse.setId(post.getPostId());
         postResponse.setContent(post.getContent());
@@ -123,8 +122,8 @@ public class PostService {
         return postResponse;
     }
 
-    private List<PostResponse> convertFromPostToPostResponse(List<Post> posts){
-        List<PostResponse> postResponses = new ArrayList<PostResponse>();
+    private List<SimplePostResponse> convertFromPostToPostResponse(List<Post> posts){
+        List<SimplePostResponse> postResponses = new ArrayList<SimplePostResponse>();
 
         for(Post post : posts){
             postResponses.add(createPostResponseObject(post));

@@ -2,8 +2,8 @@ package com.sorsix.finkicommunity.api;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
-import com.sorsix.finkicommunity.domain.response.ClickedPostResponse;
-import com.sorsix.finkicommunity.domain.response.PostResponse;
+import com.sorsix.finkicommunity.domain.response.post.ClickedPostResponse;
+import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
 import com.sorsix.finkicommunity.services.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ public class PostController {
     }
 
     @GetMapping("/top")
-    public ResponseEntity<List<PostResponse>> getTopPosts(
+    public ResponseEntity<List<SimplePostResponse>> getTopPosts(
             @RequestParam(required = false) Integer noOfPosts   // If absent, default will be 10
     ){
         return ResponseEntity.ok(postService.getTopPosts(noOfPosts));

@@ -1,6 +1,7 @@
-package com.sorsix.finkicommunity.domain.response;
+package com.sorsix.finkicommunity.domain.response.post;
 
-public class PostResponse {
+public class SimplePostResponse {
+
     private long id;
     private long timeOfPost;
     private int noOfLikes;

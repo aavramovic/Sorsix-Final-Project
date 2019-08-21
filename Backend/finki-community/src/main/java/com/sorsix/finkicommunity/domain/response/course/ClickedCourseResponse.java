@@ -1,6 +1,6 @@
-package com.sorsix.finkicommunity.domain.response;
+package com.sorsix.finkicommunity.domain.response.course;
 
-import com.sorsix.finkicommunity.domain.entities.Post;
+import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +16,7 @@ public class ClickedCourseResponse {
     private int numberOfPosts;
     private int numberOfReplies;
 
-    Set<PostResponse> posts = new HashSet<>();
+    Set<SimplePostResponse> posts = new HashSet<>();
 
     public String getCode() {
         return code;
@@ -90,11 +90,11 @@ public class ClickedCourseResponse {
         this.numberOfReplies = numberOfReplies;
     }
 
-    public Set<PostResponse> getPosts() {
+    public Set<SimplePostResponse> getPosts() {
         return posts;
     }
 
-    public void setPosts(Set<PostResponse> posts) {
+    public void setPosts(Set<SimplePostResponse> posts) {
         this.posts = posts;
     }
 }
