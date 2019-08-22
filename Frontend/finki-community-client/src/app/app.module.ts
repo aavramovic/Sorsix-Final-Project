@@ -17,7 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule, MatButtonToggleModule, MatCheckboxModule, MatIconModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule, MatButtonToggleModule, MatCheckboxModule, MatIconModule, MatRadioModule, MatSelectModule} from '@angular/material';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
@@ -56,6 +56,7 @@ import { AdminComponent } from './Components/Views/admin/admin.component';
         MatSelectModule,
         MatButtonToggleModule,
         MatCheckboxModule,
+        MatRadioModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

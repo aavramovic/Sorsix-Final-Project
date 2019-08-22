@@ -38,17 +38,14 @@ export class ThreadBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.thread$.pipe(switchMap(() =>
-        //     this.threadService.getTopNPosts(this.numberOfPostsByPage)))
-        //     .subscribe(threads => this.threads = threads);
-        // this.thread$.next();
-
         this.router.events.subscribe(e => {
             if (e instanceof NavigationEnd && this.url.hasStartInUrl()) {
                 this.urlChange();
             }
         });
         this.selectedCourse = this.url.getLastPartOfUrl();
+
+        //TODO: ne go menjaj te mrzi
         if (this.selectedCourse == 'start' || this.selectedCourse == 'threads') {
             this.selectedCourse = '';
         }

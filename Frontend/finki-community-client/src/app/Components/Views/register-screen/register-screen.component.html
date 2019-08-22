@@ -1,120 +1,123 @@
-<div class="container-fluid">
-    <div class="row" id="login-label">
-        <span class="col-sm-3 offset-1 h3">Register</span>
+<div class="purple-background h-100 d-flex">
+    <div class="container-fluid mt-5 ">
+        <div class="row" id="login-label">
+            <span class="col-sm-3 offset-1 h3">Register</span>
+        </div>
+        <hr>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+            <!--FIRST NAME-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="First Name" formControlName="firstName" required>
+                    </label>
+
+                    <mat-error *ngIf="registerForm.get('firstName')?.errors">
+                        {{getErrorMessage('firstName')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--LAST NAME-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Last Name" formControlName="lastName" required>
+                    </label>
+
+                    <mat-error *ngIf="registerForm.get('lastName')?.errors">
+                        {{getErrorMessage('lastName')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--USERNAME-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Username" formControlName="username" required>
+                    </label>
+
+                    <mat-error *ngIf="registerForm.get('username')?.errors">
+                        {{getErrorMessage('username')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--EMAIL-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Enter email" formControlName="email" required>
+                    </label>
+
+                    <mat-error *ngIf="registerForm.get('email')?.errors">
+                        {{getErrorMessage('email')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--CONFIRM EMAIL-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Confirm email" formControlName="confirmEmail" required>
+                    </label>
+
+                    <mat-error *ngIf="registerForm.get('confirmEmail')?.errors">
+                        {{getErrorMessage('confirmEmail')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--PASSWORD-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Enter password" [type]="hidePassword ? 'password' : 'text'"
+                               formControlName="password" required>
+                    </label>
+
+                    <mat-error *ngIf="registerForm.get('password')?.errors">
+                        {{getErrorMessage('password')}}
+                    </mat-error>
+
+                    <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                            [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hidePassword">
+                        <i class="material-icons">
+                            {{hidePassword ? 'visibility_off' : 'visibility'}}
+                        </i>
+                    </button>
+                </mat-form-field>
+            </div>
+
+            <!--CONFIRM PASSWORD-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Confirm password"
+                               [type]="hideConfirmPassword ? 'password' : 'text'"
+                               formControlName="confirmPassword" required>
+                    </label>
+                    <mat-error *ngIf="registerForm.get('confirmPassword')?.errors">
+                        {{getErrorMessage('confirmPassword')}}
+                    </mat-error>
+                    <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+                            [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hideConfirmPassword">
+                        <i class="material-icons">{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</i>
+                    </button>
+                </mat-form-field>
+            </div>
+
+            <!--SUBMIT-->
+            <div class="row mt-5">
+                <button type='submit' class="btn btn-outline-dark col-sm-4 offset-4" [disabled]="registerForm.invalid">
+                    Register
+                </button>
+            </div>
+        </form>
     </div>
-    <hr>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
-        <!--FIRST NAME-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="First Name" formControlName="firstName" required>
-                </label>
-
-                <mat-error *ngIf="registerForm.get('firstName')?.errors">
-                    {{getErrorMessage('firstName')}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <!--LAST NAME-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Last Name" formControlName="lastName" required>
-                </label>
-
-                <mat-error *ngIf="registerForm.get('lastName')?.errors">
-                    {{getErrorMessage('lastName')}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <!--USERNAME-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Username" formControlName="username" required>
-                </label>
-
-                <mat-error *ngIf="registerForm.get('username')?.errors">
-                    {{getErrorMessage('username')}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <!--EMAIL-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Enter email" formControlName="email" required>
-                </label>
-
-                <mat-error *ngIf="registerForm.get('email')?.errors">
-                    {{getErrorMessage('email')}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <!--CONFIRM EMAIL-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Confirm email" formControlName="confirmEmail" required>
-                </label>
-
-                <mat-error *ngIf="registerForm.get('confirmEmail')?.errors">
-                    {{getErrorMessage('confirmEmail')}}
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <!--PASSWORD-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Enter password" [type]="hidePassword ? 'password' : 'text'"
-                           formControlName="password" required>
-                </label>
-
-                <mat-error *ngIf="registerForm.get('password')?.errors">
-                    {{getErrorMessage('password')}}
-                </mat-error>
-
-                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hidePassword">
-                    <i class="material-icons">
-                        {{hidePassword ? 'visibility_off' : 'visibility'}}
-                    </i>
-                </button>
-            </mat-form-field>
-        </div>
-
-        <!--CONFIRM PASSWORD-->
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Confirm password" [type]="hideConfirmPassword ? 'password' : 'text'"
-                           formControlName="confirmPassword" required>
-                </label>
-                <mat-error *ngIf="registerForm.get('confirmPassword')?.errors">
-                    {{getErrorMessage('confirmPassword')}}
-                </mat-error>
-                <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
-                        [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hideConfirmPassword">
-                    <i class="material-icons">{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</i>
-                </button>
-            </mat-form-field>
-        </div>
-
-        <!--SUBMIT-->
-        <div class="row mt-5">
-            <button type='submit' class="btn btn-outline-dark col-sm-4 offset-4" [disabled]="registerForm.invalid">
-                Register
-            </button>
-        </div>
-    </form>
 </div>

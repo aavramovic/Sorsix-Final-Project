@@ -24,9 +24,6 @@ export class Course {
         this.type = type;
     }
 
-//TODO:// add user, delete user
-
-
     toString(): string {
         return this.type;
     }

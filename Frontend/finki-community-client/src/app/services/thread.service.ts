@@ -25,7 +25,6 @@ export class ThreadService {
 
 
     getTopNThreadsByCourse(numberOfPosts: number, courseName?: string): Observable<Thread[]> {
-
         if (courseName.length == 0) {
             return this.getTopNPosts(numberOfPosts);
         } else {

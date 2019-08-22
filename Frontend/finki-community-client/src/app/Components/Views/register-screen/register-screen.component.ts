@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {EmailMatch, PasswordMatch} from '../../../Models/Validators/equal-values-validator';
 import {HttpClient} from '@angular/common/http';
-import {API_URL, REGISTER_USER, USERS} from '../../../Models/global-const-url-paths';
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
 
@@ -28,7 +26,7 @@ export class RegisterScreenComponent implements OnInit {
         validators: [
             this.matchValidator('email', 'confirmEmail'),
             this.matchValidator('password', 'confirmPassword')
-        ], updateOn: 'blur'
+        ]
     });
 
     private matchValidator(value, confirmValue): ValidatorFn {
@@ -77,11 +75,10 @@ export class RegisterScreenComponent implements OnInit {
     }
 
     onSubmit() {
-        // TODO: Use EventEmitter with form value
         let newUser = this.registerForm;
         newUser.removeControl('confirmEmail');
         newUser.removeControl('confirmPassword');
         this.userService.postNewUser(newUser);
-        this.router.navigateByUrl(API_URL);
+        this.router.navigate(['/']).then(r => r.valueOf());
     }
 }
