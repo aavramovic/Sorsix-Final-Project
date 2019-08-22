@@ -22,6 +22,7 @@ import {RegisterScreenComponent} from './Components/Views/register-screen/regist
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
 import { AdminComponent } from './Components/Views/admin/admin.component';
+import { NewCourseComponent } from './new-course/new-course.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { AdminComponent } from './Components/Views/admin/admin.component';
         RegisterScreenComponent,
         UserBarComponent,
         MatSelectComponent,
-        AdminComponent
+        AdminComponent,
+        NewCourseComponent
     ],
     imports: [
         BrowserModule,
