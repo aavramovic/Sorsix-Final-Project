@@ -14,7 +14,11 @@ export class UrlService {
         return this.location.normalize(this.location.path()).split('/').pop();
     }
 
-    containsStartInUrl() {
+    hasStartInUrl():boolean {
         return this.location.normalize(this.location.path()).split('/').includes('start');
+    }
+
+    urlLengthInParts(): number{
+        return this.location.normalize(this.location.path()).split('/').length;
     }
 }

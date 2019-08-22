@@ -9,7 +9,7 @@ import {ICourse} from '../Models/Interfaces/ICourse';
 import {catchError, map} from 'rxjs/operators';
 import {getKeyByValue, YearOfStudy} from '../Models/Enumeration/YearOfStudy';
 import {Semester} from '../Models/Enumeration/Semester';
-import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/Classes/GlobalPathStaticVariables';
+import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/global-const-url-paths';
 import {IPostCourse} from '../Models/Interfaces/IPostCourse';
 import {PostCourse} from '../Models/Classes/PostCourse';
 

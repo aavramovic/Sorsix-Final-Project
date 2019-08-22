@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
@@ -30,7 +30,7 @@ export class ThreadBarComponent implements OnInit {
     urlChange() {
         this.selectedCourse = this.url.getLastPartOfUrl();
 
-        if (this.selectedCourse == 'start') {
+        if (this.selectedCourse == 'start' || this.selectedCourse == 'threads') {
             this.selectedCourse = '';
         }
 
@@ -44,12 +44,12 @@ export class ThreadBarComponent implements OnInit {
         // this.thread$.next();
 
         this.router.events.subscribe(e => {
-            if (e instanceof NavigationEnd && this.url.containsStartInUrl()) {
+            if (e instanceof NavigationEnd && this.url.hasStartInUrl()) {
                 this.urlChange();
             }
         });
         this.selectedCourse = this.url.getLastPartOfUrl();
-        if (this.selectedCourse == 'start') {
+        if (this.selectedCourse == 'start' || this.selectedCourse == 'threads') {
             this.selectedCourse = '';
         }
 
@@ -59,4 +59,7 @@ export class ThreadBarComponent implements OnInit {
 
         this.threadByCourse$.next();
     }
+
+
 }
+

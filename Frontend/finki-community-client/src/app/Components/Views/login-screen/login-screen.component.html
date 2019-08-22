@@ -6,7 +6,7 @@
     <div class="row">
         <mat-form-field class="col-sm-10 offset-1">
             <label>
-                <input matInput placeholder="Enter your email" [formControl]="email" required>
+                <input matInput placeholder="Enter email" [formControl]="email" required>
             </label>
             <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
