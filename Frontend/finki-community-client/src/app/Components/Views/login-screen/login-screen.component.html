@@ -35,7 +35,8 @@
                 </mat-form-field>
             </div>
             <div class="row mt-5">
-                <button type='submit' class="btn btn-outline-dark col-sm-4 offset-4">Login</button>
+                <button type='submit' class="btn btn-outline-dark col-4 offset-4" [disabled]="loginForm.invalid">Login
+                </button>
             </div>
         </form>
     </div>

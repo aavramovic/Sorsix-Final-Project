@@ -1,0 +1,8 @@
+a:hover {
+    color: rebeccapurple !important;
+}
+
+a:active {
+    color: rebeccapurple !important;
+    font-weight: bolder !important;
+}

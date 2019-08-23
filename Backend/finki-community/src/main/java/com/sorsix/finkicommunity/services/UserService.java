@@ -7,6 +7,7 @@ import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,11 +23,11 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User createNewUser(NewUserRequest newUserRequest){
+    public User createNewUser(NewUserRequest newUserRequest) {
         User user = new User();
 
         user.setUsername(newUserRequest.getUsername());
@@ -36,18 +37,18 @@ public class UserService {
         user.setLastName(newUserRequest.getLastName());
         user.setBirthdate(newUserRequest.getBirthdate());
         user.addRole("USER");
-        try{
+        try {
             return userRepository.save(user);
-        }catch(RuntimeException ex){
-            return null;
+        } catch (RuntimeException ex) {
+            return user;
         }
     }
 
-    public Optional<User> getUserById(Long id){
+    public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
-    public Optional<NewFollowingRequest> addNewFollowing(NewFollowingRequest newFollowingRequest){
+    public Optional<NewFollowingRequest> addNewFollowing(NewFollowingRequest newFollowingRequest) {
 
         Optional<User> userFollowing = userRepository.findById(newFollowingRequest.getUserIdFollowing());
         Optional<User> userFollowed = userRepository.findById(newFollowingRequest.getUserIdFollowed());
@@ -55,7 +56,7 @@ public class UserService {
         return userFollowing.map(
                 user1 -> Optional.of(newFollowingRequest)
         ).orElseGet(
-                ()-> Optional.empty()
+                () -> Optional.empty()
         );
 
 //        if(userFollowing.isPresent() && userFollowed.isPresent()){
@@ -69,7 +70,7 @@ public class UserService {
 //        return Optional.empty();
     }
 
-    public Optional<Set<Post>> getUserPosts(Long id){
+    public Optional<Set<Post>> getUserPosts(Long id) {
         Optional<User> user = userRepository.findById(id);
 
         return user.map(

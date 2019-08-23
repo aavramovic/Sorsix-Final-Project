@@ -3,6 +3,9 @@ import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from 
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
+import {Subject} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {PostUser} from '../../../Models/Classes/PostUser';
 
 @Component({
     selector: 'app-register-screen',
@@ -12,15 +15,17 @@ import {Router} from '@angular/router';
 export class RegisterScreenComponent implements OnInit {
     hidePassword: boolean = true;
     hideConfirmPassword: boolean = true;
+    user$ = new Subject();
+    newUser: PostUser;
 
     registerForm = new FormGroup({
-        username: new FormControl('', Validators.required),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        confirmEmail: new FormControl('', [Validators.required]),
-        password: new FormControl('', [Validators.required, Validators.min(8)]),
-        confirmPassword: new FormControl('', [Validators.required]),
-        firstName: new FormControl('', [Validators.required]),
-        lastName: new FormControl('', [Validators.required]),
+        username: new FormControl('asd', Validators.required),
+        email: new FormControl('asd@asd', [Validators.required, Validators.email]),
+        confirmEmail: new FormControl('asd@sad', [Validators.required]),
+        password: new FormControl('12345678', [Validators.required, Validators.min(8)]),
+        confirmPassword: new FormControl('12345678', [Validators.required]),
+        firstName: new FormControl('asd', [Validators.required]),
+        lastName: new FormControl('asd', [Validators.required]),
         birthdate: new FormControl((new Date(1998, 12, 4)).getMilliseconds(), [Validators.required]),
     }, {
         validators: [
@@ -28,6 +33,7 @@ export class RegisterScreenComponent implements OnInit {
             this.matchValidator('password', 'confirmPassword')
         ]
     });
+
 
     private matchValidator(value, confirmValue): ValidatorFn {
         return (group: FormGroup): ValidationErrors => {
@@ -52,6 +58,13 @@ export class RegisterScreenComponent implements OnInit {
 
 
     ngOnInit() {
+        this.registerForm.clearValidators();
+
+        this.user$.pipe(switchMap(() =>
+            this.userService.postNewUser(this.newUser)))
+            .subscribe(response => {
+                console.log(response.username + ' - ' + response.userId);
+            });
     }
 
     getErrorMessage(value: string) {
@@ -70,10 +83,16 @@ export class RegisterScreenComponent implements OnInit {
     }
 
     onSubmit() {
-        let newUser = this.registerForm;
-        newUser.removeControl('confirmEmail');
-        newUser.removeControl('confirmPassword');
-        this.userService.postNewUser(newUser);
-        this.router.navigate(['/']).then(r => r.valueOf());
+        this.newUser = new PostUser(
+            this.registerForm.get('username').value,
+            this.registerForm.get('firstName').value,
+            this.registerForm.get('lastName').value,
+            this.registerForm.get('password').value,
+            this.registerForm.get('birthdate').value,
+            this.registerForm.get('email').value
+        );
+
+        this.user$.next();
+        // this.router.navigate(['/']).then(r => r.valueOf());
     }
 }

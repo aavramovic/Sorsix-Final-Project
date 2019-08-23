@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../../../services/user.service';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
     selector: 'app-login-screen',
@@ -14,7 +16,8 @@ export class LoginScreenComponent implements OnInit {
         password: new FormControl('', [Validators.required, Validators.min(8)]),
     });
 
-    constructor() {
+    constructor(private userService: UserService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -31,6 +34,8 @@ export class LoginScreenComponent implements OnInit {
     }
 
     onSubmit() {
-
+        let newUser = this.loginForm;
+        this.userService.loginUser(newUser);
+        this.router.navigate(['/']).then(r => r.valueOf());
     }
 }

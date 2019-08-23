@@ -13,6 +13,31 @@ hr {
     margin-left: 8%;
 }
 
+@media only screen and (max-width: 800px) {
+    .container-fluid {
+        width: 80%;
+    }
+
+    button[type="submit"] {
+        margin-left: 33%;
+    }
+
+}
+
+@media only screen and (max-width: 575px) {
+    mat-form-field {
+        margin: 0;
+    }
+
+    .container-fluid {
+
+    }
+
+    button[type="submit"] {
+        margin-left: 32%;
+    }
+}
+
 #login-label {
     color: rebeccapurple;
 }
@@ -25,4 +50,14 @@ html, body {
 
 .purple-background {
     background-image: url("http://azuretwilight.org/images/themes/azure_twilight/background_space_purple.png");
+}
+
+.btn-outline-dark:hover:disabled {
+    background-color: white !important;
+    color: darkred !important;
+}
+
+.btn-outline-dark:disabled {
+    border-color: darkred !important;
+    color: darkred !important;
 }
