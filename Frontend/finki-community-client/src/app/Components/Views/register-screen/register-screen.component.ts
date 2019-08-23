@@ -69,11 +69,6 @@ export class RegisterScreenComponent implements OnInit {
         return errors.join(', ');
     }
 
-
-    get diagnostic() {
-        return JSON.stringify(this.registerForm);
-    }
-
     onSubmit() {
         let newUser = this.registerForm;
         newUser.removeControl('confirmEmail');

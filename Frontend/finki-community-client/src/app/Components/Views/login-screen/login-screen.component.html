@@ -5,28 +5,38 @@
             <span class="col-sm-3 offset-1 h3">Login</span>
         </div>
         <hr>
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Enter email" [formControl]="email" required>
-                </label>
-                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="row">
-            <mat-form-field class="col-sm-10 offset-1">
-                <label>
-                    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
-                </label>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!--USERNAME-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Enter username" formControlName="username" required>
+                    </label>
+                    <mat-error *ngIf="loginForm.get('username')?.errors">
+                        {{getErrorMessage('username')}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!--PASSWORD-->
+            <div class="row">
+                <mat-form-field class="col-sm-10 offset-1">
+                    <label>
+                        <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" required
+                               formControlName="password">
+                    </label>
+                    <mat-error *ngIf="loginForm.get('password')?.errors">
+                        {{getErrorMessage('password')}}
+                    </mat-error>
 
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
-                    <i class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</i>
-                </button>
-            </mat-form-field>
-        </div>
-        <div class="row mt-5">
-            <button type='submit' class="btn btn-outline-dark col-sm-4 offset-4">Login</button>
-        </div>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                        <i class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</i>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="row mt-5">
+                <button type='submit' class="btn btn-outline-dark col-sm-4 offset-4">Login</button>
+            </div>
+        </form>
     </div>
 </div>

@@ -21,7 +21,9 @@ import {MatButtonModule, MatButtonToggleModule, MatCheckboxModule, MatIconModule
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
-import { AdminComponent } from './Components/Views/admin/admin.component';
+import {AdminComponent} from './Components/Views/admin/admin.component';
+import {NewCourseComponent} from './Components/Views/new-course/new-course.component';
+import {MatDialogModule} from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -37,7 +39,8 @@ import { AdminComponent } from './Components/Views/admin/admin.component';
         RegisterScreenComponent,
         UserBarComponent,
         MatSelectComponent,
-        AdminComponent
+        AdminComponent,
+        NewCourseComponent
     ],
     imports: [
         BrowserModule,
@@ -57,9 +60,11 @@ import { AdminComponent } from './Components/Views/admin/admin.component';
         MatButtonToggleModule,
         MatCheckboxModule,
         MatRadioModule,
+        MatDialogModule
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [NewCourseComponent]
 })
 export class AppModule {
 }

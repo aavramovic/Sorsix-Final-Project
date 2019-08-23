@@ -15,7 +15,7 @@ const routes: Routes = [
     {path: 'courses', component: CourseBarComponent},
     {path: 'courses/:id', component: ThreadBarComponent},
     {path: 'threads', component: ThreadBarComponent},
-    {path: 'users', component: UserBarComponent},
+    {path: 'users', component: AdminComponent},
     {path: 'login', component: LoginScreenComponent},
     {path: 'register', component: RegisterScreenComponent},
     {path: 'admin', component: AdminComponent},
