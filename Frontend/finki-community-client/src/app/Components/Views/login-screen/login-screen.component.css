@@ -5,22 +5,22 @@
     width: 40%;
     background-color: white;
     opacity: 0.8;
-    height: 40%;
+    height: 45%;
 }
 
 hr {
     width: 50%;
     margin-left: 8%;
-
 }
 
 #login-label {
     color: rebeccapurple;
 }
 
-
 html, body {
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .purple-background {

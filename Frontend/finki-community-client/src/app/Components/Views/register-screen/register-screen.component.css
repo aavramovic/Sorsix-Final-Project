@@ -1,21 +1,23 @@
 .container-fluid {
+    margin-top: 2%;
     border: 1px rebeccapurple solid;
     padding: 5vh 10px;
     width: 50%;
-    margin-top: 2%;
     background-color: white;
     opacity: 0.8;
-    height: 80%;
+    height: 83%;
+
 }
 
 hr {
     width: 50%;
     margin-left: 8%;
-
 }
 
 html, body {
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #login-label {

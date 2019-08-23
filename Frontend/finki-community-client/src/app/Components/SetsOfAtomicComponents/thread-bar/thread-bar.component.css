@@ -1,12 +1,3 @@
-.accessory {
-    height: 6px;
-    background-image: radial-gradient(
-        closest-side,
-        hsla(0, 0%, 50%, 1.0),
-        hsla(0, 0%, 50%, 0) 100%);
-    position: relative;
-}
-
 .margin {
     margin: 0 10px;
 }
