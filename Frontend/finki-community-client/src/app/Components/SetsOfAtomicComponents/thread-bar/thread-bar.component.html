@@ -1,24 +1,26 @@
-<h3>{{selectedCourse.length != 0 ? selectedCourse : 'Threads'}}</h3>
-<hr>
-<div>
+<div class="mt-4">
+    <h3>{{selectedCourse.length != 0 ? selectedCourse : 'Threads'}}</h3>
+    <hr>
+    <div>
 
-    <section class="section">
-        <label class="margin">Threads per page:</label>
-        <mat-radio-group [(ngModel)]="numberOfPostsByPage" class="mt-2" color="primary" >
-            <mat-radio-button class="margin" value="10" aria-checked="true">10</mat-radio-button>
-            <mat-radio-button class="margin" value="25">25</mat-radio-button>
-            <mat-radio-button class="margin" value="50">50</mat-radio-button>
-        </mat-radio-group>
-    </section>
-</div>
-<hr>
-<div *ngIf="!threads">
-    <mat-spinner class="d-flex m-auto mt-xl-5"></mat-spinner>
-</div>
-<div *ngIf="threads">
-    <ul class="list-group">
-        <li *ngFor="let thread of threads" class="list-group-item">
-            <app-thread [thread]="thread"></app-thread>
-        </li>
-    </ul>
+        <section class="section">
+            <label class="margin">Threads per page:</label>
+            <mat-radio-group [(ngModel)]="numberOfPostsByPage" class="mt-2" color="primary">
+                <mat-radio-button class="margin" value="10" aria-checked="true">10</mat-radio-button>
+                <mat-radio-button class="margin" value="25">25</mat-radio-button>
+                <mat-radio-button class="margin" value="50">50</mat-radio-button>
+            </mat-radio-group>
+        </section>
+    </div>
+    <hr>
+    <div *ngIf="!threads">
+        <mat-spinner class="d-flex m-auto mt-xl-5"></mat-spinner>
+    </div>
+    <div *ngIf="threads">
+        <ul class="list-group">
+            <li *ngFor="let thread of threads" class="list-group-item">
+                <app-thread [thread]="thread"></app-thread>
+            </li>
+        </ul>
+    </div>
 </div>

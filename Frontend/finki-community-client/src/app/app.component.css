@@ -1,5 +1,15 @@
-.container-fluid {
-    margin-top: 1%;
+html, body {
+    height: 100%;
+    margin: auto;
+}
+
+.overflow-x-hidden {
     overflow-x: hidden;
 }
 
+.height {
+    height: 94.3%;
+}
+
+.height-nav {
+}

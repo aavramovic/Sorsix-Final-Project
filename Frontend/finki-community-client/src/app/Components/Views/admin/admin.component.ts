@@ -1,5 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {EnumService} from '../../../services/enum.service';
+import {NewCourseComponent} from '../new-course/new-course.component';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+
+export interface NewCourseDialogData {
+    programs: string[];
+    year: string[];
+    semester: string[];
+    type: string[];
+
+}
 
 @Component({
     selector: 'app-admin',
@@ -12,10 +22,31 @@ export class AdminComponent implements OnInit {
     semesters: string[] = EnumService.getSemesters();
     types: string[] = EnumService.getTypes();
 
-    constructor() {
+    program: string;
+    year: string;
+    semester: string;
+    type: string;
+
+    constructor(public dialog: MatDialog) {
     }
 
     ngOnInit() {
     }
 
+    openDialog(): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+            programs: this.programs,
+            years: this.years,
+            semesters: this.semesters,
+            types: this.types
+        };
+
+        const dialogRef = this.dialog.open(NewCourseComponent, dialogConfig.data);
+
+        dialogRef.afterClosed().subscribe(
+            data => console.log(data)
+        );
+    }
 }

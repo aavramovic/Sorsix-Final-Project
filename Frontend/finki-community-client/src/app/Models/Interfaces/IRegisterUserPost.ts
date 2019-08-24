@@ -1,9 +1,7 @@
-export interface IUser {
-    id?: number;
+export interface IRegisterUserPost {
     username: string,
     password: string,
     firstName: string,
     lastName: string,
     birthdate: number,
-    authdata?: string
 }
