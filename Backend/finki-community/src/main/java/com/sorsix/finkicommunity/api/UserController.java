@@ -1,6 +1,7 @@
 package com.sorsix.finkicommunity.api;
 
 import com.sorsix.finkicommunity.domain.entities.User;
+import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
 import com.sorsix.finkicommunity.services.UserService;
@@ -44,8 +45,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> createNewUser(@RequestBody NewUserRequest newUserRequest) {
+    public ResponseEntity<User> createNewUser(@RequestBody @Valid NewUserRequest newUserRequest) {
         return ResponseEntity.ok(userService.createNewUser(newUserRequest));
+    }
+    //TODO: probably not right change
+    @PostMapping("/login")
+    public ResponseEntity<String> findExistingUser(@RequestBody @Valid LoginViewModel loginViewModel){
+        return ResponseEntity.ok(userService.findExistingUser(loginViewModel));
     }
 
     @PostMapping("/new-following")

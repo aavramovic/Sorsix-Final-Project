@@ -1,7 +1,9 @@
 package com.sorsix.finkicommunity.services;
 
+import antlr.Token;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
+import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
 import com.sorsix.finkicommunity.repository.UserRepository;
@@ -44,6 +46,21 @@ public class UserService {
         }
     }
 
+    public String findExistingUser(LoginViewModel loginViewModel) {
+        String encodedPassword;
+        String rawPassword;
+        try {
+            encodedPassword = userRepository.findByUsername(loginViewModel.getUsername()).getPassword();
+            rawPassword = loginViewModel.getPassword();
+        } catch (Exception someException) {
+            return "Username not found";
+        }
+        if (passwordEncoder.matches(rawPassword, encodedPassword))
+            return encodedPassword;
+        return "Wrong username or password";
+
+    }
+
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
@@ -77,4 +94,6 @@ public class UserService {
                 u -> u.getPosts()
         );
     }
+
+
 }

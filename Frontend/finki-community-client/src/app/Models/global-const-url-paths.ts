@@ -6,3 +6,4 @@ export const THREAD_REPLIES: string = 'forum/posts/replies/';
 export const POST_COURSE: string = 'forum/courses/new';
 export const USERS: string = 'forum/users/';
 export const REGISTER_USER = 'register';
+export const LOGIN_USER = 'login';
