@@ -1,12 +1,10 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
-import {Course} from '../../../Models/Classes/Course';
 import {Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {Location} from '@angular/common';
+import {NavigationEnd, Router} from '@angular/router';
 import {UrlService} from '../../../services/url.service';
 
 @Component({
@@ -18,7 +16,6 @@ export class ThreadBarComponent implements OnInit {
     threads: Thread[];
     selectedCourse: string = '';
     numberOfPostsByPage: number = 10;//TODO napravi komponenta ili delche za biranje na ova
-    // thread$ = new Subject();
     threadByCourse$ = new Subject();
 
     constructor(private threadService: ThreadService,
