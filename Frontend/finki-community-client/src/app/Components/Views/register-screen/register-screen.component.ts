@@ -21,7 +21,7 @@ export class RegisterScreenComponent implements OnInit {
     registerForm = new FormGroup({
         username: new FormControl('asd', Validators.required),
         email: new FormControl('asd@asd', [Validators.required, Validators.email]),
-        confirmEmail: new FormControl('asd@sad', [Validators.required]),
+        // confirmEmail: new FormControl('asd@sad', [Validators.required]),
         password: new FormControl('12345678', [Validators.required, Validators.min(8)]),
         confirmPassword: new FormControl('12345678', [Validators.required]),
         firstName: new FormControl('asd', [Validators.required]),
@@ -29,7 +29,7 @@ export class RegisterScreenComponent implements OnInit {
         birthdate: new FormControl((new Date(1998, 12, 4)).getMilliseconds(), [Validators.required]),
     }, {
         validators: [
-            this.matchValidator('email', 'confirmEmail'),
+            // this.matchValidator('email', 'confirmEmail'),
             this.matchValidator('password', 'confirmPassword')
         ]
     });

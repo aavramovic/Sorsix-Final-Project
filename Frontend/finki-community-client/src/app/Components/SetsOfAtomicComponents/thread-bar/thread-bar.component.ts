@@ -27,6 +27,10 @@ export class ThreadBarComponent implements OnInit {
                 private url: UrlService) {
     }
 
+    onValueChange() {
+        this.threadByCourse$.next();
+    }
+
     urlChange() {
         this.selectedCourse = this.url.getLastPartOfUrl();
 

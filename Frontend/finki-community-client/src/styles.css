@@ -15,14 +15,9 @@
 
 html, body {
     height: 100%;
-    margin: auto;
+    overflow-x: hidden;
 }
 
 .purple-background {
     background: url("http://azuretwilight.org/images/themes/azure_twilight/background_space_purple.png") no-repeat;
-}
-
-app-root {
-    display: block;
-    height: 100%;
 }

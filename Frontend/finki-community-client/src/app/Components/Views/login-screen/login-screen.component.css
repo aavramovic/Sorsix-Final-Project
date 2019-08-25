@@ -1,11 +1,14 @@
 .container-fluid {
-    margin-top: 10%;
+    margin-top: 7%;
     border: 1px rebeccapurple solid;
     padding: 5vh 10px;
     width: 40%;
     background-color: white;
     opacity: 0.8;
-    height: 45%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 55%;
+
 }
 
 hr {
@@ -13,9 +16,11 @@ hr {
     margin-left: 8%;
 }
 
+/*Medium*/
 @media only screen and (max-width: 800px) {
     .container-fluid {
         width: 80%;
+        margin-top: 10%;
     }
 
     button[type="submit"] {
@@ -24,13 +29,10 @@ hr {
 
 }
 
+/*Small*/
 @media only screen and (max-width: 575px) {
     mat-form-field {
         margin: 0;
-    }
-
-    .container-fluid {
-
     }
 
     button[type="submit"] {
@@ -50,6 +52,7 @@ html, body {
 
 .purple-background {
     background-image: url("http://azuretwilight.org/images/themes/azure_twilight/background_space_purple.png");
+    background-size: cover;
 }
 
 .btn-outline-dark:hover:disabled {
@@ -60,4 +63,21 @@ html, body {
 .btn-outline-dark:disabled {
     border-color: darkred !important;
     color: darkred !important;
+}
+
+.purple-scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.purple-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+.purple-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: rebeccapurple;
 }
