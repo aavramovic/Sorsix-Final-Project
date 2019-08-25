@@ -12,7 +12,6 @@ import com.sorsix.finkicommunity.domain.response.course.SimpleCourseResponse;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.domain.response.course.ClickedCourseResponse;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,7 +97,6 @@ public class CourseService {
             } else {
                 clickedCourseResponse.setPosts(convertFromPostToPostResponse(course.getPosts().stream().limit(10).collect(Collectors.toList())));
             }
-
             return Optional.of(clickedCourseResponse);
 
         } else {

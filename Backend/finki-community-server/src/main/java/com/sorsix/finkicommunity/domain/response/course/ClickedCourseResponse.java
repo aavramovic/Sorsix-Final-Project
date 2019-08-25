@@ -16,7 +16,7 @@ public class ClickedCourseResponse {
     private int numberOfPosts;
     private int numberOfReplies;
 
-    Set<SimplePostResponse> posts = new HashSet<>();
+    private Set<SimplePostResponse> posts = new HashSet<>();
 
     public String getCode() {
         return code;

@@ -25,7 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth){     // throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -37,19 +37,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
-                .authorizeRequests().anyRequest().permitAll();
-               /* .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login", "/forum/users/register", "/register/**", "/register").permitAll()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/login","/forum/users/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/forum").permitAll()
                 .antMatchers("/forum/courses/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/forum/users/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/forum/posts/**").permitAll()*/
-//                .anyRequest().authenticated();
-
+                .antMatchers(HttpMethod.GET, "/forum/posts/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean
-    DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
@@ -58,7 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 }

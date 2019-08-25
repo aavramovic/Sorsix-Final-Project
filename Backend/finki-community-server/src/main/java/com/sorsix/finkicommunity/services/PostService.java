@@ -77,17 +77,17 @@ public class PostService {
         }
     }
 
-    public List<SimplePostResponse> getTop10Posts(){
+    private List<SimplePostResponse> getTop10Posts(){
         List<Post> posts = postRepository.findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    public List<SimplePostResponse> getTop25Posts(){
+    private List<SimplePostResponse> getTop25Posts(){
         List<Post> posts = postRepository.findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    public List<SimplePostResponse> getTop50Posts(){
+    private List<SimplePostResponse> getTop50Posts(){
         List<Post> posts = postRepository.findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
@@ -123,7 +123,7 @@ public class PostService {
     }
 
     private List<SimplePostResponse> convertFromPostToPostResponse(List<Post> posts){
-        List<SimplePostResponse> postResponses = new ArrayList<SimplePostResponse>();
+        List<SimplePostResponse> postResponses = new ArrayList<>();
 
         for(Post post : posts){
             postResponses.add(createPostResponseObject(post));

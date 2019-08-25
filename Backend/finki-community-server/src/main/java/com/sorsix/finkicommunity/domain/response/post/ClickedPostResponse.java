@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ClickedPostResponse {
-    SimplePostResponse postResponse;
-    Set<Post> replies = new HashSet<>();
+    private SimplePostResponse postResponse;
+    private Set<Post> replies = new HashSet<>();
 
     @JsonGetter(value = "post")
     public SimplePostResponse getPostResponse() {

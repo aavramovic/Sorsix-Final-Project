@@ -1,7 +1,5 @@
 package com.sorsix.finkicommunity.domain.requests;
 
-import org.springframework.lang.Nullable;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
