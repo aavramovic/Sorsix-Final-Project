@@ -3,9 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {API_URL, LOGIN_USER, USERS} from '../Models/global-const-url-paths';
-import {User} from '../Models/Classes/User';
 import * as moment from 'moment';
 import {ILoginResponse} from '../Models/Interfaces/ILoginResponse';
+import {LoginResponse} from '../Models/Classes/LoginResponse';
+import {Authorization} from '../Models/Enumeration/Authorization';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
@@ -21,14 +22,19 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username, password) {
+    login(username, password): Observable<ILoginResponse> {
+
         return this.http.post<ILoginResponse>(API_URL + USERS + LOGIN_USER, {username, password})
             .pipe(map(response => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                const expiresAt = moment().add(response.expiresIn, 'second');
-
-                localStorage.setItem('id_token', response.idToken);
-                localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+                if (response.valid) {
+                    const expiresAt = moment().add(response.expiresIn, 'second');
+                    this.logout();
+                    localStorage.setItem('id_token', response.idToken);
+                    localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
+                    return response;
+                }
+                return new LoginResponse('0', '', Authorization.VISITOR, response.valid, response.errorMessage);
             }));
     }
 
@@ -40,15 +46,15 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
     }
 
-    public isLoggedIn() {
-        return moment().isBefore(this.getExpiration());
+    public static isLoggedIn() {
+        return moment().isBefore(AuthenticationService.getExpiration());
     }
 
-    isLoggedOut() {
-        return !this.isLoggedIn();
+    static isLoggedOut() {
+        return !AuthenticationService.isLoggedIn();
     }
 
-    getExpiration() {
+    static getExpiration() {
         const expiration = localStorage.getItem('expires_at');
         const expiresAt = JSON.parse(expiration);
         return moment(expiresAt);

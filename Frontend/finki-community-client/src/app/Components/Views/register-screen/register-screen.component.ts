@@ -21,7 +21,7 @@ export class RegisterScreenComponent implements OnInit {
     registerForm = new FormGroup({
         username: new FormControl('asd', Validators.required),
         email: new FormControl('asd@asd', [Validators.required, Validators.email]),
-        password: new FormControl('12345678', [Validators.required, Validators.min(8)]),
+        password: new FormControl('12345678', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl('12345678', [Validators.required]),
         firstName: new FormControl('asd', [Validators.required]),
         lastName: new FormControl('asd', [Validators.required]),
@@ -76,6 +76,9 @@ export class RegisterScreenComponent implements OnInit {
         }
         if (this.registerForm.get(value).hasError('notEquivalent')) {
             errors.push('Does not match');
+        }
+        if (this.registerForm.get(value).hasError('minLength')) {
+            errors.push('Password too short');
         }
         return errors.join(', ');
     }

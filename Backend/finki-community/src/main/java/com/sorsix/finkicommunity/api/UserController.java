@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
+import com.sorsix.finkicommunity.domain.response.user.UserResponse;
 import com.sorsix.finkicommunity.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +49,10 @@ public class UserController {
     public ResponseEntity<User> createNewUser(@RequestBody @Valid NewUserRequest newUserRequest) {
         return ResponseEntity.ok(userService.createNewUser(newUserRequest));
     }
-    //TODO: probably not right change
+
+    //TODO: probably not right, change
     @PostMapping("/login")
-    public ResponseEntity<String> findExistingUser(@RequestBody @Valid LoginViewModel loginViewModel){
+    public ResponseEntity<UserResponse> findExistingUser(@RequestBody @Valid LoginViewModel loginViewModel) {
         return ResponseEntity.ok(userService.findExistingUser(loginViewModel));
     }
 

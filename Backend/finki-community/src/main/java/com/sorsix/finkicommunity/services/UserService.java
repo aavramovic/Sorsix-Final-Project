@@ -3,10 +3,13 @@ package com.sorsix.finkicommunity.services;
 import antlr.Token;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
+import com.sorsix.finkicommunity.domain.enums.Role;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
+import com.sorsix.finkicommunity.domain.response.user.UserResponse;
 import com.sorsix.finkicommunity.repository.UserRepository;
+import com.sorsix.finkicommunity.security.JwtProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,19 +49,31 @@ public class UserService {
         }
     }
 
-    public String findExistingUser(LoginViewModel loginViewModel) {
+    public UserResponse findExistingUser(LoginViewModel loginViewModel) {
         String encodedPassword;
         String rawPassword;
+        UserResponse userResponse = new UserResponse();
         try {
             encodedPassword = userRepository.findByUsername(loginViewModel.getUsername()).getPassword();
             rawPassword = loginViewModel.getPassword();
-        } catch (Exception someException) {
-            return "Username not found";
-        }
-        if (passwordEncoder.matches(rawPassword, encodedPassword))
-            return encodedPassword;
-        return "Wrong username or password";
 
+            if (passwordEncoder.matches(rawPassword, encodedPassword))
+            {
+                userResponse.setIdToken(encodedPassword);
+                userResponse.setExpiresIn(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME);
+                userResponse.setRole(Role.ADMIN);
+                userResponse.setValid(true);
+            }
+            else
+            {
+                userResponse.setErrorMessage("Incorrect password");
+                userResponse.setValid(false);
+            }//TODO: check what kind of exceptions?!
+        } catch (Exception someException) {
+            userResponse.setErrorMessage("Username not found");
+            userResponse.setValid(false);
+        }
+        return userResponse;
     }
 
     public Optional<User> getUserById(Long id) {
