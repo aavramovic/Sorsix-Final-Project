@@ -1,3 +1,7 @@
 app-course:focus {
     outline: none;
 }
+
+li:hover {
+    cursor: pointer;
+}
