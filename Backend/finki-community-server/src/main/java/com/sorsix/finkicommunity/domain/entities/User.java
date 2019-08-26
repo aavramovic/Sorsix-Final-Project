@@ -1,6 +1,8 @@
 package com.sorsix.finkicommunity.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sorsix.finkicommunity.domain.enums.Role;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -27,16 +29,12 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    private long birthdate;
-
     private Character sex;
 
     @Column(name = "posts_number")
     private int numberOfPosts = 0;
 
-    private String roles = "";
-
-    private String permissions = "";
+    private Role role;
 
     private boolean active = true;
 
@@ -56,16 +54,16 @@ public class User {
             joinColumns = @JoinColumn(name="user_id_following"),
             inverseJoinColumns = @JoinColumn(name = "user_id_followed")
     )
-    private Set<User> follows = new HashSet<>();
+    private Set<User> followings = new HashSet<>();
 
     /*
             USER --- followed by --- USER   ManyToMany
          */
     @ManyToMany(
-            mappedBy = "follows",
+            mappedBy = "followings",
             fetch=FetchType.EAGER
     )
-    private Set<User> followedBy = new HashSet<>();
+    private Set<User> followers = new HashSet<>();
 
 
     /*
@@ -95,15 +93,13 @@ public class User {
     /*
         This is used by JACKSON JSON when converts the POJO to json
      */
-
     public User() {
     }
 
-    public User(String username, String password, String roles, String permissions){
+    public User(String username, String password, Role role){
         this.username = username;
         this.password = password;
-        this.roles = roles;
-        this.permissions = permissions;
+        this.role = role;
 
         Random random = new Random();
         if(random.nextInt(2)==0){
@@ -114,16 +110,14 @@ public class User {
 
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, char sex, long birthdate, String roles, String permissions) {
+    public User(String username, String password, String email, String firstName, String lastName, char sex, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
         this.sex = sex;
-        this.roles = roles;
-        this.permissions = permissions;
+        this.role = role;
     }
 
     public long getUserId() {
@@ -156,14 +150,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public long getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(long birthdate) {
-        this.birthdate = birthdate;
     }
 
     public String getPassword() {
@@ -238,26 +224,26 @@ public class User {
     public boolean addNewFollowing(User newFollowing){
         this.incrementNumberOfFollowings();
         newFollowing.incrementNumberOfFollowers();
-        return follows.add(newFollowing);
+        return followings.add(newFollowing);
     }
 
     public boolean removeFollowing(User following){
         this.decrementNumberOfFollowings();
         following.decrementNumberOfFollowers();
-        return follows.remove(following);
+        return followings.remove(following);
     }
 
-    public boolean addNewFollowedBy(User newFollowedBy){
-        this.incrementNumberOfFollowers();
-        newFollowedBy.incrementNumberOfFollowings();
-        return followedBy.add(newFollowedBy);
-    }
-
-    public boolean removeFollowedBy(User followedBy){
-        this.decrementNumberOfFollowers();
-        followedBy.decrementNumberOfFollowings();
-        return this.followedBy.remove(followedBy);
-    }
+//    public boolean addNewFollowedBy(User newFollowedBy){
+//        this.incrementNumberOfFollowers();
+//        newFollowedBy.incrementNumberOfFollowings();
+//        return followedBy.add(newFollowedBy);
+//    }
+//
+//    public boolean removeFollowedBy(User followedBy){
+//        this.decrementNumberOfFollowers();
+//        followedBy.decrementNumberOfFollowings();
+//        return this.followedBy.remove(followedBy);
+//    }
 
     public boolean addNewPost(Post newPost){
         this.incrementNumberOfPosts();
@@ -288,45 +274,24 @@ public class User {
     }
 
     @JsonIgnore
-    public Set<User> getFollows() {
-        return follows;
+    public Set<User> getFollowings() {
+        return followings;
     }
 
-    public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
+    public Role getRole(){
+        return role;
     }
 
-    public List<String> getPermissionList(){
-        if(this.permissions.length() > 0){
-            return Arrays.asList(this.permissions.split(","));
-        }
-        return new ArrayList<>();
+    public void setRole(String Role){
+        this.role = role;
     }
 
-    public boolean addRole(String role){
-        if(roles.contains(role))
-            return false;
-        if(roles.length() > 0){
-            roles += "," + role;
-        }else{
-            roles += role;
-        }
-        return true;
+    @JsonIgnore
+    public Set<User> getFollowers() {
+        return followers;
     }
 
-    public boolean removeRole(String roleParam){
-        String[] r = roles.split(",");
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(String role: r){
-            if(!role.equals(roleParam))
-                stringBuilder.append(role + ",");
-        }
-        roles = stringBuilder.substring(0, stringBuilder.length()-1).toString();
-
-        return true;
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
     }
 }

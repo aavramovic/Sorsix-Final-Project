@@ -9,13 +9,9 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByTimestampDescTitleAsc();
     List<Post> findAllByUser_UserId(Long id);
-    Post findTopByOrderByTimestampDescTitleAsc();
     List<Post> findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
     List<Post> findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
     List<Post> findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
-
-
-    // List<Post> findAllByRepliedToIsNullOrderByTimestampDescTitleAsc(Pageable pageable);
 
     Post findByPostId(Long postId);
 }

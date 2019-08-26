@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.domain.response.post;
+package com.sorsix.finkicommunity.domain.responses.post;
 
 public class SimplePostResponse {
 

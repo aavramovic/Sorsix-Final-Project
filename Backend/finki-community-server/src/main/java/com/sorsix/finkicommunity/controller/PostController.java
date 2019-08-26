@@ -2,8 +2,8 @@ package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
-import com.sorsix.finkicommunity.domain.response.post.ClickedPostResponse;
-import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
+import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
+import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.services.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

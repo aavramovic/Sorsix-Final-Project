@@ -1,5 +1,5 @@
-package com.sorsix.finkicommunity.domain.response.course;
-import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
+package com.sorsix.finkicommunity.domain.responses.course;
+import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 
 import java.util.HashSet;
 import java.util.Set;

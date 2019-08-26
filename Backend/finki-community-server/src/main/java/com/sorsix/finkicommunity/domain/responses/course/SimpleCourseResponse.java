@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.domain.response.course;
+package com.sorsix.finkicommunity.domain.responses.course;
 
 public class SimpleCourseResponse {
     private long courseId;

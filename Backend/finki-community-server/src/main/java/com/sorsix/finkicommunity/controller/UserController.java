@@ -4,8 +4,9 @@ import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
-import com.sorsix.finkicommunity.domain.response.user.MockUser;
-import com.sorsix.finkicommunity.domain.response.user.UserResponse;
+import com.sorsix.finkicommunity.domain.responses.user.MockUser;
+import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
+import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
 import com.sorsix.finkicommunity.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/forum/users")
@@ -29,10 +31,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/mock")
-    public ResponseEntity<List<MockUser>> getAllMockUsers() {
-        return ResponseEntity.ok(userService.getAllMockUsers());
+    @GetMapping("/details")
+    public ResponseEntity<UserDetailsResponse> getUserDetails(
+            @RequestParam String username
+    ) {
+        return ResponseEntity.ok(userService.getUserDetails(username));
     }
+
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
@@ -64,8 +69,18 @@ public class UserController {
 
     @PostMapping("/new-following")
     public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
-        return userService.addNewFollowing(newFollowingRequest)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+        Optional<NewFollowingRequest> result = userService.addNewFollowing(newFollowingRequest);
+        System.out.println(result);
+        return ResponseEntity.ok(newFollowingRequest);
+//        return userService.addNewFollowing(newFollowingRequest)
+//                .map(ResponseEntity::ok)
+//                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
+
+    @GetMapping("/mock")
+    public ResponseEntity<List<MockUser>> getAllMockUsers(){
+        return ResponseEntity.ok(userService.getAllMockUsers());
+    }
+
 }

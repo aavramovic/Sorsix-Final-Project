@@ -1,7 +1,7 @@
 package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
-import com.sorsix.finkicommunity.domain.response.course.SimpleCourseResponse;
+import com.sorsix.finkicommunity.domain.responses.course.SimpleCourseResponse;
 import com.sorsix.finkicommunity.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

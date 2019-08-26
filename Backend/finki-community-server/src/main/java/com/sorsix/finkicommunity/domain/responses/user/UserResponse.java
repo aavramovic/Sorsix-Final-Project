@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.domain.response.user;
+package com.sorsix.finkicommunity.domain.responses.user;
 
 import com.sorsix.finkicommunity.domain.enums.Role;
 
