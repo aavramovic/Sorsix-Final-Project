@@ -7,6 +7,7 @@ import {IThread} from '../Models/Interfaces/IThread';
 import {map} from 'rxjs/operators';
 import {API_URL, COURSE_LIST, THREAD_LIST, THREAD_LIST_10, THREAD_REPLIES} from '../Models/global-const-url-paths';
 import {IClickedCourse} from '../Models/Interfaces/IClickedCourse';
+import {IGetRepliesByPostId} from '../Models/Interfaces/IGetRepliesByPostId';
 
 @Injectable({
     providedIn: 'root'
@@ -37,15 +38,15 @@ export class ThreadService {
     }
 
     getReplies(postId: number): Observable<Thread[]> {
-        return this.http.get<IThread[]>(API_URL + THREAD_REPLIES + postId).pipe(
-            map(threads => this.mapIThreadsToThreads(threads)));
+        return this.http.get<IGetRepliesByPostId>(API_URL + THREAD_REPLIES + '?postId=' + postId).pipe(
+            map(reply => this.mapIThreadsToThreads(reply.replies)));
     }
 
     mapIThreadsToThreads(threads: IThread[]): Thread[] {
         let tempThreads: Thread[] = [];
         threads.forEach(thread => {
             tempThreads.push(new Thread(
-                thread.postId,
+                thread.id,
                 thread.username,
                 thread.courseName,
                 new Date(thread.timeOfPost),

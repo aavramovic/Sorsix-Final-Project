@@ -1,4 +1,5 @@
 <div *ngIf="thread">
+    <!--TOP PART START-->
     <div class="container-fluid">
         <div class="row">
             <span *ngIf="thread.imageUrl" class="col-auto d-flex"><img src="{{thread.imageUrl}}" alt="Users image"
@@ -11,25 +12,41 @@
             </div>
         </div>
     </div>
+    <!--TOP PART END-->
     <hr>
+    <!--MIDDLE PART START-->
     <div class="row">
         <h3 *ngIf="thread.title" class="col">{{thread.title}}</h3>
-        <div class="col-auto font-weight-light">Course{{thread.courseName}}</div>
+        <div class="col-auto font-weight-light"><a
+            routerLink="/start/{{thread.courseName}}">Course: {{thread.courseName}}</a>
+        </div>
         |
         <div class="col-auto font-weight-light mr-1 ml-auto">{{thread.timeOfPost | date:"dd.MM.y"}}</div>
     </div>
+    <!--MIDDLE PART END-->
+    <!--BOTTOM PART START-->
     <div *ngIf="thread && thread.content">
         <p>{{thread.content}}</p>
     </div>
-    <div *ngIf="thread.numberOfLikes" class="float-right mr-1 mt-2">
-        ▲{{thread.numberOfLikes}}
-    </div>
+
     <div>
         <button class="float-right font-weight-light mr-1 btn btn-light">Like</button>
     </div>
+
+    <div *ngIf="thread.numberOfLikes>=0" class="float-right mr-1 mt-2">
+        ▲{{thread.numberOfLikes}}
+    </div>
+
     <!-- TODO: ako e premnogu dolgo da se skrati so opcija da se pushti prozorec ili da se extendne-->
     <button *ngIf="!isOpen" type="button" class="btn btn-light col mt-2" (click)="loadComments()">
         · · · LoadComments · · ·
     </button>
-    <div *ngIf="isOpen"></div>
+    <div *ngIf="isOpen && replies">
+        <ul>
+            <li *ngFor="let reply of replies">
+                <app-thread [thread]="reply"></app-thread>
+            </li>
+        </ul>
+    </div>
+    <!--BOTTOM PART END-->
 </div>

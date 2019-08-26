@@ -2,7 +2,7 @@ import {Thread} from '../Classes/Thread';
 import {IUser} from './IUser';
 
 export interface IThread {
-    postId: number,
+    id: number,
     username: string,
     courseName: string,
     timeOfPost: Date,
@@ -12,5 +12,5 @@ export interface IThread {
     imageUrl: string,
     title?: string,
     replies?: IThread[],
-    usersLiked?:IUser[];
+    usersLiked?: IUser[];
 }

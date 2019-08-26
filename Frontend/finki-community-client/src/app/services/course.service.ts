@@ -12,6 +12,7 @@ import {Semester} from '../Models/Enumeration/Semester';
 import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/global-const-url-paths';
 import {IPostCourse} from '../Models/Interfaces/IPostCourse';
 import {PostCourse} from '../Models/Classes/PostCourse';
+import {Router} from '@angular/router';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ import {PostCourse} from '../Models/Classes/PostCourse';
 export class CourseService {
 
     constructor(private http: HttpClient,
-                private mock: MockClassesCreationService) {
+                private router: Router) {
     }
 
 
@@ -67,7 +68,7 @@ export class CourseService {
         return this.http.get<Course>(API_URL + COURSE_LIST + courseId);
     }
 
-    postCourse(courseName: string, courseDescription: string, programs: Program[], studyYear: YearOfStudy, semester: Semester, courseType: Type)/*:Observable<ICourse>*/{
+    postCourse(courseName: string, courseDescription: string, programs: Program[], studyYear: YearOfStudy, semester: Semester, courseType: Type)/*:Observable<ICourse>*/ {
         let postRequest: PostCourse = new PostCourse(courseName, courseDescription, courseType, programs, semester, studyYear);
         console.log(postRequest);
         let httpOptions;
@@ -84,4 +85,6 @@ export class CourseService {
             return undefined;
         };
     }
+
+
 }
