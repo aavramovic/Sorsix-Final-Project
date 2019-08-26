@@ -9,11 +9,11 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.response.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
+import net.bytebuddy.build.Plugin;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -93,7 +93,11 @@ public class PostService {
         ClickedPostResponse clickedPostResponse = new ClickedPostResponse();
 
         clickedPostResponse.setPostResponse(createPostResponseObject(post));
-        clickedPostResponse.setReplies(post.getReplies());
+
+
+        Set<SimplePostResponse> simplePostResponses = convertFromPostToPostResponseSET(post.getReplies());
+
+        clickedPostResponse.setReplies(simplePostResponses);
 
         return clickedPostResponse;
     }
@@ -113,12 +117,23 @@ public class PostService {
         postResponse.setTimeOfPost(post.getTimestamp());
         postResponse.setTitle(post.getTitle());
         postResponse.setUsername(post.getUser().getUsername());
+        postResponse.setSex(post.getUser().getSex());
 
         return postResponse;
     }
 
     private List<SimplePostResponse> convertFromPostToPostResponse(List<Post> posts){
         List<SimplePostResponse> postResponses = new ArrayList<>();
+
+        for(Post post : posts){
+            postResponses.add(createPostResponseObject(post));
+        }
+
+        return postResponses;
+    }
+
+    private Set<SimplePostResponse> convertFromPostToPostResponseSET(Set<Post> posts){
+        Set<SimplePostResponse> postResponses = new HashSet<>();
 
         for(Post post : posts){
             postResponses.add(createPostResponseObject(post));

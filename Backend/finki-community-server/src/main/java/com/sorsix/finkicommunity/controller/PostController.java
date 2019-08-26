@@ -42,7 +42,6 @@ public class PostController {
         return ResponseEntity.ok(postService.getClickedPost(postId));
     }
 
-
     // POST METHODS
     @PostMapping("/new")
     public ResponseEntity<Post> createNewPost(@RequestBody @Valid NewPostRequest newPostRequest){

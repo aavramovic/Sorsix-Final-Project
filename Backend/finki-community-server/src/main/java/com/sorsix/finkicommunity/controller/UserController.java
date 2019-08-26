@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
+import com.sorsix.finkicommunity.domain.response.user.MockUser;
 import com.sorsix.finkicommunity.domain.response.user.UserResponse;
 import com.sorsix.finkicommunity.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/mock")
+    public ResponseEntity<List<MockUser>> getAllMockUsers() {
+        return ResponseEntity.ok(userService.getAllMockUsers());
     }
 
     @GetMapping("/{userId}")

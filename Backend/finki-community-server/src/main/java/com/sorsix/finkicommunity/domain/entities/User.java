@@ -29,11 +29,10 @@ public class User {
 
     private long birthdate;
 
+    private Character sex;
+
     @Column(name = "posts_number")
     private int numberOfPosts = 0;
-
-    @Column(name = "picture_url")
-    private String pictureUrl;
 
     private String roles = "";
 
@@ -105,16 +104,24 @@ public class User {
         this.password = password;
         this.roles = roles;
         this.permissions = permissions;
+
+        Random random = new Random();
+        if(random.nextInt(2)==0){
+            this.sex='F';
+        }else{
+            this.sex='M';
+        }
+
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, long birthdate, String pictureUrl, String roles, String permissions) {
+    public User(String username, String password, String email, String firstName, String lastName, char sex, long birthdate, String roles, String permissions) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
-        this.pictureUrl = pictureUrl;
+        this.sex = sex;
         this.roles = roles;
         this.permissions = permissions;
     }
@@ -183,12 +190,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public char getSex() {
+        return sex;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
+    public void setSex(char sex) {
+        this.sex = sex;
     }
 
     public boolean isActive() {
@@ -210,6 +217,7 @@ public class User {
     public Set<Post> getPosts(){
         return posts;
     }
+
     // FUNCTIONS
     public void incrementNumberOfPosts(){
         numberOfPosts++;

@@ -7,12 +7,14 @@ import com.sorsix.finkicommunity.domain.enums.Role;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
+import com.sorsix.finkicommunity.domain.response.user.MockUser;
 import com.sorsix.finkicommunity.domain.response.user.UserResponse;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.security.JwtProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +34,22 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<MockUser> getAllMockUsers(){
+        List<User> users = userRepository.findAll();
+
+        List<MockUser> mockUsers = new ArrayList<>();
+        MockUser mockUser;
+        for(User user: users){
+            mockUser = new MockUser();
+            mockUser.setUserId(user.getUserId());
+            mockUser.setUsername(user.getUsername());
+
+            mockUsers.add(mockUser);
+        }
+
+        return mockUsers;
+    }
+
     public User createNewUser(NewUserRequest newUserRequest) {
         User user = new User();
 
@@ -41,6 +59,7 @@ public class UserService {
         user.setFirstName(newUserRequest.getFirstName());
         user.setLastName(newUserRequest.getLastName());
         user.setBirthdate(newUserRequest.getBirthdate());
+        user.setSex(newUserRequest.getSex());
         user.addRole("USER");
         try {
             return userRepository.save(user);
