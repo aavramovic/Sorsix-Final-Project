@@ -1,14 +1,13 @@
 package com.sorsix.finkicommunity.domain.response.post;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.sorsix.finkicommunity.domain.entities.Post;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ClickedPostResponse {
     private SimplePostResponse postResponse;
-    private Set<Post> replies = new HashSet<>();
+    private Set<SimplePostResponse> replies = new HashSet<>();
 
     @JsonGetter(value = "post")
     public SimplePostResponse getPostResponse() {
@@ -20,11 +19,11 @@ public class ClickedPostResponse {
     }
 
     @JsonGetter(value = "replies")
-    public Set<Post> getReplies() {
+    public Set<SimplePostResponse> getReplies() {
         return replies;
     }
 
-    public void setReplies(Set<Post> replies) {
+    public void setReplies(Set<SimplePostResponse> replies) {
         this.replies = replies;
     }
 }

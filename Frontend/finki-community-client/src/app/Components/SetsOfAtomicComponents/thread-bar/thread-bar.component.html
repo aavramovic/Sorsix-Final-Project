@@ -2,7 +2,6 @@
     <h3>{{selectedCourse.length != 0 ? selectedCourse : 'Threads'}}</h3>
     <hr>
     <div>
-
         <section class="section">
             <label class="margin">Threads per page:</label>
             <mat-radio-group [(ngModel)]="numberOfPostsByPage" (change)="onValueChange()" class="mt-2" color="primary">

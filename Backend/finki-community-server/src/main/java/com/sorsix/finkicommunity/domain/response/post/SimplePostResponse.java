@@ -6,7 +6,11 @@ public class SimplePostResponse {
     private long timeOfPost;
     private int noOfLikes;
     private int noOfComments;
+    // User
+    // This could be encapsulated to a SimplePostResponseUser class
     private String username;
+    private char sex;
+
     private String courseName;
     private String title;
     private String content;
@@ -42,6 +46,14 @@ public class SimplePostResponse {
 
     public int getNoOfComments() {
         return noOfComments;
+    }
+
+    public char getSex() {
+        return sex;
+    }
+
+    public void setSex(char sex) {
+        this.sex = sex;
     }
 
     public void setId(long id) {
