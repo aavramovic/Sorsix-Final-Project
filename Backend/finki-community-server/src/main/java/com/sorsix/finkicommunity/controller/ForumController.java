@@ -1,7 +1,6 @@
-package com.sorsix.finkicommunity.api;
+package com.sorsix.finkicommunity.controller;
 
 
-import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

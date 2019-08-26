@@ -59,11 +59,6 @@ public class PostService {
         return newPost;
     }
 
-    public Post getTopPost(){
-        return postRepository.findTopByOrderByTimestampDescTitleAsc();
-    }
-
-
     public List<SimplePostResponse> getTopPosts(Integer noOfPosts){
         if(noOfPosts == null || noOfPosts.intValue() == 10){
             return getTop10Posts();

@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.api;
+package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
@@ -61,7 +61,5 @@ public class UserController {
         return userService.addNewFollowing(newFollowingRequest)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.badRequest().build());
-//                .map(user -> ResponseEntity.ok(user))
-//                .orElseGet(()->ResponseEntity.badRequest().build());
     }
 }

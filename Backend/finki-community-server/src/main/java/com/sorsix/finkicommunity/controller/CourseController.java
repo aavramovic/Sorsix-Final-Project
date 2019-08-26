@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.api;
+package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
 import com.sorsix.finkicommunity.domain.response.course.SimpleCourseResponse;

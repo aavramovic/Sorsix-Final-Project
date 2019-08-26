@@ -1,4 +1,4 @@
-package com.sorsix.finkicommunity.api;
+package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
@@ -35,21 +35,6 @@ public class PostController {
         return ResponseEntity.ok(postService.getTopPosts(noOfPosts));
     }
 
-//    @GetMapping("/top/10")
-//    public ResponseEntity<List<PostResponse>> getTop10Posts(){
-//        return ResponseEntity.ok(postService.getTop10Posts());
-//    }
-//
-//    @GetMapping("/top/25")
-//    public ResponseEntity<List<PostResponse>> getTop25Posts(){
-//        return ResponseEntity.ok(postService.getTop25Posts());
-//    }
-//
-//    @GetMapping("/top/50")
-//    public ResponseEntity<List<PostResponse>> getTop50Posts(){
-//        return ResponseEntity.ok(postService.getTop50Posts());
-//    }
-
     @GetMapping("/clicked")
     public ResponseEntity<ClickedPostResponse> getClickedPost(
             @RequestParam Long postId
@@ -64,18 +49,4 @@ public class PostController {
         return ResponseEntity.ok(postService.createNewPost(newPostRequest));
 
     }
-
-        /*
-    USED ONLY FOR TESTING
-     */
-//    @GetMapping("/{userId}")
-//    public ResponseEntity getAllPostsByUserId(@PathVariable Long userId){
-//        List<Post> result = postService.getAllPostsByUserId(userId);
-//        if(result == null){
-//            return ResponseEntity.badRequest().body("There is no user with id = " + userId);
-//        }
-//        else{
-//            return ResponseEntity.ok(result);
-//        }
-//    }
 }

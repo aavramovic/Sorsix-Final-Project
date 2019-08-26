@@ -38,12 +38,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login","/forum/users/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/forum").permitAll()
-                .antMatchers("/forum/courses/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/forum/users/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/forum/posts/**").permitAll()
-                .anyRequest().authenticated();
+                //.antMatchers(HttpMethod.POST, "/login","/forum/users/register").permitAll()
+                .anyRequest().permitAll();
+//                .antMatchers(HttpMethod.GET, "/forum").permitAll()
+//                .antMatchers("/forum/courses/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/forum/users/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/forum/posts/**").permitAll()
+//                .anyRequest().authenticated();
     }
 
     @Bean

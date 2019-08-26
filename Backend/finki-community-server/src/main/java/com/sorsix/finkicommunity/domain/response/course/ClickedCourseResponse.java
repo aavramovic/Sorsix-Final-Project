@@ -1,5 +1,4 @@
 package com.sorsix.finkicommunity.domain.response.course;
-
 import com.sorsix.finkicommunity.domain.response.post.SimplePostResponse;
 
 import java.util.HashSet;
