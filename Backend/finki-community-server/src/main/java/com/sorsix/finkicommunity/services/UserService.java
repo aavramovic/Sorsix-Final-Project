@@ -5,12 +5,14 @@ import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.enums.Role;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
+import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
 import com.sorsix.finkicommunity.domain.responses.user.MockUser;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollow;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsPost;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
+import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.security.JwtProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,10 +25,12 @@ public class UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private PostRepository postRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.postRepository = postRepository;
     }
 
     public List<User> getAllUsers() {
@@ -105,6 +109,29 @@ public class UserService {
             }
         }
         return Optional.empty();
+    }
+
+    public NewPostLikeRequest newPostLike(NewPostLikeRequest newPostLikeRequest){
+        User user = userRepository.findByUsername(newPostLikeRequest.username);
+        if(user == null)
+            return null;
+        Post post = postRepository.findByPostId(newPostLikeRequest.postId);
+        if(post == null)
+            return null;
+
+        if(user.getPostsLiked().contains(post)){
+            user.removePostLiked(post);
+        }else{
+            user.addPostLiked(post);
+        }
+
+        try{
+            userRepository.save(user);
+            postRepository.save(post);
+            return newPostLikeRequest;
+        }catch(Exception ex){
+            return null;
+        }
     }
 
     public Optional<Set<Post>> getUserPosts(Long id) {
@@ -216,7 +243,6 @@ public class UserService {
 
     public List<MockUser> getAllMockUsers(){
         List<User> users = userRepository.findAll();
-
 
         List<MockUser> mockUsers = new ArrayList<>();
         MockUser mockUser;

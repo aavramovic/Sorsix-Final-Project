@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name="posts")
-public class Post {
+public class Post{
 
     @Id
     @Column(name="post_id")
@@ -198,5 +199,18 @@ public class Post {
 
     public void decrementNumberOfReplies(){
         numberOfReplies--;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Post)) return false;
+        Post post = (Post) o;
+        return postId == post.postId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(postId);
     }
 }

@@ -3,6 +3,7 @@ package com.sorsix.finkicommunity.controller;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
 import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
+import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
 import com.sorsix.finkicommunity.domain.responses.user.MockUser;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
@@ -54,7 +55,6 @@ public class UserController {
         return ResponseEntity.ok(
                 userService.getUserPosts(userId)
         );
-
     }
 
     @PostMapping("/register")
@@ -76,6 +76,11 @@ public class UserController {
 //        return userService.addNewFollowing(newFollowingRequest)
 //                .map(ResponseEntity::ok)
 //                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @PostMapping("/likes")
+    public ResponseEntity<NewPostLikeRequest> newPostLike(@RequestBody @Valid NewPostLikeRequest newPostLikeRequest){
+        return ResponseEntity.ok(userService.newPostLike(newPostLikeRequest));
     }
 
 

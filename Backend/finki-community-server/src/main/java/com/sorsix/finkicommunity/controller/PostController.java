@@ -1,10 +1,13 @@
 package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
+import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
+import com.sorsix.finkicommunity.domain.responses.post.MockPost;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.services.PostService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -47,5 +50,10 @@ public class PostController {
     public ResponseEntity<Post> createNewPost(@RequestBody @Valid NewPostRequest newPostRequest){
         return ResponseEntity.ok(postService.createNewPost(newPostRequest));
 
+    }
+
+    @GetMapping("/mock")
+    public ResponseEntity<List<MockPost>> getAllMockPosts(){
+        return ResponseEntity.ok(postService.getAllMockPosts());
     }
 }

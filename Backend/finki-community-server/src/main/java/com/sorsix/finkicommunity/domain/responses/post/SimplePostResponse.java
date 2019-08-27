@@ -1,6 +1,6 @@
 package com.sorsix.finkicommunity.domain.responses.post;
 
-public class SimplePostResponse {
+public class SimplePostResponse implements Comparable<SimplePostResponse>{
 
     private long id;
     private long timeOfPost;
@@ -86,5 +86,12 @@ public class SimplePostResponse {
 
     public void setNoOfComments(int noOfComments) {
         this.noOfComments = noOfComments;
+    }
+
+    @Override
+    public int compareTo(SimplePostResponse o) {
+        if(timeOfPost > o.timeOfPost)
+            return -1;
+        return 1;
     }
 }

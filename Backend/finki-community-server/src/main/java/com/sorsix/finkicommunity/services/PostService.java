@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
+import com.sorsix.finkicommunity.domain.responses.post.MockPost;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
@@ -139,5 +140,32 @@ public class PostService {
         }
 
         return postResponses;
+    }
+
+    public List<MockPost> getAllMockPosts(){
+        List<Post> posts = postRepository.findAllByOrderByTimestampDescTitleAsc();
+        User user = userRepository.findByUsername("fisnik");
+
+        List<MockPost> mockPosts = new ArrayList<>();
+        MockPost mockPost;
+        for(Post post: posts){
+            mockPost = new MockPost();
+
+            mockPost.id = post.getPostId();
+            mockPost.timeOfPost = post.getTimestamp();
+            mockPost.noOfLikes = post.getNumberOfLikes();
+            mockPost.noOfComments = post.getNumberOfReplies();
+            mockPost.title = post.getTitle();
+            mockPost.content = post.getContent();
+
+            mockPost.isLiked = user.getPostsLiked().contains(post);
+
+            mockPost.username = post.getUser().getUsername();
+            mockPost.courseName = post.getCourse().getCourseName();
+
+            mockPosts.add(mockPost);
+        }
+
+        return mockPosts;
     }
 }

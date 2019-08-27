@@ -205,5 +205,6 @@ public class DbInit implements CommandLineRunner {
 
          userRepository.saveAll(users);
          courseRepository.saveAll(courses);
+         postRepository.saveAll(posts);
     }
 }
