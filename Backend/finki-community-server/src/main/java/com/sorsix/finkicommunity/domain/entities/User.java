@@ -8,7 +8,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
@@ -46,7 +46,6 @@ public class User {
            USER --- follows --- USER     ManyToMany
     */
     @ManyToMany(
-            cascade = CascadeType.ALL,
             fetch=FetchType.EAGER
     )
     @JoinTable(
@@ -79,8 +78,7 @@ public class User {
         USER --- likes --- POST     ManyToMany
      */
     @ManyToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             name="user_likes_post",
@@ -233,18 +231,6 @@ public class User {
         return followings.remove(following);
     }
 
-//    public boolean addNewFollowedBy(User newFollowedBy){
-//        this.incrementNumberOfFollowers();
-//        newFollowedBy.incrementNumberOfFollowings();
-//        return followedBy.add(newFollowedBy);
-//    }
-//
-//    public boolean removeFollowedBy(User followedBy){
-//        this.decrementNumberOfFollowers();
-//        followedBy.decrementNumberOfFollowings();
-//        return this.followedBy.remove(followedBy);
-//    }
-
     public boolean addNewPost(Post newPost){
         this.incrementNumberOfPosts();
         return posts.add(newPost);
@@ -273,11 +259,6 @@ public class User {
         this.numberOfFollowers = numberOfFollowers;
     }
 
-    @JsonIgnore
-    public Set<User> getFollowings() {
-        return followings;
-    }
-
     public Role getRole(){
         return role;
     }
@@ -287,11 +268,32 @@ public class User {
     }
 
     @JsonIgnore
+    public Set<User> getFollowings() {
+        return followings;
+    }
+
+    @JsonIgnore
     public Set<User> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
+    @JsonIgnore
+    public Set<Post> getPostsLiked() {
+        return postsLiked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, username, email);
     }
 }

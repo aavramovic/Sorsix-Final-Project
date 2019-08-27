@@ -1,5 +1,6 @@
 package com.sorsix.finkicommunity.domain.responses.user_details;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sorsix.finkicommunity.domain.enums.Role;
 
 import java.util.ArrayList;
@@ -13,14 +14,17 @@ public class UserDetailsResponse {
     public String lastName;
     public Character sex;
     public Role role;
+    public boolean isFollowing;
 
     public int numberOfPosts;
+    public int numberOfPostsLiked;
     public int numberOfFollowers;
     public int numberOfFollowings;
 
     public List<UserDetailsPost> userDetailsPosts = new ArrayList<>();
-    public List<UserDetailsFollower> userDetailsFollowers = new ArrayList<>();
-    public List<UserDetailsFollowing> userDetailsFollowings = new ArrayList<>();
+    public List<UserDetailsFollow> userDetailsFollowers = new ArrayList<>();
+    public List<UserDetailsFollow> userDetailsFollowings = new ArrayList<>();
+    public List<UserDetailsPost> userDetailsPostsLiked = new ArrayList<>();
 
     public long getUserId() {
         return userId;
@@ -86,6 +90,14 @@ public class UserDetailsResponse {
         this.numberOfPosts = numberOfPosts;
     }
 
+    public int getNumberOfPostsLiked() {
+        return numberOfPostsLiked;
+    }
+
+    public void setNumberOfPostsLiked(int numberOfPostsLiked) {
+        this.numberOfPostsLiked = numberOfPostsLiked;
+    }
+
     public int getNumberOfFollowers() {
         return numberOfFollowers;
     }
@@ -110,19 +122,40 @@ public class UserDetailsResponse {
         this.userDetailsPosts = userDetailsPosts;
     }
 
-    public List<UserDetailsFollower> getUserDetailsFollowers() {
+    public List<UserDetailsFollow> getUserDetailsFollowers() {
         return userDetailsFollowers;
     }
 
-    public void setUserDetailsFollowers(List<UserDetailsFollower> userDetailsFollowers) {
+    public void setUserDetailsFollowers(List<UserDetailsFollow> userDetailsFollowers) {
         this.userDetailsFollowers = userDetailsFollowers;
     }
 
-    public List<UserDetailsFollowing> getUserDetailsFollowings() {
+    public List<UserDetailsFollow> getUserDetailsFollowings() {
         return userDetailsFollowings;
     }
 
-    public void setUserDetailsFollowings(List<UserDetailsFollowing> userDetailsFollowings) {
-        this.userDetailsFollowings = userDetailsFollowings;
+    public void setUserDetailsFollowings(List<UserDetailsFollow> userDetailsFollows) {
+        this.userDetailsFollowings = userDetailsFollows;
+    }
+
+    public void setUserDetailsPosts(List<UserDetailsPost> userDetailsPosts) {
+        this.userDetailsPosts = userDetailsPosts;
+    }
+
+    public List<UserDetailsPost> getUserDetailsPostsLiked() {
+        return userDetailsPostsLiked;
+    }
+
+    public void setUserDetailsPostsLiked(List<UserDetailsPost> userDetailsPostsLiked) {
+        this.userDetailsPostsLiked = userDetailsPostsLiked;
+    }
+
+    @JsonGetter
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
     }
 }

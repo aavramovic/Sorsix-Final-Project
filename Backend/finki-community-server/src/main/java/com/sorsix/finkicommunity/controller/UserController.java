@@ -11,7 +11,6 @@ import com.sorsix.finkicommunity.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -33,9 +32,11 @@ public class UserController {
 
     @GetMapping("/details")
     public ResponseEntity<UserDetailsResponse> getUserDetails(
-            @RequestParam String username
+            @RequestParam String username,
+            @RequestParam(required = false) String loggedInUsername
     ) {
-        return ResponseEntity.ok(userService.getUserDetails(username));
+        // System.out.println(username + " " + loggedInUsername);
+        return ResponseEntity.ok(userService.getUserDetails(username, loggedInUsername));
     }
 
 
@@ -70,7 +71,7 @@ public class UserController {
     @PostMapping("/new-following")
     public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
         Optional<NewFollowingRequest> result = userService.addNewFollowing(newFollowingRequest);
-        System.out.println(result);
+        // System.out.println(result);
         return ResponseEntity.ok(newFollowingRequest);
 //        return userService.addNewFollowing(newFollowingRequest)
 //                .map(ResponseEntity::ok)

@@ -35,7 +35,9 @@ public class Post {
     private Set<User> usersLiked;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(name = "fk_user_id_owner")
     private User user;
 

@@ -1,6 +1,6 @@
 package com.sorsix.finkicommunity.domain.responses.user_details;
 
-public class UserDetailsFollowing {
+public class UserDetailsFollow {
     private long id;
     private String username;
     private String firstName;

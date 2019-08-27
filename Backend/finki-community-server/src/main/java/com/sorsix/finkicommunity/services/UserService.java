@@ -8,8 +8,7 @@ import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
 import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
 import com.sorsix.finkicommunity.domain.responses.user.MockUser;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
-import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollower;
-import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollowing;
+import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollow;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsPost;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
 import com.sorsix.finkicommunity.repository.UserRepository;
@@ -17,10 +16,7 @@ import com.sorsix.finkicommunity.security.JwtProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -95,10 +91,14 @@ public class UserService {
             User user1 = userFollowing.get();
             User user2 = userFollowed.get();
 
-            user1.addNewFollowing(user2);
-
+            if(user1.getFollowings().contains(user2)){
+                user1.removeFollowing(user2);
+            }else{
+                user1.addNewFollowing(user2);
+            }
             try{
                 userRepository.save(user1);
+                userRepository.save(user2);
                 return Optional.of(newFollowingRequest);
             }catch(Exception ex){
                 return Optional.empty();
@@ -115,7 +115,7 @@ public class UserService {
         );
     }
 
-    public UserDetailsResponse getUserDetails(String username){
+    public UserDetailsResponse getUserDetails(String username, String loggedInUsername){
         User user = userRepository.findByUsername(username);
         if(user == null)
             return null;
@@ -129,6 +129,13 @@ public class UserService {
         userDetailsResponse.setLastName(user.getLastName());
         userDetailsResponse.setSex(user.getSex());
         userDetailsResponse.setRole(user.getRole());
+
+        if(loggedInUsername != null){
+            User loggedInUser = userRepository.findByUsername(loggedInUsername);
+            if(loggedInUser.getFollowings().contains(user)){
+                userDetailsResponse.setFollowing(true);
+            }
+        }
 
         userDetailsResponse.setNumberOfPosts(user.getNumberOfPosts());
         userDetailsResponse.setNumberOfFollowings(user.getNumberOfFollowings());
@@ -151,30 +158,49 @@ public class UserService {
         }
         userDetailsResponse.setUserDetailsPost(userDetailsPosts);
 
+        // POSTS LIKED
+        Set<Post> userPostsLiked = user.getPostsLiked();
+
+        userDetailsResponse.setNumberOfPostsLiked(userPostsLiked.size());
+
+        List<UserDetailsPost> userDetailsPostsLiked = new ArrayList<>();
+        UserDetailsPost userDetailsPostLiked;
+        for(Post postLiked: userPostsLiked){
+            userDetailsPostLiked = new UserDetailsPost();
+
+            userDetailsPostLiked.setId(postLiked.getPostId());
+            userDetailsPostLiked.setTimeOfPost(postLiked.getTimestamp());
+            userDetailsPostLiked.setCourseName(postLiked.getCourse().getCourseName());
+            userDetailsPostLiked.setTitle(postLiked.getTitle());
+            userDetailsPostLiked.setContent(postLiked.getContent().substring(0,50));
+
+            userDetailsPostsLiked.add(userDetailsPostLiked);
+        }
+        userDetailsResponse.setUserDetailsPostsLiked(userDetailsPostsLiked);
 
         // FOLLOWINGS
         Set<User> userFollowings = user.getFollowings();
-        List<UserDetailsFollowing> userDetailsFollowings = new ArrayList<>();
-        UserDetailsFollowing userDetailsFollowing;
+        List<UserDetailsFollow> userDetailsFollows = new ArrayList<>();
+        UserDetailsFollow userDetailsFollow;
         for(User following: userFollowings){
-            userDetailsFollowing = new UserDetailsFollowing();
+            userDetailsFollow = new UserDetailsFollow();
 
-            userDetailsFollowing.setId(following.getUserId());
-            userDetailsFollowing.setUsername(following.getUsername());
-            userDetailsFollowing.setFirstName(following.getFirstName());
-            userDetailsFollowing.setLastName(following.getLastName());
+            userDetailsFollow.setId(following.getUserId());
+            userDetailsFollow.setUsername(following.getUsername());
+            userDetailsFollow.setFirstName(following.getFirstName());
+            userDetailsFollow.setLastName(following.getLastName());
 
-            userDetailsFollowings.add(userDetailsFollowing);
+            userDetailsFollows.add(userDetailsFollow);
         }
-        userDetailsResponse.setUserDetailsFollowings(userDetailsFollowings);
+        userDetailsResponse.setUserDetailsFollowings(userDetailsFollows);
 
 
         // FOLLOWERS
         Set<User> userFollowers = user.getFollowers();
-        List<UserDetailsFollower> userDetailsFollowers = new ArrayList<>();
-        UserDetailsFollower userDetailsFollower;
+        List<UserDetailsFollow> userDetailsFollowers = new ArrayList<>();
+        UserDetailsFollow userDetailsFollower;
         for(User follower: userFollowers){
-            userDetailsFollower = new UserDetailsFollower();
+            userDetailsFollower = new UserDetailsFollow();
 
             userDetailsFollower.setId(follower.getUserId());
             userDetailsFollower.setUsername(follower.getUsername());

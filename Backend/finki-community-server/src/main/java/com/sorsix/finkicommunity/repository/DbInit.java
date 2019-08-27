@@ -203,6 +203,7 @@ public class DbInit implements CommandLineRunner {
 
         List<User> addPostLikedToUsers = Arrays.asList(fisnik, antonio, user5, user6, user7, user8, user9, user10);
 
-        userRepository.saveAll(addPostLikedToUsers);
+         userRepository.saveAll(users);
+         courseRepository.saveAll(courses);
     }
 }

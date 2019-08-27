@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -43,10 +44,10 @@ public class Course {
     private int numberOfReplies = 0;
 
     @OneToMany(
-            fetch = FetchType.EAGER,
-            mappedBy = "course"
+            mappedBy = "course",
+            fetch = FetchType.EAGER
     )
-    private Set<Post> posts;
+    private Set<Post> posts = new HashSet<>();
 
     /*
         Needed for JPA auto table creation
