@@ -1,0 +1,33 @@
+import {Injectable} from '@angular/core';
+import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+
+import {AuthenticationService} from './authentication.service';
+import {catchError} from 'rxjs/operators';
+
+@Injectable()
+export class BasicAuthInterceptor implements HttpInterceptor {
+    constructor(private authenticationService: AuthenticationService) {
+    }
+
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        // add authorization header with basic auth credentials if available
+        const token = this.authenticationService.getToken();
+        if (this.authenticationService.isLoggedIn()) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${this.authenticationService.getToken()}`
+                }
+            });
+        }
+
+        return next.handle(request)
+            .pipe(catchError(error => {
+                if (error.status === 401) {
+                    this.authenticationService.logout();
+                    // redirect to sign in
+                }
+                return throwError(error);
+            }));
+    }
+}

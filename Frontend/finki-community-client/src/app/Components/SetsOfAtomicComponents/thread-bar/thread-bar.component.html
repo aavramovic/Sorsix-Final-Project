@@ -17,6 +17,9 @@
     </div>
     <div *ngIf="threads">
         <ul class="list-group">
+            <li *ngIf="threads.length == 0" class="list-group-item-info list-unstyled">
+                No threads for this course yet.
+            </li>
             <li *ngFor="let thread of threads" class="list-group-item">
                 <app-thread [thread]="thread"></app-thread>
             </li>

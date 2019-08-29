@@ -1,25 +1,30 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {API_URL, LOGIN_USER, USERS} from '../Models/global-const-url-paths';
 import * as moment from 'moment';
 import {ILoginResponse} from '../Models/Interfaces/ILoginResponse';
 import {LoginResponse} from '../Models/Classes/LoginResponse';
 import {Authorization} from '../Models/Enumeration/Authorization';
+import {Router} from '@angular/router';
+import {User} from '../Models/Classes/User';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<any>;
-    public currentUser: Observable<any>;
+    public isLoggedIn$: Subject<boolean> = new Subject();
 
-    constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('id_token')));
-        this.currentUser = this.currentUserSubject.asObservable();
+    constructor(private http: HttpClient,
+                private router: Router) {
+
     }
 
-    public get currentUserValue() {
-        return this.currentUserSubject.value;
+    public getToken() {
+        const token = localStorage.getItem('id_token');
+        if (token && token.length) {
+            return token;
+        }
+        return null;
     }
 
     login(username, password): Observable<ILoginResponse> {
@@ -29,9 +34,10 @@ export class AuthenticationService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 if (response.valid) {
                     const expiresAt = moment().add(response.expiresIn, 'second');
-                    this.logout();
                     localStorage.setItem('id_token', response.idToken);
                     localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
+                    localStorage.setItem('role', response.role.toString());
+                    this.isLoggedIn$.next(true);
                     return response;
                 }
                 return new LoginResponse('0', '', Authorization.VISITOR, response.valid, response.errorMessage);
@@ -39,19 +45,19 @@ export class AuthenticationService {
     }
 
     logout() {
+        if (!this.isLoggedIn()) {
+            return;
+        }
         // remove user from local storage and set current user to null
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
-
-        this.currentUserSubject.next(null);
+        localStorage.removeItem('role');
+        this.isLoggedIn$.next(false);
     }
 
-    public static isLoggedIn() {
-        return moment().isBefore(AuthenticationService.getExpiration());
-    }
-
-    static isLoggedOut() {
-        return !AuthenticationService.isLoggedIn();
+    public isLoggedIn() {
+        const token = localStorage.getItem('id_token');
+        return token && token.length;
     }
 
     static getExpiration() {

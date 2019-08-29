@@ -59,15 +59,13 @@ public class UserService {
             encodedPassword = userRepository.findByUsername(loginViewModel.getUsername()).getPassword();
             rawPassword = loginViewModel.getPassword();
 
-            if (passwordEncoder.matches(rawPassword, encodedPassword))
-            {
+            if (passwordEncoder.matches(rawPassword, encodedPassword)) {
                 userResponse.setIdToken(encodedPassword);
-                userResponse.setExpiresIn(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME);
+                userResponse.setExpiresIn(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME);
                 userResponse.setRole(Role.ADMIN);
+                userResponse.setUsername(loginViewModel.getUsername());
                 userResponse.setValid(true);
-            }
-            else
-            {
+            } else {
                 userResponse.setErrorMessage("Incorrect password");
                 userResponse.setValid(false);
             }//TODO: check what kind of exceptions?!
@@ -88,45 +86,45 @@ public class UserService {
         Optional<User> userFollowed = userRepository.findById(newFollowingRequest.getUserIdFollowed());
 
 
-        if(userFollowing.isPresent() && userFollowed.isPresent()){
+        if (userFollowing.isPresent() && userFollowed.isPresent()) {
             User user1 = userFollowing.get();
             User user2 = userFollowed.get();
 
-            if(user1.getFollowings().contains(user2)){
+            if (user1.getFollowings().contains(user2)) {
                 user1.removeFollowing(user2);
-            }else{
+            } else {
                 user1.addNewFollowing(user2);
             }
-            try{
+            try {
                 userRepository.save(user1);
                 userRepository.save(user2);
                 return Optional.of(newFollowingRequest);
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 return Optional.empty();
             }
         }
         return Optional.empty();
     }
 
-    public NewPostLikeRequest newPostLike(NewPostLikeRequest newPostLikeRequest){
+    public NewPostLikeRequest newPostLike(NewPostLikeRequest newPostLikeRequest) {
         User user = userRepository.findByUsername(newPostLikeRequest.username);
-        if(user == null)
+        if (user == null)
             return null;
         Post post = postRepository.findByPostId(newPostLikeRequest.postId);
-        if(post == null)
+        if (post == null)
             return null;
 
-        if(user.getPostsLiked().contains(post)){
+        if (user.getPostsLiked().contains(post)) {
             user.removePostLiked(post);
-        }else{
+        } else {
             user.addPostLiked(post);
         }
 
-        try{
+        try {
             userRepository.save(user);
             postRepository.save(post);
             return newPostLikeRequest;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return null;
         }
     }
@@ -139,9 +137,9 @@ public class UserService {
         );
     }
 
-    public UserDetailsResponse getUserDetails(String username, String loggedInUsername){
+    public UserDetailsResponse getUserDetails(String username, String loggedInUsername) {
         User user = userRepository.findByUsername(username);
-        if(user == null)
+        if (user == null)
             return null;
 
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
@@ -154,9 +152,9 @@ public class UserService {
         userDetailsResponse.setSex(user.getSex());
         userDetailsResponse.setRole(user.getRole());
 
-        if(loggedInUsername != null){
+        if (loggedInUsername != null) {
             User loggedInUser = userRepository.findByUsername(loggedInUsername);
-            if(loggedInUser.getFollowings().contains(user)){
+            if (loggedInUser.getFollowings().contains(user)) {
                 userDetailsResponse.setFollowing(true);
             }
         }
@@ -169,14 +167,14 @@ public class UserService {
         Set<Post> userPosts = user.getPosts();
         List<UserDetailsPost> userDetailsPosts = new ArrayList<>();
         UserDetailsPost userDetailsPost;
-        for(Post post: userPosts){
+        for (Post post : userPosts) {
             userDetailsPost = new UserDetailsPost();
 
             userDetailsPost.setId(post.getPostId());
             userDetailsPost.setTimeOfPost(post.getTimestamp());
             userDetailsPost.setCourseName(post.getCourse().getCourseName());
             userDetailsPost.setTitle(post.getTitle());
-            userDetailsPost.setContent(post.getContent().substring(0,50));
+            userDetailsPost.setContent(post.getContent().substring(0, 50));
 
             userDetailsPosts.add(userDetailsPost);
         }
@@ -189,14 +187,14 @@ public class UserService {
 
         List<UserDetailsPost> userDetailsPostsLiked = new ArrayList<>();
         UserDetailsPost userDetailsPostLiked;
-        for(Post postLiked: userPostsLiked){
+        for (Post postLiked : userPostsLiked) {
             userDetailsPostLiked = new UserDetailsPost();
 
             userDetailsPostLiked.setId(postLiked.getPostId());
             userDetailsPostLiked.setTimeOfPost(postLiked.getTimestamp());
             userDetailsPostLiked.setCourseName(postLiked.getCourse().getCourseName());
             userDetailsPostLiked.setTitle(postLiked.getTitle());
-            userDetailsPostLiked.setContent(postLiked.getContent().substring(0,50));
+            userDetailsPostLiked.setContent(postLiked.getContent().substring(0, 50));
 
             userDetailsPostsLiked.add(userDetailsPostLiked);
         }
@@ -206,7 +204,7 @@ public class UserService {
         Set<User> userFollowings = user.getFollowings();
         List<UserDetailsFollow> userDetailsFollows = new ArrayList<>();
         UserDetailsFollow userDetailsFollow;
-        for(User following: userFollowings){
+        for (User following : userFollowings) {
             userDetailsFollow = new UserDetailsFollow();
 
             userDetailsFollow.setId(following.getUserId());
@@ -223,7 +221,7 @@ public class UserService {
         Set<User> userFollowers = user.getFollowers();
         List<UserDetailsFollow> userDetailsFollowers = new ArrayList<>();
         UserDetailsFollow userDetailsFollower;
-        for(User follower: userFollowers){
+        for (User follower : userFollowers) {
             userDetailsFollower = new UserDetailsFollow();
 
             userDetailsFollower.setId(follower.getUserId());
@@ -238,12 +236,12 @@ public class UserService {
         return userDetailsResponse;
     }
 
-    public List<MockUser> getAllMockUsers(){
+    public List<MockUser> getAllMockUsers() {
         List<User> users = userRepository.findAll();
 
         List<MockUser> mockUsers = new ArrayList<>();
         MockUser mockUser;
-        for(User user: users){
+        for (User user : users) {
             mockUser = new MockUser();
 
             mockUser.setUserId(user.getUserId());

@@ -9,8 +9,9 @@ export class User {
     private _authorization: Authorization;
     private email: string;
     private numberOfPosts: number;
+    private sex: string;
     private _imageUrl: string;
-
+    authdata?: string;
 
     constructor(firstName: string, lastName: string, username: string, password: string, email: string, userId?: number) {
         this.firstName = firstName;
