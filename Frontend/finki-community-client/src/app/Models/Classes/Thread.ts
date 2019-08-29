@@ -1,4 +1,5 @@
 import {Course} from './Course';
+import {Authorization} from '../Enumeration/Authorization';
 
 export class Thread {
     threadId: number;
@@ -10,6 +11,8 @@ export class Thread {
     content: string;
     imageUrl: string;
     title: string;
+    sex: string;
+    role: Authorization;
 
     comments: Thread[];
 
@@ -21,7 +24,9 @@ export class Thread {
                 noOfComments: number,
                 content: string,
                 imageUrl: string,
-                title?: string) {
+                title: string,
+                sex: string,
+                role: Authorization) {
         this.threadId = threadId;
         this.username = username;
         this.courseName = courseName;
@@ -31,6 +36,8 @@ export class Thread {
         this.content = content;
         this.imageUrl = imageUrl;
         this.title = title;
+        this.sex = sex;
+        this.role = role;
 
         this.comments = [];
     }

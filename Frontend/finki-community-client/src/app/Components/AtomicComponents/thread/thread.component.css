@@ -7,3 +7,15 @@
     margin-top: 1%;
     border: darkgray 1px solid;
 }
+
+.admin-color {
+    color: red;
+}
+
+.moderator-color {
+    color: green;
+}
+
+.user-color {
+    color: black;
+}

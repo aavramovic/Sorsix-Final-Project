@@ -9,6 +9,7 @@ import {API_URL, COURSE_LIST, THREAD_LIST, THREAD_LIST_10, THREAD_REPLIES, USER_
 import {IClickedCourse} from '../Models/Interfaces/IClickedCourse';
 import {IGetRepliesByPostId} from '../Models/Interfaces/IGetRepliesByPostId';
 import {NewPostLikeRequest} from '../Models/Classes/NewPostLikeRequest';
+import {Authorization} from '../Models/Enumeration/Authorization';
 
 @Injectable({
     providedIn: 'root'
@@ -55,13 +56,16 @@ export class ThreadService {
                 thread.noOfComments,
                 thread.content,
                 'https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_1280.png',
-                thread.title
+                thread.title,
+                thread.sex,
+                Authorization[thread.role]
             ));
         });
         return tempThreads;
     }
-    likes(username: string, threadId: number):Observable<NewPostLikeRequest>{
 
-        return this.http.put<NewPostLikeRequest>(API_URL + USERS + USER_LIKES_POST,new NewPostLikeRequest(username,threadId))
+    likes(username: string, threadId: number): Observable<NewPostLikeRequest> {
+
+        return this.http.put<NewPostLikeRequest>(API_URL + USERS + USER_LIKES_POST, new NewPostLikeRequest(username, threadId));
     }
 }
