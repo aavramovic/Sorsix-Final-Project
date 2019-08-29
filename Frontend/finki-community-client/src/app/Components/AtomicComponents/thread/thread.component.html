@@ -5,11 +5,9 @@
             <span *ngIf="thread.imageUrl" class="col-auto d-flex"><img src="{{thread.imageUrl}}" alt="Users image"
                                                                        width="50px"
                                                                        height="50px"></span>
-            <span *ngIf="thread.username" class="col d-flex p-0">{{thread.username}}</span>
-            <div class="col-auto d-flex p-0">
-                <!--                TODO: onClickEvent shto ke go followne userot-->
-                <button class="btn-sm btn-xsm btn-dark font-weight-light ml-auto mr-1 d-flex">Follow User</button>
-            </div>
+            <span *ngIf="thread.username" class="col d-flex p-0">
+                <a routerLink="/details/{{thread.username}}">{{thread.username}}</a>
+            </span>
         </div>
     </div>
     <!--TOP PART END-->
@@ -36,17 +34,24 @@
     <div *ngIf="thread.numberOfLikes>=0" class="float-right mr-1 mt-2">
         ▲{{thread.numberOfLikes}}
     </div>
+    <div>
+        Number of comments:
+        {{thread.numberOfComments}}
+    </div>
 
     <!-- TODO: ako e premnogu dolgo da se skrati so opcija da se pushti prozorec ili da se extendne-->
-    <button *ngIf="!isOpen" type="button" class="btn btn-light col mt-2" (click)="loadComments()">
+    <button *ngIf="!isOpen && thread.numberOfComments>0" type="button" class="btn btn-light col mt-2"
+            (click)="loadComments()">
         · · · LoadComments · · ·
     </button>
-    <div *ngIf="isOpen && replies">
-        <ul>
-            <li *ngFor="let reply of replies">
-                <app-thread [thread]="reply"></app-thread>
-            </li>
-        </ul>
-    </div>
+    <section class="mt-3 pt-2">
+        <div class="list-group" *ngIf="isOpen && replies && replies.length>0">
+            <ul>
+                <li *ngFor="let reply of replies" class="list-group-item">
+                    <app-thread [thread]="reply"></app-thread>
+                </li>
+            </ul>
+        </div>
+    </section>
     <!--BOTTOM PART END-->
 </div>

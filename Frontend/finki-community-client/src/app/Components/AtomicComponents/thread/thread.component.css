@@ -2,3 +2,8 @@
     width: 70%;
     height: 100%;
 }
+
+.section {
+    margin-top: 1%;
+    border: darkgray 1px solid;
+}

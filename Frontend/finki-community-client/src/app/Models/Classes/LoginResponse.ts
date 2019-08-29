@@ -8,6 +8,7 @@ export class LoginResponse implements ILoginResponse, IErrorMessage {
     role: Authorization;
     valid: boolean;
     errorMessage: string;
+    username: string;
 
     constructor(expiresIn: string, idToken: string, role: Authorization, valid: boolean, errorMessage?: string) {
         this.expiresIn = expiresIn;

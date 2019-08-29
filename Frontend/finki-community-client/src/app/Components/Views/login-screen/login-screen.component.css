@@ -7,8 +7,7 @@
     opacity: 0.8;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 55%;
-
+    height: 50%;
 }
 
 hr {
@@ -21,12 +20,21 @@ hr {
     .container-fluid {
         width: 80%;
         margin-top: 10%;
+        height: 45%;
+
     }
 
     button[type="submit"] {
         margin-left: 33%;
     }
+}
 
+@media only screen and (max-height: 800px) {
+    .container-fluid {
+        margin-top: 5%;
+        height: 65%;
+
+    }
 }
 
 /*Small*/
@@ -37,6 +45,13 @@ hr {
 
     button[type="submit"] {
         margin-left: 32%;
+    }
+}
+
+@media only screen and (max-height: 575px) {
+    .container-fluid {
+        margin-top: 2%;
+        height: 80%;
     }
 }
 

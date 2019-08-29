@@ -28,21 +28,20 @@ export class CourseBarComponent implements OnInit {
     semester: string;
     type: string;
 
-    filter = new Subject();
+    filter$ = new Subject();
 
     constructor(private courseService: CourseService,
-                private mock: MockClassesCreationService,
                 private enumService: EnumService) {
     }
 
     ngOnInit() {
-        this.filter.pipe(switchMap(() => this.courseService.getCourses(this.program, this.year, this.semester, this.type)))
+        this.filter$.pipe(switchMap(() => this.courseService.getCourses(this.program, this.year, this.semester, this.type)))
             .subscribe(courses => this.courses = courses);
-        this.filter.next();
+        this.filter$.next();
     }
 
     filterCourses() {
-        this.filter.next();
+        this.filter$.next();
     }
 
     setProgram($event?: string) {
