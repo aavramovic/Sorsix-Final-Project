@@ -7,6 +7,7 @@ import {MainViewComponent} from './Components/Views/main-view/main-view.componen
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {AdminComponent} from './Components/Views/admin/admin.component';
+import {UserComponent} from './Components/AtomicComponents/user/user.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'start', pathMatch: 'full'},
@@ -15,7 +16,7 @@ const routes: Routes = [
     {path: 'courses', component: CourseBarComponent},
     {path: 'courses/:id', component: ThreadBarComponent},
     {path: 'threads', component: ThreadBarComponent},
-    {path: 'users', component: AdminComponent},
+    {path: 'users', component: UserComponent},
     {path: 'login', component: LoginScreenComponent},
     {path: 'register', component: RegisterScreenComponent},
     {path: 'admin', component: AdminComponent},

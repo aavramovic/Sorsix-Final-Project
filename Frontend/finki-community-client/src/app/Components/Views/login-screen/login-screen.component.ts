@@ -18,25 +18,29 @@ export class LoginScreenComponent implements OnInit {
         username: new FormControl('', Validators.required),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     });
-    username: string;
-    password: string;
+    username: string = '';
+    password: string = '';
 
     constructor(private userService: UserService,
                 private router: Router,
-                private authService: AuthenticationService) {
+                private authService: AuthenticationService
+    ) {
+
     }
 
     ngOnInit() {
+        console.log('NgOnInit');
         this.login$.pipe(switchMap(() =>
             this.authService.login(this.username, this.password))).subscribe(response => {
-            console.log('idToken: ' + response.idToken);
-            console.log('errorMessage: ' + response.errorMessage);
-            console.log('valid: ' + response.valid);
-            console.log('expiresIn: ' + response.expiresIn);
-            console.log('role: ' + response.role);
-            console.log('----: ');
+            // console.log('idToken: ' + response.idToken);
+            // console.log('errorMessage: ' + response.errorMessage);
+            // console.log('valid: ' + response.valid);
+            // console.log('expiresIn: ' + response.expiresIn);
+            // console.log('role: ' + response.role);
+            // console.log('----: ');
             if (response.valid) {
-                this.router.navigate(['/']).then(r => r.valueOf());
+                //TODO
+                this.router.navigate(['/']).catch(e => console.log(e));
             } else {
                 alert(response.errorMessage);
             }
@@ -59,6 +63,6 @@ export class LoginScreenComponent implements OnInit {
     onSubmit() {
         this.username = this.loginForm.get('username').value;
         this.password = this.loginForm.get('password').value;
-        this.login$.next();
+        // this.login$.next();
     }
 }
