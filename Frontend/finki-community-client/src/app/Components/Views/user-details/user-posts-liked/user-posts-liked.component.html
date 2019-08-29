@@ -1,0 +1,7 @@
+<div>POSTS LIKED</div>
+<div>Number of posts liked: {{numberOfPostsLiked}}</div>
+<div id="post-liked-items">
+  <div *ngFor="let postLiked of userDetailsPostsLiked">
+    {{postLiked.content}}
+  </div>
+</div>

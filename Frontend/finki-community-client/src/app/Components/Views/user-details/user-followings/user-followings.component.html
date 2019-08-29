@@ -1,0 +1,8 @@
+<div>FOLLOWINGS</div>
+<div>Number of followings: {{numberOfFollowings}}</div>
+<div id="followers-items">
+  <div *ngFor="let follower of userDetailsFollowings">
+    {{follower.username}}
+  </div>
+</div>
+

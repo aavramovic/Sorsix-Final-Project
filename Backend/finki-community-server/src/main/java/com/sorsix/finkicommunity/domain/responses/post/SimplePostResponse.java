@@ -13,6 +13,7 @@ public class SimplePostResponse implements Comparable<SimplePostResponse>{
     private String username;
     private char sex;
     private Role role;
+    private boolean isLiked;
 
     private String courseName;
     private String title;
@@ -96,6 +97,14 @@ public class SimplePostResponse implements Comparable<SimplePostResponse>{
 
     public void setNoOfComments(int noOfComments) {
         this.noOfComments = noOfComments;
+    }
+
+    public boolean getIsLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     @Override

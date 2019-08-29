@@ -1,0 +1,46 @@
+#info{
+  text-align: center;
+  padding: 20px;
+  border: 2px green solid;
+}
+
+.flex-container{
+  display:flex;
+}
+
+#posts{
+  width:35%;
+  border: 2px black solid;
+  text-align: center;
+}
+
+#posts-liked{
+  width: 35%;
+  border: 2px red solid;
+  text-align: center;
+}
+
+#followings{
+  width: 15%;
+  border: 2px blue solid;
+  text-align: center;
+}
+
+#followers{
+  width: 15%;
+  border: 2px brown solid;
+  text-align: center;
+}
+
+li{
+  list-style-type: none;
+}
+
+.following{
+  color: blue;
+  font-weight: bold;
+}
+
+a{
+  font-size: 20px;
+}

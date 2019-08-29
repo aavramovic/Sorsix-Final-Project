@@ -33,9 +33,10 @@ public class PostController {
 
     @GetMapping("/top")
     public ResponseEntity<List<SimplePostResponse>> getTopPosts(
-            @RequestParam(required = false) Integer noOfPosts   // If absent, default will be 10
+            @RequestParam(required = false) Integer noOfPosts,   // If absent, default will be 10
+            @RequestParam(required = false) String username
     ){
-        return ResponseEntity.ok(postService.getTopPosts(noOfPosts));
+        return ResponseEntity.ok(postService.getTopPosts(noOfPosts, username));
     }
 
     @GetMapping("/clicked")

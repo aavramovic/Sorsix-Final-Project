@@ -13,6 +13,7 @@ export class Thread {
     title: string;
     sex: string;
     role: Authorization;
+    isLiked: boolean;
 
     comments: Thread[];
 

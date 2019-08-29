@@ -60,31 +60,31 @@ public class PostService {
         return newPost;
     }
 
-    public List<SimplePostResponse> getTopPosts(Integer noOfPosts) {
+    public List<SimplePostResponse> getTopPosts(Integer noOfPosts, String username) {
         if (noOfPosts == null || noOfPosts.intValue() == 10) {
-            return getTop10Posts();
+            return getTop10Posts(username);
         } else if (noOfPosts.intValue() == 25) {
-            return getTop25Posts();
+            return getTop25Posts(username);
         } else if (noOfPosts.intValue() == 50) {
-            return getTop50Posts();
+            return getTop50Posts(username);
         } else {
-            return getTop10Posts();
+            return getTop10Posts(username);
         }
     }
 
-    private List<SimplePostResponse> getTop10Posts() {
+    private List<SimplePostResponse> getTop10Posts(String username) {
         List<Post> posts = postRepository.findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
-        return convertFromPostToPostResponse(posts);
+        return convertFromPostToSimplePostResponse(posts, username);
     }
 
-    private List<SimplePostResponse> getTop25Posts() {
+    private List<SimplePostResponse> getTop25Posts(String username) {
         List<Post> posts = postRepository.findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
-        return convertFromPostToPostResponse(posts);
+        return convertFromPostToSimplePostResponse(posts, username);
     }
 
-    private List<SimplePostResponse> getTop50Posts() {
+    private List<SimplePostResponse> getTop50Posts(String username) {
         List<Post> posts = postRepository.findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
-        return convertFromPostToPostResponse(posts);
+        return convertFromPostToSimplePostResponse(posts, username);
     }
 
     public ClickedPostResponse getClickedPost(Long id) {
@@ -92,7 +92,7 @@ public class PostService {
 
         ClickedPostResponse clickedPostResponse = new ClickedPostResponse();
 
-        clickedPostResponse.setPostResponse(createPostResponseObject(post));
+        clickedPostResponse.setPostResponse(createPostResponseObject(post, null));
 
 
         Set<SimplePostResponse> simplePostResponses = convertFromPostToPostResponseSET(post.getReplies());
@@ -106,7 +106,7 @@ public class PostService {
     /*
     HELPER METHODS
      */
-    private SimplePostResponse createPostResponseObject(Post post) {
+    private SimplePostResponse createPostResponseObject(Post post, String username) {
         SimplePostResponse postResponse = new SimplePostResponse();
 
         postResponse.setId(post.getPostId());
@@ -119,15 +119,17 @@ public class PostService {
         postResponse.setUsername(post.getUser().getUsername());
         postResponse.setSex(post.getUser().getSex());
         postResponse.setRole(post.getUser().getRole());
+        if(username==null)
+            postResponse.setLiked(false);
 
         return postResponse;
     }
 
-    private List<SimplePostResponse> convertFromPostToPostResponse(List<Post> posts) {
+    private List<SimplePostResponse> convertFromPostToSimplePostResponse(List<Post> posts, String username) {
         List<SimplePostResponse> postResponses = new ArrayList<>();
 
         for (Post post : posts) {
-            postResponses.add(createPostResponseObject(post));
+            postResponses.add(createPostResponseObject(post, username));
         }
 
         return postResponses;
@@ -137,7 +139,7 @@ public class PostService {
         Set<SimplePostResponse> postResponses = new HashSet<>();
 
         for (Post post : posts) {
-            postResponses.add(createPostResponseObject(post));
+            postResponses.add(createPostResponseObject(post, null));
         }
 
         return postResponses;

@@ -8,8 +8,13 @@ import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/use
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {AdminComponent} from './Components/Views/admin/admin.component';
 import {UserComponent} from './Components/AtomicComponents/user/user.component';
+import {UserDetailsComponent} from './Components/Views/user-details/user-info/user-details.component';
 
 const routes: Routes = [
+    {
+        path: 'details/:username',
+        component: UserDetailsComponent
+    },
     {path: '', redirectTo: 'start', pathMatch: 'full'},
     {path: 'start', component: MainViewComponent, pathMatch: 'full'},
     {path: 'start/:id', component: MainViewComponent, pathMatch: 'full'},
@@ -20,7 +25,7 @@ const routes: Routes = [
     {path: 'login', component: LoginScreenComponent},
     {path: 'register', component: RegisterScreenComponent},
     {path: 'admin', component: AdminComponent},
-    {path: '**', redirectTo: ''}
+    {path: '**', redirectTo: ''},
 ];
 
 @NgModule({

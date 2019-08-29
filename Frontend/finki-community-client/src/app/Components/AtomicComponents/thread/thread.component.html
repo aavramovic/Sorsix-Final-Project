@@ -6,7 +6,7 @@
                                                                        width="50px"
                                                                        height="50px"></span>
             <span *ngIf="thread.username" class="col d-flex p-0">
-                <a routerLink="/details/{{thread.username}}"
+                <a [routerLink]="['/details/', thread.username]"
                    [class.admin-color]="thread.role===admin"
                    [class.moderator-color]="thread.role===moderator"
                    [class.user-color]="thread.role===user"
@@ -32,7 +32,7 @@
     </div>
 
     <div *ngIf="isLoggedIn">
-        <button class="float-right font-weight-light mr-1 btn btn-light">Like</button>
+        <button class="float-right font-weight-light mr-1 btn btn-light" [class.liked]="false">Like</button>
     </div>
 
     <div *ngIf="thread.numberOfLikes>=0" class="float-right mr-1 mt-2">

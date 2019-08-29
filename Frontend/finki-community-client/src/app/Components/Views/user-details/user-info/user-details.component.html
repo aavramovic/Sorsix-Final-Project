@@ -1,0 +1,18 @@
+<div *ngIf="user">
+  <div id="info">
+    <div *ngIf="loggedin && user.username!='fisnik'">
+      <button ng-model="button" [class.following]="this.user.isFollowing" (click)="followClicked(user)">{{this.user.isFollowing ? 'FOLLOWING' : 'FOLLOW'}}</button>
+    </div>
+    <div>Username: {{user.username}}</div>
+    <div>First name: {{user.firstName}}</div>
+    <div>Last name: {{user.lastName}}</div>
+    <div>Email: {{user.email}}</div>
+    <div>Sex: {{user.sex}}</div>
+  </div>
+  <div class="flex-container">
+      <app-user-posts id="posts" [numberOfPosts]="user.numberOfPosts" [posts]="user.userDetailsPosts"></app-user-posts>
+      <app-user-posts-liked id="posts-liked" [numberOfPostsLiked]="user.numberOfPostsLiked" [userDetailsPostsLiked]="user.userDetailsPostsLiked"></app-user-posts-liked>
+      <app-user-followings id="followings" [numberOfFollowings]="user.numberOfFollowings" [userDetailsFollowings]="user.userDetailsFollowings"></app-user-followings>
+      <app-user-followers id="followers" [numberOfFollowers]="user.numberOfFollowers" [userDetailsFollowers]="user.userDetailsFollowers"></app-user-followers>
+  </div>
+</div>
