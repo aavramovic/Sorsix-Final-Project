@@ -1,10 +1,12 @@
 package com.sorsix.finkicommunity.domain.responses.user;
 
 public class MockUser {
+
     public long userId;
     public String username;
     public String firstName;
     public String lastName;
+    public String role;
 
     public long getUserId() {
         return userId;
@@ -36,5 +38,13 @@ public class MockUser {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -3,10 +3,7 @@ package com.sorsix.finkicommunity.services;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.enums.Role;
-import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
-import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
-import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
-import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
+import com.sorsix.finkicommunity.domain.requests.*;
 import com.sorsix.finkicommunity.domain.responses.user.MockUser;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollow;
@@ -46,7 +43,7 @@ public class UserService {
         user.setFirstName(newUserRequest.getFirstName());
         user.setLastName(newUserRequest.getLastName());
         user.setSex(newUserRequest.getSex());
-        user.setRole("USER");
+        user.setRole(Role.USER);
         try {
             return userRepository.save(user);
         } catch (RuntimeException ex) {
@@ -251,10 +248,40 @@ public class UserService {
             mockUser.setUsername(user.getUsername());
             mockUser.setFirstName(user.getFirstName());
             mockUser.setLastName(user.getLastName());
+            mockUser.setRole(user.getRole().toString());
 
             mockUsers.add(mockUser);
         }
 
         return mockUsers;
+    }
+
+    public List<MockUser> getResultFromSearch(String q){
+        List<User> result = userRepository.findByUsernameContainingOrderByUsername(q);
+
+        List<MockUser> mockUsers = new ArrayList<>();
+        MockUser mockUser;
+        for(User user : result){
+            mockUser = new MockUser();
+
+            mockUser.setUserId(user.getUserId());
+            mockUser.setUsername(user.getUsername());
+            mockUser.setFirstName(user.getFirstName());
+            mockUser.setLastName(user.getLastName());
+            mockUser.setRole(user.getRole().toString());
+
+            mockUsers.add(mockUser);
+        }
+        return mockUsers;
+    }
+
+    public RoleChangeRequest changeRole(RoleChangeRequest roleChangeRequest){
+        User user = userRepository.findByUsername(roleChangeRequest.username);
+        if(user != null){
+            user.setRole(roleChangeRequest.role);
+            userRepository.save(user);
+            return roleChangeRequest;
+        }
+        return null;
     }
 }

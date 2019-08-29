@@ -1,10 +1,7 @@
 package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.User;
-import com.sorsix.finkicommunity.domain.requests.LoginViewModel;
-import com.sorsix.finkicommunity.domain.requests.NewFollowingRequest;
-import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
-import com.sorsix.finkicommunity.domain.requests.NewUserRequest;
+import com.sorsix.finkicommunity.domain.requests.*;
 import com.sorsix.finkicommunity.domain.responses.user.MockUser;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
@@ -36,7 +33,6 @@ public class UserController {
             @RequestParam String username,
             @RequestParam(required = false) String loggedInUsername
     ) {
-        // System.out.println(username + " " + loggedInUsername);
         return ResponseEntity.ok(userService.getUserDetails(username, loggedInUsername));
     }
 
@@ -71,11 +67,7 @@ public class UserController {
     @PostMapping("/new-following")
     public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
         Optional<NewFollowingRequest> result = userService.addNewFollowing(newFollowingRequest);
-        // System.out.println(result);
         return ResponseEntity.ok(newFollowingRequest);
-//        return userService.addNewFollowing(newFollowingRequest)
-//                .map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @PostMapping("/likes")
@@ -83,10 +75,20 @@ public class UserController {
         return ResponseEntity.ok(userService.newPostLike(newPostLikeRequest));
     }
 
+    @PostMapping("/role")
+    public ResponseEntity<RoleChangeRequest> changeRole(@RequestBody @Valid RoleChangeRequest roleChangeRequest){
+        return ResponseEntity.ok(userService.changeRole(roleChangeRequest));
+    }
 
     @GetMapping("/mock")
     public ResponseEntity<List<MockUser>> getAllMockUsers(){
         return ResponseEntity.ok(userService.getAllMockUsers());
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MockUser>> getResultFromSearch(@RequestParam String q){
+        return ResponseEntity.ok(userService.getResultFromSearch(q));
+    }
+
 
 }
