@@ -9,6 +9,16 @@ public class UserResponse {
     private String errorMessage;
     private boolean valid;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String username;
+
     public UserResponse() {
     }
 
