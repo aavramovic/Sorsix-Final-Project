@@ -263,7 +263,7 @@ public class User{
         return role;
     }
 
-    public void setRole(String Role){
+    public void setRole(Role role){
         this.role = role;
     }
 
