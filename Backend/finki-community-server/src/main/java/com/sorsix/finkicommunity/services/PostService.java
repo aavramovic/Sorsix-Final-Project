@@ -121,6 +121,14 @@ public class PostService {
         postResponse.setRole(post.getUser().getRole());
         if(username==null)
             postResponse.setLiked(false);
+        else{
+            User user = userRepository.findByUsername(username);
+            if(user == null){
+                postResponse.setLiked(false);
+            }else{
+                postResponse.setLiked(user.getPostsLiked().contains(post));
+            }
+        }
 
         return postResponse;
     }
