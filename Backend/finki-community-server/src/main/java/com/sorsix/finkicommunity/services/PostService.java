@@ -11,6 +11,7 @@ import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -30,17 +31,17 @@ public class PostService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Post> getAllPosts(){
+    public List<Post> getAllPosts() {
         return postRepository.findAllByOrderByTimestampDescTitleAsc();
     }
 
-    public List<Post> getAllPostsByUserId(Long userId){
-        if(userRepository.existsById(userId))
+    public List<Post> getAllPostsByUserId(Long userId) {
+        if (userRepository.existsById(userId))
             return postRepository.findAllByUser_UserId(userId);
         return null;
     }
 
-    public Post createNewPost(NewPostRequest newPostRequest){
+    public Post createNewPost(NewPostRequest newPostRequest) {
         Course course = courseRepository.findById(newPostRequest.getCourseId()).get();
         Post repliedTo = null;
         User user = userRepository.findById(newPostRequest.getUserIdOwner()).get();
@@ -59,35 +60,34 @@ public class PostService {
         return newPost;
     }
 
-    public List<SimplePostResponse> getTopPosts(Integer noOfPosts){
-        if(noOfPosts == null || noOfPosts.intValue() == 10){
+    public List<SimplePostResponse> getTopPosts(Integer noOfPosts) {
+        if (noOfPosts == null || noOfPosts.intValue() == 10) {
             return getTop10Posts();
-        }
-        else if(noOfPosts.intValue() == 25) {
+        } else if (noOfPosts.intValue() == 25) {
             return getTop25Posts();
-        }else if(noOfPosts.intValue() == 50){
+        } else if (noOfPosts.intValue() == 50) {
             return getTop50Posts();
-        }else{
+        } else {
             return getTop10Posts();
         }
     }
 
-    private List<SimplePostResponse> getTop10Posts(){
+    private List<SimplePostResponse> getTop10Posts() {
         List<Post> posts = postRepository.findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    private List<SimplePostResponse> getTop25Posts(){
+    private List<SimplePostResponse> getTop25Posts() {
         List<Post> posts = postRepository.findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    private List<SimplePostResponse> getTop50Posts(){
+    private List<SimplePostResponse> getTop50Posts() {
         List<Post> posts = postRepository.findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();
         return convertFromPostToPostResponse(posts);
     }
 
-    public ClickedPostResponse getClickedPost(Long id){
+    public ClickedPostResponse getClickedPost(Long id) {
         Post post = postRepository.findByPostId(id);
 
         ClickedPostResponse clickedPostResponse = new ClickedPostResponse();
@@ -106,7 +106,7 @@ public class PostService {
     /*
     HELPER METHODS
      */
-    private SimplePostResponse createPostResponseObject(Post post){
+    private SimplePostResponse createPostResponseObject(Post post) {
         SimplePostResponse postResponse = new SimplePostResponse();
 
         postResponse.setId(post.getPostId());
@@ -118,37 +118,38 @@ public class PostService {
         postResponse.setTitle(post.getTitle());
         postResponse.setUsername(post.getUser().getUsername());
         postResponse.setSex(post.getUser().getSex());
+        postResponse.setRole(post.getUser().getRole());
 
         return postResponse;
     }
 
-    private List<SimplePostResponse> convertFromPostToPostResponse(List<Post> posts){
+    private List<SimplePostResponse> convertFromPostToPostResponse(List<Post> posts) {
         List<SimplePostResponse> postResponses = new ArrayList<>();
 
-        for(Post post : posts){
+        for (Post post : posts) {
             postResponses.add(createPostResponseObject(post));
         }
 
         return postResponses;
     }
 
-    private Set<SimplePostResponse> convertFromPostToPostResponseSET(Set<Post> posts){
+    private Set<SimplePostResponse> convertFromPostToPostResponseSET(Set<Post> posts) {
         Set<SimplePostResponse> postResponses = new HashSet<>();
 
-        for(Post post : posts){
+        for (Post post : posts) {
             postResponses.add(createPostResponseObject(post));
         }
 
         return postResponses;
     }
 
-    public List<MockPost> getAllMockPosts(){
+    public List<MockPost> getAllMockPosts() {
         List<Post> posts = postRepository.findAllByOrderByTimestampDescTitleAsc();
         User user = userRepository.findByUsername("fisnik");
 
         List<MockPost> mockPosts = new ArrayList<>();
         MockPost mockPost;
-        for(Post post: posts){
+        for (Post post : posts) {
             mockPost = new MockPost();
 
             mockPost.id = post.getPostId();

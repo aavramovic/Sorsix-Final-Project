@@ -1,5 +1,7 @@
 package com.sorsix.finkicommunity.domain.responses.post;
 
+import com.sorsix.finkicommunity.domain.enums.Role;
+
 public class SimplePostResponse implements Comparable<SimplePostResponse>{
 
     private long id;
@@ -10,11 +12,19 @@ public class SimplePostResponse implements Comparable<SimplePostResponse>{
     // This could be encapsulated to a SimplePostResponseUser class
     private String username;
     private char sex;
+    private Role role;
 
     private String courseName;
     private String title;
     private String content;
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public long getId() {
         return id;
