@@ -8,6 +8,10 @@ public class UserResponse {
     private Role role;
     private String errorMessage;
     private boolean valid;
+    private String username;
+
+    public UserResponse() {
+    }
 
     public String getUsername() {
         return username;
@@ -15,11 +19,6 @@ public class UserResponse {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    private String username;
-
-    public UserResponse() {
     }
 
     public long getExpiresIn() {

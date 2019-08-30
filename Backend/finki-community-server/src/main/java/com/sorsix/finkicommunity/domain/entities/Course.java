@@ -4,8 +4,8 @@ import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 @Entity
@@ -25,6 +25,9 @@ public class Course {
     @Column(name = "course_description")
     private String courseDescription;
 
+    /*
+    FOUR FOLLOWING PROPERTIES ARE STORED AS STRINGS INSTEAD OF enum TYPES FOR JPA QUERY PURPOSE
+     */
     @Column(name = "study_year")
     private String studyYear;
 
@@ -37,6 +40,7 @@ public class Course {
     @Column(name = "course_type")
     private String courseType;
 
+
     @Column(name = "number_of_posts")
     private int numberOfPosts = 0;
 
@@ -47,7 +51,7 @@ public class Course {
             mappedBy = "course",
             fetch = FetchType.EAGER
     )
-    private Set<Post> posts = new HashSet<>();
+    private Set<Post> posts = new TreeSet<>();
 
     /*
         Needed for JPA auto table creation
@@ -55,17 +59,17 @@ public class Course {
     public Course(){
     }
 
-    public Course(String code, String courseName, String courseDescription, String progs,
-                  StudyYear studyYear, Semester semester, CourseType courseType) {
+    public Course(String code, String courseName, String courseDescription, String programs, StudyYear studyYear, Semester semester, CourseType courseType) {
         this.code = code;
         this.courseName = courseName;
         this.courseDescription = courseDescription;
-        this.programs = progs;
+        this.programs = programs;
         this.studyYear = studyYear.toString();
         this.semester = semester.toString();
         this.courseType = courseType.toString();
     }
 
+    // GETTERs, SETTERs
     public String getStudyYear() {
         return studyYear;
     }
@@ -122,6 +126,35 @@ public class Course {
         this.courseType = courseType;
     }
 
+    public String getPrograms() {
+        return programs;
+    }
+
+    public void setPrograms(String progs){
+        programs = progs;
+    }
+
+    public int getNumberOfPosts() {
+        return numberOfPosts;
+    }
+
+    public void setNumberOfPosts(int numberOfPosts) {
+        this.numberOfPosts = numberOfPosts;
+    }
+
+    public int getNumberOfReplies() {
+        return numberOfReplies;
+    }
+
+    public void setNumberOfReplies(int numberOfReplies) {
+        this.numberOfReplies = numberOfReplies;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    // HELPER FUNCTIONS
     public void incrementNumberOfPosts(){
         numberOfPosts++;
     }
@@ -136,47 +169,5 @@ public class Course {
 
     public void decrementNumberOfReplies(){
         numberOfReplies--;
-    }
-
-    public void addProgram(String program){
-        programs.concat("," + program);
-    }
-
-    public void removeProgram(String program){
-        int ind = programs.indexOf(program);
-
-        if(ind > 0){
-            programs.replace(","+program, "");
-        }else{
-            programs.replace(program + ",", "");
-        }
-    }
-
-    public String getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(String progs){
-        programs = progs;
-    }
-
-    public int getNumberOfPosts() {
-        return numberOfPosts;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setNumberOfPosts(int numberOfPosts) {
-        this.numberOfPosts = numberOfPosts;
-    }
-
-    public int getNumberOfReplies() {
-        return numberOfReplies;
-    }
-
-    public void setNumberOfReplies(int numberOfReplies) {
-        this.numberOfReplies = numberOfReplies;
     }
 }

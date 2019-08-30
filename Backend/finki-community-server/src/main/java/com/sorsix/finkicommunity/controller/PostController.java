@@ -1,13 +1,12 @@
 package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.Post;
-import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
-import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
-import com.sorsix.finkicommunity.domain.responses.post.MockPost;
+import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
+import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.services.PostService;
-import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -25,7 +24,9 @@ public class PostController {
     }
 
 
-    // GET METHODS
+    /*
+    GET METHODS
+     */
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts(){
         return ResponseEntity.ok(postService.getAllPosts());
@@ -34,27 +35,34 @@ public class PostController {
     @GetMapping("/top")
     public ResponseEntity<List<SimplePostResponse>> getTopPosts(
             @RequestParam(required = false) Integer noOfPosts,   // If absent, default will be 10
-            @RequestParam(required = false) String username
+            @RequestParam(required = false) String username      // if no user logged in, this will be null
     ){
         return ResponseEntity.ok(postService.getTopPosts(noOfPosts, username));
     }
 
-    @GetMapping("/clicked")
-    public ResponseEntity<ClickedPostResponse> getClickedPost(
-            @RequestParam Long postId
-    ){
-        return ResponseEntity.ok(postService.getClickedPost(postId));
-    }
+//    @GetMapping("/clicked")
+//    public ResponseEntity<ClickedPostResponse> getClickedPost(
+//            @RequestParam Long postId
+//            @RequestParam String username
+//    ){
+//        return ResponseEntity.ok(postService.getClickedPost(postId));
+//    }
 
-    // POST METHODS
+    /*
+    POST METHODS
+     */
     @PostMapping("/new")
     public ResponseEntity<Post> createNewPost(@RequestBody @Valid NewPostRequest newPostRequest){
-        return ResponseEntity.ok(postService.createNewPost(newPostRequest));
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(postService.createNewPost(newPostRequest));
+        }
+        catch(CourseNotFoundException | UserNotFoundException e){
+            return ResponseEntity.badRequest().build();
+        }
+        catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
 
-    }
 
-    @GetMapping("/mock")
-    public ResponseEntity<List<MockPost>> getAllMockPosts(){
-        return ResponseEntity.ok(postService.getAllMockPosts());
     }
 }

@@ -4,7 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.enums.Role;
 import com.sorsix.finkicommunity.domain.requests.*;
-import com.sorsix.finkicommunity.domain.responses.user.MockUser;
+import com.sorsix.finkicommunity.domain.responses.user.SearchUserResponse;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollow;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsPost;
@@ -12,6 +12,7 @@ import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsRespon
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.security.JwtProperties;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,41 +35,162 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User createNewUser(NewUserRequest newUserRequest) {
-        User user = new User();
+    public Optional<User> getUserById(Long id) { return userRepository.findById(id);}
 
-        user.setUsername(newUserRequest.getUsername());
-        user.setEmail(newUserRequest.getEmail());
-        user.setPassword(passwordEncoder.encode(newUserRequest.getPassword()));
-        user.setFirstName(newUserRequest.getFirstName());
-        user.setLastName(newUserRequest.getLastName());
-        user.setSex(newUserRequest.getSex());
-        user.setRole(Role.USER);
-        try {
-            return userRepository.save(user);
-        } catch (RuntimeException ex) {
-            return user;
-        }
+    public Set<Post> getUserPosts(Long id) throws UsernameNotFoundException{
+        return userRepository
+                .findById(id)
+                .map(
+                        user -> user.getPosts()
+                )
+                .orElseThrow(
+                        () -> new UsernameNotFoundException("No user found with id " + id)
+                );
     }
 
-    public UserResponse findExistingUser(LoginViewModel loginViewModel) {
+    public UserDetailsResponse getUserDetails(String username, String loggedInUsername) throws UsernameNotFoundException {
+        return userRepository
+                .findByUsername(username)
+                .map(
+                        user -> {
+                            UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
+
+                            userDetailsResponse.userId = user.getUserId();
+                            userDetailsResponse.username = user.getUsername();
+                            userDetailsResponse.email = user.getEmail();
+                            userDetailsResponse.firstName = user.getFirstName();
+                            userDetailsResponse.lastName = user.getLastName();
+                            userDetailsResponse.sex = user.getSex();
+                            userDetailsResponse.role = user.getRole();
+
+                            userDetailsResponse.numberOfPosts = user.getNumberOfPosts();
+                            userDetailsResponse.numberOfFollowings = user.getNumberOfFollowings();
+                            userDetailsResponse.numberOfFollowers = user.getNumberOfFollowers();
+
+                            // POSTS
+                            Set<Post> userPosts = user.getPosts();
+                            List<UserDetailsPost> userDetailsPosts = new ArrayList<>();
+                            UserDetailsPost userDetailsPost;
+                            for (Post post : userPosts) {
+                                userDetailsPost = new UserDetailsPost();
+
+                                userDetailsPost.id = post.getPostId();
+                                userDetailsPost.timeOfPost = post.getTimestamp();
+                                userDetailsPost.courseName = post.getCourse().getCourseName();
+                                userDetailsPost.title = post.getTitle();
+                                userDetailsPost.content = post.getContent().substring(0, 50);
+
+                                userDetailsPosts.add(userDetailsPost);
+                            }
+                            userDetailsResponse.userDetailsPosts = userDetailsPosts;
+
+                            // POSTS LIKED
+                            Set<Post> userPostsLiked = user.getPostsLiked();
+
+                            userDetailsResponse.numberOfPostsLiked = userPostsLiked.size();
+
+                            List<UserDetailsPost> userDetailsPostsLiked = new ArrayList<>();
+                            UserDetailsPost userDetailsPostLiked;
+                            for (Post postLiked : userPostsLiked) {
+                                userDetailsPostLiked = new UserDetailsPost();
+
+                                userDetailsPostLiked.id = postLiked.getPostId();
+                                userDetailsPostLiked.timeOfPost = postLiked.getTimestamp();
+                                userDetailsPostLiked.courseName = postLiked.getCourse().getCourseName();
+                                userDetailsPostLiked.title = postLiked.getTitle();
+                                userDetailsPostLiked.content = postLiked.getContent().substring(0, 50);
+
+                                userDetailsPostsLiked.add(userDetailsPostLiked);
+                            }
+                            userDetailsResponse.userDetailsPostsLiked = userDetailsPostsLiked;
+
+                            // FOLLOWINGS
+                            Set<User> userFollowings = user.getFollowings();
+                            List<UserDetailsFollow> userDetailsFollows = new ArrayList<>();
+                            UserDetailsFollow userDetailsFollow;
+                            for (User following : userFollowings) {
+                                userDetailsFollow = new UserDetailsFollow();
+
+                                userDetailsFollow.id = following.getUserId();
+                                userDetailsFollow.username = following.getUsername();
+                                userDetailsFollow.firstName = following.getFirstName();
+                                userDetailsFollow.lastName = following.getLastName();
+
+                                userDetailsFollows.add(userDetailsFollow);
+                            }
+                            userDetailsResponse.userDetailsFollowings = userDetailsFollows;
+
+
+                            // FOLLOWERS
+                            Set<User> userFollowers = user.getFollowers();
+                            List<UserDetailsFollow> userDetailsFollowers = new ArrayList<>();
+                            UserDetailsFollow userDetailsFollower;
+                            for (User follower : userFollowers) {
+                                userDetailsFollower = new UserDetailsFollow();
+
+                                userDetailsFollower.id = follower.getUserId();
+                                userDetailsFollower.username = follower.getUsername();
+                                userDetailsFollower.firstName = follower.getFirstName();
+                                userDetailsFollower.lastName = follower.getLastName();
+
+                                userDetailsFollowers.add(userDetailsFollower);
+                            }
+                            userDetailsResponse.userDetailsFollowers = userDetailsFollowers;
+
+                            if (loggedInUsername != null) {
+                                userRepository
+                                        .findByUsername(loggedInUsername)
+                                        .map(
+                                                userLogged -> {
+                                                    if (userLogged.getFollowings().contains(user)) {
+                                                        userDetailsResponse.isFollowing = true;
+                                                    }
+                                                    return userLogged;
+                                                }
+                                        )
+                                        .orElseThrow(
+                                                ()->new UsernameNotFoundException("No user found with username " + loggedInUsername)
+                                        );
+
+                            }
+                            return userDetailsResponse;
+                        })
+                .orElseThrow(
+                        ()->new UsernameNotFoundException("No user found with username " + loggedInUsername)
+                );
+    }
+
+    public UserResponse findExistingUser(LoginViewModel loginViewModel){
         String encodedPassword;
         String rawPassword;
         UserResponse userResponse = new UserResponse();
+        Optional<User> user;
         try {
-            encodedPassword = userRepository.findByUsername(loginViewModel.getUsername()).getPassword();
+            user = userRepository.findByUsername(loginViewModel.getUsername());
+            encodedPassword = user
+                    .map(
+                            u -> u.getPassword()
+                    ).orElseThrow(
+                            () -> new UsernameNotFoundException("No user found with username " + loginViewModel.getUsername())
+                    );
+
             rawPassword = loginViewModel.getPassword();
 
             if (passwordEncoder.matches(rawPassword, encodedPassword)) {
                 userResponse.setIdToken(encodedPassword);
                 userResponse.setExpiresIn(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME);
-                userResponse.setRole(Role.ADMIN);
+                user
+                        .map(u -> {
+                            userResponse.setRole(u.getRole());
+                            return u;
+                        })
+                        .orElseThrow(() -> new RuntimeException());
                 userResponse.setUsername(loginViewModel.getUsername());
                 userResponse.setValid(true);
             } else {
                 userResponse.setErrorMessage("Incorrect password");
                 userResponse.setValid(false);
-            }//TODO: check what kind of exceptions?!
+            }
         } catch (Exception someException) {
             userResponse.setErrorMessage("Username not found");
             userResponse.setValid(false);
@@ -76,212 +198,124 @@ public class UserService {
         return userResponse;
     }
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public Optional<User> createNewUser(NewUserRequest newUserRequest) {
+        User user = new User();
+
+        user.setUsername(newUserRequest.username);
+        user.setEmail(newUserRequest.email);
+        user.setPassword(passwordEncoder.encode(newUserRequest.password));
+        user.setFirstName(newUserRequest.firstName);
+        user.setLastName(newUserRequest.lastName);
+        user.setSex(newUserRequest.sex);
+        user.setRole(Role.USER);
+
+        try {
+            return Optional.of(userRepository.save(user));
+        } catch (RuntimeException ex) {
+            return Optional.empty();
+        }
     }
 
     public Optional<NewFollowingRequest> addNewFollowing(NewFollowingRequest newFollowingRequest) {
 
-        Optional<User> userFollowing = userRepository.findById(newFollowingRequest.getUserIdFollowing());
-        Optional<User> userFollowed = userRepository.findById(newFollowingRequest.getUserIdFollowed());
-
-
-        if (userFollowing.isPresent() && userFollowed.isPresent()) {
-            User user1 = userFollowing.get();
-            User user2 = userFollowed.get();
-
-            if (user1.getFollowings().contains(user2)) {
-                user1.removeFollowing(user2);
-            } else {
-                user1.addNewFollowing(user2);
-            }
-            try {
-                userRepository.save(user1);
-                userRepository.save(user2);
-                return Optional.of(newFollowingRequest);
-            } catch (Exception ex) {
-                return Optional.empty();
-            }
-        }
+//        return userRepository
+//                .findById(newFollowingRequest.getUserIdFollowing())
+//                .map(
+//                        userFollowing ->
+//                                userRepository
+//                                    .findById(newFollowingRequest.getUserIdFollowed())
+//                                    .map(
+//                                            userFollowed -> {
+//                                                if(userFollowing.getFollowings().contains(userFollowed)) {
+//                                                    userFollowing.removeFollowing(userFollowed);
+//                                                }else{
+//                                                    userFollowing.addNewFollowing(userFollowed);
+//                                                }
+//                                                try {
+//                                                    userRepository.save(userFollowing);
+//                                                    userRepository.save(userFollowed);
+//                                                    return Optional.of(newFollowingRequest);
+//                                                }catch(Exception ex) {
+//                                                    return Optional.empty();
+//                                                }
+//                                            }
+//                                    )
+//                                    .orElseGet(()->Optional.empty())
+//                )
+//                .orElseGet(()->Optional.empty());
         return Optional.empty();
     }
 
-    public NewPostLikeRequest newPostLike(NewPostLikeRequest newPostLikeRequest) {
-        User user = userRepository.findByUsername(newPostLikeRequest.username);
-        if (user == null)
-            return null;
-        Post post = postRepository.findByPostId(newPostLikeRequest.postId);
-        if (post == null)
-            return null;
-
-        if (user.getPostsLiked().contains(post)) {
-            user.removePostLiked(post);
-        } else {
-            user.addPostLiked(post);
-        }
-
-        try {
-            userRepository.save(user);
-            postRepository.save(post);
-            return newPostLikeRequest;
-        } catch (Exception ex) {
-            return null;
-        }
+    public Optional<NewPostLikeRequest> newPostLike(NewPostLikeRequest newPostLikeRequest) {
+//        try {
+//            userRepository
+//                    .findByUsername(newPostLikeRequest.username)
+//                    .map(
+//                            user ->
+//                            {
+//                                try {
+//                                    return postRepository
+//                                            .findByPostId(newPostLikeRequest.postId)
+//                                            .map(
+//                                                    post -> {
+//                                                        if (user.getPostsLiked().contains(post)) {
+//                                                            user.removePostLiked(post);
+//                                                        } else {
+//                                                            user.addPostLiked(post);
+//                                                        }
+//
+//                                                        userRepository.save(user);
+//                                                        postRepository.save(post);
+//                                                        return Optional.of(newPostLikeRequest);
+//                                                    }
+//                                            ).orElseThrow
+//                                                    (
+//                                                            () -> new PostNotFoundException("No post found with post id: " + newPostLikeRequest.postId)
+//                                                    );
+//                                } catch (PostNotFoundException e) {
+//                                    return Optional.empty();
+//                                }
+//                            }
+//                    )
+//                    .orElseThrow(
+//                            () -> new UsernameNotFoundException("No user found with username: " + newPostLikeRequest.username)
+//                    );
+//        }catch(UsernameNotFoundException e){
+//            return Optional.empty();
+//        }
+        return Optional.empty();
     }
 
-    public Optional<Set<Post>> getUserPosts(Long id) {
-        Optional<User> user = userRepository.findById(id);
-
-        return user.map(
-                u -> u.getPosts()
-        );
-    }
-
-    public UserDetailsResponse getUserDetails(String username, String loggedInUsername) {
-        User user = userRepository.findByUsername(username);
-        if (user == null)
-            return null;
-
-        UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
-
-        userDetailsResponse.setUserId(user.getUserId());
-        userDetailsResponse.setUsername(user.getUsername());
-        userDetailsResponse.setEmail(user.getEmail());
-        userDetailsResponse.setFirstName(user.getFirstName());
-        userDetailsResponse.setLastName(user.getLastName());
-        userDetailsResponse.setSex(user.getSex());
-        userDetailsResponse.setRole(user.getRole());
-
-        if (loggedInUsername != null) {
-            User loggedInUser = userRepository.findByUsername(loggedInUsername);
-            if (loggedInUser.getFollowings().contains(user)) {
-                userDetailsResponse.setFollowing(true);
-            }
-        }
-
-        userDetailsResponse.setNumberOfPosts(user.getNumberOfPosts());
-        userDetailsResponse.setNumberOfFollowings(user.getNumberOfFollowings());
-        userDetailsResponse.setNumberOfFollowers(user.getNumberOfFollowers());
-
-        // POSTS
-        Set<Post> userPosts = user.getPosts();
-        List<UserDetailsPost> userDetailsPosts = new ArrayList<>();
-        UserDetailsPost userDetailsPost;
-        for (Post post : userPosts) {
-            userDetailsPost = new UserDetailsPost();
-
-            userDetailsPost.setId(post.getPostId());
-            userDetailsPost.setTimeOfPost(post.getTimestamp());
-            userDetailsPost.setCourseName(post.getCourse().getCourseName());
-            userDetailsPost.setTitle(post.getTitle());
-            userDetailsPost.setContent(post.getContent().substring(0, 50));
-
-            userDetailsPosts.add(userDetailsPost);
-        }
-        userDetailsResponse.setUserDetailsPost(userDetailsPosts);
-
-        // POSTS LIKED
-        Set<Post> userPostsLiked = user.getPostsLiked();
-
-        userDetailsResponse.setNumberOfPostsLiked(userPostsLiked.size());
-
-        List<UserDetailsPost> userDetailsPostsLiked = new ArrayList<>();
-        UserDetailsPost userDetailsPostLiked;
-        for (Post postLiked : userPostsLiked) {
-            userDetailsPostLiked = new UserDetailsPost();
-
-            userDetailsPostLiked.setId(postLiked.getPostId());
-            userDetailsPostLiked.setTimeOfPost(postLiked.getTimestamp());
-            userDetailsPostLiked.setCourseName(postLiked.getCourse().getCourseName());
-            userDetailsPostLiked.setTitle(postLiked.getTitle());
-            userDetailsPostLiked.setContent(postLiked.getContent().substring(0, 50));
-
-            userDetailsPostsLiked.add(userDetailsPostLiked);
-        }
-        userDetailsResponse.setUserDetailsPostsLiked(userDetailsPostsLiked);
-
-        // FOLLOWINGS
-        Set<User> userFollowings = user.getFollowings();
-        List<UserDetailsFollow> userDetailsFollows = new ArrayList<>();
-        UserDetailsFollow userDetailsFollow;
-        for (User following : userFollowings) {
-            userDetailsFollow = new UserDetailsFollow();
-
-            userDetailsFollow.setId(following.getUserId());
-            userDetailsFollow.setUsername(following.getUsername());
-            userDetailsFollow.setFirstName(following.getFirstName());
-            userDetailsFollow.setLastName(following.getLastName());
-
-            userDetailsFollows.add(userDetailsFollow);
-        }
-        userDetailsResponse.setUserDetailsFollowings(userDetailsFollows);
-
-
-        // FOLLOWERS
-        Set<User> userFollowers = user.getFollowers();
-        List<UserDetailsFollow> userDetailsFollowers = new ArrayList<>();
-        UserDetailsFollow userDetailsFollower;
-        for (User follower : userFollowers) {
-            userDetailsFollower = new UserDetailsFollow();
-
-            userDetailsFollower.setId(follower.getUserId());
-            userDetailsFollower.setUsername(follower.getUsername());
-            userDetailsFollower.setFirstName(follower.getFirstName());
-            userDetailsFollower.setLastName(follower.getLastName());
-
-            userDetailsFollowers.add(userDetailsFollower);
-        }
-        userDetailsResponse.setUserDetailsFollowers(userDetailsFollowers);
-
-        return userDetailsResponse;
-    }
-
-    public List<MockUser> getAllMockUsers() {
-        List<User> users = userRepository.findAll();
-
-        List<MockUser> mockUsers = new ArrayList<>();
-        MockUser mockUser;
-        for (User user : users) {
-            mockUser = new MockUser();
-
-            mockUser.setUserId(user.getUserId());
-            mockUser.setUsername(user.getUsername());
-            mockUser.setFirstName(user.getFirstName());
-            mockUser.setLastName(user.getLastName());
-            mockUser.setRole(user.getRole().toString());
-
-            mockUsers.add(mockUser);
-        }
-
-        return mockUsers;
-    }
-
-    public List<MockUser> getResultFromSearch(String q){
+    public List<SearchUserResponse> getResultFromSearch(String q){
         List<User> result = userRepository.findByUsernameContainingOrderByUsername(q);
 
-        List<MockUser> mockUsers = new ArrayList<>();
-        MockUser mockUser;
+        List<SearchUserResponse> resultUsers = new ArrayList<>();
+        SearchUserResponse searchUserResponse;
         for(User user : result){
-            mockUser = new MockUser();
+            searchUserResponse = new SearchUserResponse();
 
-            mockUser.setUserId(user.getUserId());
-            mockUser.setUsername(user.getUsername());
-            mockUser.setFirstName(user.getFirstName());
-            mockUser.setLastName(user.getLastName());
-            mockUser.setRole(user.getRole().toString());
+            searchUserResponse.userId = user.getUserId();
+            searchUserResponse.username = user.getUsername();
+            searchUserResponse.firstName = user.getFirstName();
+            searchUserResponse.lastName = user.getLastName();
+            searchUserResponse.role = user.getRole().toString();
 
-            mockUsers.add(mockUser);
+            resultUsers.add(searchUserResponse);
         }
-        return mockUsers;
+        return resultUsers;
     }
 
-    public RoleChangeRequest changeRole(RoleChangeRequest roleChangeRequest){
-        User user = userRepository.findByUsername(roleChangeRequest.username);
-        if(user != null){
-            user.setRole(roleChangeRequest.role);
-            userRepository.save(user);
-            return roleChangeRequest;
-        }
-        return null;
+    public RoleChangeRequest changeRole(RoleChangeRequest roleChangeRequest) throws UsernameNotFoundException{
+            return userRepository
+                    .findByUsername(roleChangeRequest.username)
+                    .map(
+                            user -> {
+                                user.setRole(roleChangeRequest.role);
+                                return roleChangeRequest;
+                            }
+                    )
+                    .orElseThrow(
+                            () -> new UsernameNotFoundException("No user found with username " + roleChangeRequest.username)
+                    );
     }
 }

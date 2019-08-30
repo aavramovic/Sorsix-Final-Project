@@ -1,6 +1,5 @@
 package com.sorsix.finkicommunity.security;
 
-import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,9 +17,12 @@ public class UserPrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.userRepository.findByUsername(username);
-        UserPrincipal userPrincipal = new UserPrincipal(user);
-
+        UserPrincipal userPrincipal = this.userRepository.findByUsername(username)
+                .map(
+                        user -> new UserPrincipal(user)
+                ).orElseThrow(
+                        () -> new UsernameNotFoundException("No user found with username " + username)
+                );
         return userPrincipal;
     }
 }

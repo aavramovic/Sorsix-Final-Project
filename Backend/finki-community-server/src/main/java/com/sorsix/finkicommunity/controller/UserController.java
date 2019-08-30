@@ -2,12 +2,13 @@ package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.*;
-import com.sorsix.finkicommunity.domain.responses.user.MockUser;
+import com.sorsix.finkicommunity.domain.responses.user.SearchUserResponse;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
 import com.sorsix.finkicommunity.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -23,6 +24,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    /*
+    GET METHODS
+     */
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
@@ -36,35 +40,48 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserDetails(username, loggedInUsername));
     }
 
-
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
     @GetMapping("/posts")
-    public ResponseEntity getUserPosts(
-            @RequestParam Long userId
-    ) {
-        return ResponseEntity.ok(
-                userService.getUserPosts(userId)
-        );
+    public ResponseEntity getUserPosts(@RequestParam Long userId) {
+        try{
+            return ResponseEntity.ok(userService.getUserPosts(userId));
+        }catch(UsernameNotFoundException ex){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<SearchUserResponse>> getResultFromSearch(@RequestParam String q){
+        return ResponseEntity.ok(userService.getResultFromSearch(q));
+    }
+
+    /*
+    POST METHODS
+     */
     @PostMapping("/register")
     public ResponseEntity<User> createNewUser(@RequestBody @Valid NewUserRequest newUserRequest) {
-        return ResponseEntity.ok(userService.createNewUser(newUserRequest));
+        return userService
+                .createNewUser(newUserRequest)
+                .map(
+                        user->ResponseEntity.status(HttpStatus.CREATED).body(user)
+                )
+                .orElseGet(
+                        ()->ResponseEntity.badRequest().build()
+                );
     }
 
-    //TODO: probably not right, change
     @PostMapping("/login")
-    public ResponseEntity<UserResponse> findExistingUser(@RequestBody @Valid LoginViewModel loginViewModel) {
+    public ResponseEntity<UserResponse> UserLogin(@RequestBody @Valid LoginViewModel loginViewModel) {
         return ResponseEntity.ok(userService.findExistingUser(loginViewModel));
     }
 
-    @PostMapping("/new-following")
+    @PostMapping("/follow")
     public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
         Optional<NewFollowingRequest> result = userService.addNewFollowing(newFollowingRequest);
         return ResponseEntity.ok(newFollowingRequest);
@@ -72,22 +89,18 @@ public class UserController {
 
     @PostMapping("/likes")
     public ResponseEntity<NewPostLikeRequest> newPostLike(@RequestBody @Valid NewPostLikeRequest newPostLikeRequest){
-        return ResponseEntity.ok(userService.newPostLike(newPostLikeRequest));
+        Optional<NewPostLikeRequest> result = userService.newPostLike(newPostLikeRequest);
+        return ResponseEntity.ok(newPostLikeRequest);
     }
 
     @PostMapping("/role")
     public ResponseEntity<RoleChangeRequest> changeRole(@RequestBody @Valid RoleChangeRequest roleChangeRequest){
-        return ResponseEntity.ok(userService.changeRole(roleChangeRequest));
-    }
+        try{
+            return ResponseEntity.ok(userService.changeRole(roleChangeRequest));
+        }catch(UsernameNotFoundException ex){
+            return ResponseEntity.badRequest().body(roleChangeRequest);
+        }
 
-    @GetMapping("/mock")
-    public ResponseEntity<List<MockUser>> getAllMockUsers(){
-        return ResponseEntity.ok(userService.getAllMockUsers());
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<MockUser>> getResultFromSearch(@RequestParam String q){
-        return ResponseEntity.ok(userService.getResultFromSearch(q));
     }
 
 

@@ -4,108 +4,20 @@ import com.sorsix.finkicommunity.domain.enums.Role;
 
 public class SimplePostResponse implements Comparable<SimplePostResponse>{
 
-    private long id;
-    private long timeOfPost;
-    private int noOfLikes;
-    private int noOfComments;
-    // User
-    // This could be encapsulated to a SimplePostResponseUser class
-    private String username;
-    private char sex;
-    private Role role;
-    private boolean isLiked;
+    public long id;
+    public long timeOfPost;
+    public int noOfLikes;
+    public int noOfComments;
 
-    private String courseName;
-    private String title;
-    private String content;
+    // User/Author data
+    public String username;
+    public char sex;
+    public Role role;
+    public boolean isLiked;
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public long getTimeOfPost() {
-        return timeOfPost;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public int getNoOfLikes() {
-        return noOfLikes;
-    }
-
-    public int getNoOfComments() {
-        return noOfComments;
-    }
-
-    public char getSex() {
-        return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public void setTimeOfPost(long timeOfPost) {
-        this.timeOfPost = timeOfPost;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setNoOfLikes(int noOfLikes) {
-        this.noOfLikes = noOfLikes;
-    }
-
-    public void setNoOfComments(int noOfComments) {
-        this.noOfComments = noOfComments;
-    }
-
-    public boolean getIsLiked() {
-        return isLiked;
-    }
-
-    public void setLiked(boolean liked) {
-        isLiked = liked;
-    }
+    public String courseName;
+    public String title;
+    public String content;
 
     @Override
     public int compareTo(SimplePostResponse o) {

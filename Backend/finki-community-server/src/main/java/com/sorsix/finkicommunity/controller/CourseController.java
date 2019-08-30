@@ -41,16 +41,16 @@ public class CourseController {
     ){
         return courseService.getPostsOfCourseByCourseName(courseName, noOfPosts)
                 .map(ResponseEntity::ok)
-                .orElseGet(()-> ResponseEntity.notFound().build());
+                .orElseGet(()-> ResponseEntity.badRequest().build());
     }
 
     /*
     POST METHODS
      */
     @PostMapping("/new")
-    public ResponseEntity createNewCourse(@RequestBody @Valid NewCourseRequest newCourseRequest){
+    public ResponseEntity<NewCourseRequest> createNewCourse(@RequestBody @Valid NewCourseRequest newCourseRequest){
         return courseService.createNewCourse(newCourseRequest)
                 .map(courseRequest -> ResponseEntity.status(HttpStatus.CREATED).body(courseRequest))
-                .orElseGet(()-> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+                .orElseGet(()-> ResponseEntity.badRequest().build());
     }
 }
