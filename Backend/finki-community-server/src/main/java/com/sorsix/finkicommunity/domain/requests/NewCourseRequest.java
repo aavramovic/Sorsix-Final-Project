@@ -8,20 +8,13 @@ import javax.validation.constraints.NotNull;
 
 
 public class NewCourseRequest{
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     public String code;
-
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     public String courseName;
-
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     public String courseDescription;
-
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     public String programs;
 
     public StudyYear studyYear;

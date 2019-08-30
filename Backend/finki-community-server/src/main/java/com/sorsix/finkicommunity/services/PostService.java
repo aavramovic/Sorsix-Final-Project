@@ -11,7 +11,6 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -59,12 +58,18 @@ public class PostService {
         return convertFromPostToSimplePostResponse(posts, username);
     }
 
-    public ClickedPostResponse getClickedPost(Long id) {
-//        Post post = postRepository.findByPostId(id);
+    public ClickedPostResponse getClickedPost(Long id, String username) {
+
+//        ClickedPostResponse clickedPostResponse =
+//                postRepository
+//                .findByPostId(id)
+//                .map(
+//                        post -> {
+//                             ClickedPostResponse p = new ClickedPostResponse();
+//                             p.setPostResponse(createPostResponseObject(post, username));
 //
-//        ClickedPostResponse clickedPostResponse = new ClickedPostResponse();
-//
-//        clickedPostResponse.setPostResponse(createPostResponseObject(post, null));
+//                        }
+//                )
 //
 //
 //        Set<SimplePostResponse> simplePostResponses = convertFromPostToPostResponseSET(post.getReplies());

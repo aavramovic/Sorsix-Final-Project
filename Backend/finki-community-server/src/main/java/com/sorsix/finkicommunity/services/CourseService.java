@@ -11,7 +11,6 @@ import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.domain.responses.course.SimpleCourseResponse;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.domain.responses.course.ClickedCourseResponse;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;

@@ -4,7 +4,6 @@ import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Semester;
 import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
