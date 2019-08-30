@@ -17,18 +17,20 @@ export class RegisterScreenComponent implements OnInit {
     hideConfirmPassword: boolean = true;
     user$ = new Subject();
     newUser: PostUser;
+    today: Date;
 
     registerForm = new FormGroup({
-        username: new FormControl('asd', Validators.required),
+        username: new FormControl('Antonio', Validators.required),
         email: new FormControl('asd@asd', [Validators.required, Validators.email]),
         password: new FormControl('12345678', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl('12345678', [Validators.required]),
         firstName: new FormControl('asd', [Validators.required]),
         lastName: new FormControl('asd', [Validators.required]),
-        birthdate: new FormControl((new Date(1998, 12, 4)).getMilliseconds(), [Validators.required]),
+        birthdate: new FormControl('', [Validators.required]),
+        sex: new FormControl('', [Validators.required])
     }, {
         validators: [
-            this.matchValidator('password', 'confirmPassword')
+            this.matchValidator('password', 'confirmPassword'),
         ]
     });
 
@@ -61,8 +63,15 @@ export class RegisterScreenComponent implements OnInit {
         this.user$.pipe(switchMap(() =>
             this.userService.postNewUser(this.newUser)))
             .subscribe(response => {
-                console.log(response.username + ' - ' + response.userId);
+                if (response.valid) {
+                    this.router.navigate(['/']).then(r => r.valueOf());
+                } else {
+                    alert('This account exists and has been disabled');
+                }
             });
+
+
+        this.today = new Date();
     }
 
     getErrorMessage(value: string) {
@@ -80,6 +89,7 @@ export class RegisterScreenComponent implements OnInit {
         if (this.registerForm.get(value).hasError('minLength')) {
             errors.push('Password too short');
         }
+
         return errors.join(', ');
     }
 
@@ -89,11 +99,11 @@ export class RegisterScreenComponent implements OnInit {
             this.registerForm.get('firstName').value,
             this.registerForm.get('lastName').value,
             this.registerForm.get('password').value,
-            this.registerForm.get('birthdate').value,
-            this.registerForm.get('email').value
+            new Date(this.registerForm.get('birthdate').value).getMilliseconds(),
+            this.registerForm.get('email').value,
+            this.registerForm.get('sex').value
         );
 
         this.user$.next();
-        this.router.navigate(['/']).then(r => r.valueOf());
     }
 }

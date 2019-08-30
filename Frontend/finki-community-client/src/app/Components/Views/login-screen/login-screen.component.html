@@ -27,14 +27,14 @@
                         {{getErrorMessage('password')}}
                     </mat-error>
 
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
                         <i class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</i>
                     </button>
                 </mat-form-field>
             </div>
             <div class="row mt-3">
-                <input type='submit' class="btn btn-outline-dark col-4 offset-4" [disabled]="loginForm.invalid"
+                <input type="submit" class="btn btn-outline-dark col-4 offset-4" [disabled]="loginForm.invalid"
                        value="Login">
             </div>
         </form>

@@ -17,7 +17,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule, MatButtonToggleModule, MatCheckboxModule, MatIconModule, MatRadioModule, MatSelectModule} from '@angular/material';
+import {
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatNativeDateModule
+} from '@angular/material';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
@@ -26,11 +35,11 @@ import {NewCourseComponent} from './Components/Views/new-course/new-course.compo
 import {MatDialogModule} from '@angular/material';
 import {SearchUserComponent} from './Components/Views/admin/admin-panel/search-user/search-user.component';
 import {UserDetailsComponent} from './Components/Views/user-details/user-info/user-details.component';
-import {UserPostsComponent} from "./Components/Views/user-details/user-posts/user-posts.component";
-import {UserPostsLikedComponent} from "./Components/Views/user-details/user-posts-liked/user-posts-liked.component";
-import {UserFollowingsComponent} from "./Components/Views/user-details/user-followings/user-followings.component";
-import {UserFollowersComponent} from "./Components/Views/user-details/user-followers/user-followers.component";
-import {AdminPanelComponent} from "./Components/Views/admin/admin-panel/admin-panel.component";
+import {UserPostsComponent} from './Components/Views/user-details/user-posts/user-posts.component';
+import {UserPostsLikedComponent} from './Components/Views/user-details/user-posts-liked/user-posts-liked.component';
+import {UserFollowingsComponent} from './Components/Views/user-details/user-followings/user-followings.component';
+import {UserFollowersComponent} from './Components/Views/user-details/user-followers/user-followers.component';
+import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-panel.component';
 
 @NgModule({
     declarations: [
@@ -76,9 +85,11 @@ import {AdminPanelComponent} from "./Components/Views/admin/admin-panel/admin-pa
         MatButtonToggleModule,
         MatCheckboxModule,
         MatRadioModule,
-        MatDialogModule
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
-    providers: [],
+    providers: [MatDatepickerModule],
     bootstrap: [AppComponent],
     entryComponents: [NewCourseComponent]
 })

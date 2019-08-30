@@ -11,6 +11,7 @@ export interface IRegisterUserResponse {
     birthdate: number;
     numberOfPosts: number;
     role: string;
+    active: boolean;
     // //
     // pictureUrl: string,
     // permissions: string,

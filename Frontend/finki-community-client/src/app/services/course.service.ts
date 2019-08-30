@@ -70,8 +70,6 @@ export class CourseService {
 
     postCourse(courseName: string, courseDescription: string, programs: Program[], studyYear: YearOfStudy, semester: Semester, courseType: Type)/*:Observable<ICourse>*/ {
         let postRequest: PostCourse = new PostCourse(courseName, courseDescription, courseType, programs, semester, studyYear);
-        console.log(postRequest);
-        let httpOptions;
 
         // return this.http.post<IPostCourse>(API_URL+POST_COURSE,postRequest, httpOptions)
         //     .pipe(

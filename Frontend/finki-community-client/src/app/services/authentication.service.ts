@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {API_URL, LOGIN_USER, USERS} from '../Models/global-const-url-paths';
 import * as moment from 'moment';
 import {ILoginResponse} from '../Models/Interfaces/ILoginResponse';
@@ -16,7 +16,6 @@ export class AuthenticationService {
 
     constructor(private http: HttpClient,
                 private router: Router) {
-
     }
 
     public getToken() {
@@ -30,22 +29,23 @@ export class AuthenticationService {
     login(username, password): Observable<ILoginResponse> {
 
         return this.http.post<ILoginResponse>(API_URL + USERS + LOGIN_USER, {username, password})
-            .pipe(map(response => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                if (response.valid) {
-                    const expiresAt = moment().add(response.expiresIn, 'second');
-                    localStorage.setItem('id_token', response.idToken);
-                    localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
-                    localStorage.setItem('role', response.role.toString());
-                    this.isLoggedIn$.next(true);
-                    return response;
-                }
-                return new LoginResponse('0', '', Authorization.VISITOR, response.valid, response.errorMessage);
-            }));
+            .pipe(
+                map(response => {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    if (response.valid) {
+                        const expiresAt = moment().add(response.expiresIn, 'second');
+                        localStorage.setItem('id_token', response.idToken);
+                        localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
+                        localStorage.setItem('role', response.role.toString());
+                        this.isLoggedIn$.next(true);
+                        return response;
+                    }
+                    return new LoginResponse('0', '', Authorization.VISITOR, response.valid, response.errorMessage);
+                }));
     }
 
     logout() {
-        if (!this.isLoggedIn()) {
+        if (!AuthenticationService.isLoggedIn()) {
             return;
         }
         // remove user from local storage and set current user to null
@@ -53,11 +53,13 @@ export class AuthenticationService {
         localStorage.removeItem('expires_at');
         localStorage.removeItem('role');
         this.isLoggedIn$.next(false);
+        this.router.navigate(['/']).then(() => {
+        });
     }
 
-    public isLoggedIn() {
+    public static isLoggedIn(): boolean {
         const token = localStorage.getItem('id_token');
-        return token && token.length;
+        return token && token.length !== 0;
     }
 
     static getExpiration() {

@@ -8,7 +8,7 @@
 
             <!--FIRST NAME-->
             <div class="row">
-                <mat-form-field class="col-sm-10 offset-1">
+                <mat-form-field class="col-sm-5 offset-1">
                     <label>
                         <input matInput placeholder="First Name" formControlName="firstName" required>
                     </label>
@@ -17,11 +17,7 @@
                         {{getErrorMessage('firstName')}}
                     </mat-error>
                 </mat-form-field>
-            </div>
-
-            <!--LAST NAME-->
-            <div class="row">
-                <mat-form-field class="col-sm-10 offset-1">
+                <mat-form-field class="col-sm-5">
                     <label>
                         <input matInput placeholder="Last Name" formControlName="lastName" required>
                     </label>
@@ -78,10 +74,8 @@
                         </i>
                     </button>
                 </mat-form-field>
-            </div>
 
-            <!--CONFIRM PASSWORD-->
-            <div class="row">
+                <!--CONFIRM PASSWORD-->
                 <mat-form-field class="col-sm-10 offset-1">
                     <label>
                         <input matInput placeholder="Confirm password"
@@ -99,9 +93,46 @@
                 </mat-form-field>
             </div>
 
+            <div class="row">
+
+                <!--DATEPICKER-->
+                <div class="col-sm-5 offset-1 margin">
+                    <mat-form-field>
+                        <label>
+                            <!--suppress AngularInvalidExpressionResultType -->
+                            <input matInput [max]="today"  [matDatepicker]="picker" placeholder="Date of birth" autocomplete="off"
+                                   formControlName="birthdate" required >
+                        </label>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="registerForm.get('birthdate')?.errors">
+                            {{getErrorMessage('birthdate')}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!--GENDER-->
+                <div class="col-sm-5 offset-1 mt-4 margin">
+                    <mat-radio-group
+                        aria-labelledby="example-radio-group-label"
+                        class="example-radio-group" color="primary" formControlName="sex">
+                        <mat-radio-button [value]="'M'">
+                            Male
+                        </mat-radio-button>
+                        <mat-radio-button [value]="'F'">
+                            Female
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="registerForm.get('confirmPassword')?.errors">
+                        {{getErrorMessage('confirmPassword')}}
+                    </mat-error>
+                </div>
+            </div>
+
+
             <!--SUBMIT-->
-            <div class="row mt-3">
-                <input type='submit' class="btn btn-outline-dark col-4 offset-4"
+            <div class="row pt-sm-0 pt-md-1 pt-lg-5">
+                <input type='submit' class="btn btn-outline-dark col-4 offset-4 mb-0 mt-auto"
                        [disabled]="registerForm.invalid" value="Register">
             </div>
         </form>

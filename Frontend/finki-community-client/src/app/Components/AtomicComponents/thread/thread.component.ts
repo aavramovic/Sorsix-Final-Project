@@ -19,7 +19,7 @@ export class ThreadComponent implements OnInit {
     replies: Thread[];
     isLoggedIn: boolean = false;
     isOpen: boolean = false;
-    role : string;
+    role: string;
     admin: Authorization = Authorization.ADMIN;
     moderator: Authorization = Authorization.MODERATOR;
     user: Authorization = Authorization.USER;
@@ -32,18 +32,30 @@ export class ThreadComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isLoggedIn = AuthenticationService.isLoggedIn();
+        if (this.isLoggedIn) {
+            this.role = localStorage.getItem('role');
+        }
+
         this.replie$.pipe(switchMap(() =>
             this.threadService.getReplies(this.thread.threadId)
         )).subscribe(replies => this.replies = replies);
         this.authService.isLoggedIn$.subscribe(r => {
             this.isLoggedIn = r;
-            this.role = localStorage.getItem('role');
-        })
+            if (this.isLoggedIn) {
+                this.role = localStorage.getItem('role');
+            }
+        });
+
     }
 
     loadComments() {
         this.isOpen = true;
         console.log(this.thread.threadId);
         this.replie$.next();
+    }
+
+    likes() {
+        this.threadService.likes(localStorage.getItem('username'), this.thread.threadId);
     }
 }
