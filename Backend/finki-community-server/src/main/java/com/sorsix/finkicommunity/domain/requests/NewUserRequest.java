@@ -5,27 +5,24 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class NewUserRequest {
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     public String username;
 
-    @NotNull
-    @NotEmpty
-    @Email
+    @NotNull @NotEmpty @Email
     public String email;
 
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     public String password;
 
-    @NotEmpty
-    @NotNull
+    @NotEmpty @NotNull
     public String firstName;
 
-    @NotEmpty
-    @NotNull
+    @NotEmpty @NotNull
     public String lastName;
 
     @NotNull
     public Character sex;
+
+    @NotNull
+    public long birthdate;
 }

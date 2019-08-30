@@ -36,6 +36,8 @@ public class User implements Comparable<User>{
 
     private Role role;
 
+    private long birthdate;
+
     private int numberOfFollowers = 0;
 
     private int numberOfFollowings = 0;
@@ -92,7 +94,7 @@ public class User implements Comparable<User>{
     public User() {
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, char sex, Role role) {
+    public User(String username, String password, String email, String firstName, String lastName, char sex, long birthdate, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -100,6 +102,7 @@ public class User implements Comparable<User>{
         this.lastName = lastName;
         this.sex = sex;
         this.role = role;
+        this.birthdate = birthdate;
     }
 
     // GETTERs, SETTERs
@@ -159,14 +162,6 @@ public class User implements Comparable<User>{
         this.email = email;
     }
 
-    public char getSex() {
-        return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-    }
-
     public int getNumberOfFollowings() {
         return numberOfFollowings;
     }
@@ -193,6 +188,22 @@ public class User implements Comparable<User>{
 
     public void setRole(Role role){
         this.role = role;
+    }
+
+    public void setSex(Character sex) {
+        this.sex = sex;
+    }
+
+    public char getSex() {
+        return sex;
+    }
+
+    public long getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(long birthdate) {
+        this.birthdate = birthdate;
     }
 
     @JsonIgnore

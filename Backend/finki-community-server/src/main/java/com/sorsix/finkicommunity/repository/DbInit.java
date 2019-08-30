@@ -35,21 +35,21 @@ public class DbInit implements CommandLineRunner {
 
         // ADD USERS    TOTAL = 15
         User user = new User();
-        User fisnik = new User("fisnik", passwordEncoder.encode("fisnik123"), "fisnik_email@gmail.com", "Fisnik", "Limani", 'M',Role.USER);
-        User antonio = new User("antonio", passwordEncoder.encode("antonio123"), "antonio_email@gmail.com", "Antonio", "Avramovikj", 'M',Role.USER);
-        User admin = new User("admin", passwordEncoder.encode("admin123"), "admin_email@gmail.com", "AdminName", "AdminSurname", 'M',Role.ADMIN);
-        User moderator = new User("moderator", passwordEncoder.encode("moderator123"), "moderator_email@gmail.com", "ModeratorName", "ModeratorSurname", 'F',Role.MODERATOR);
-        User user5 = new User("user5", passwordEncoder.encode("user5123"), "user5@gmail.com", "User5Name", "User5Surname", 'F',Role.USER);
-        User user6 = new User("user6", passwordEncoder.encode("user6123"), "user6@gmail.com", "User6Name", "User6Surname", 'F',Role.USER);
-        User user7 = new User("user7", passwordEncoder.encode("user7123"), "user7@gmail.com", "User7Name", "User7Surname", 'M',Role.USER);
-        User user8 = new User("user8", passwordEncoder.encode("user8123"), "user8@gmail.com", "User8Name", "User8Surname", 'F',Role.USER);
-        User user9 = new User("user9", passwordEncoder.encode("user9123"), "user9@gmail.com", "User9Name", "User9Surname", 'F',Role.USER);
-        User user10 = new User("user10", passwordEncoder.encode("user10123"), "user10@gmail.com", "User10Name", "User10Surname", 'M',Role.USER);
-        User user11 = new User("user11", passwordEncoder.encode("user11123"), "user11@gmail.com", "User11Name", "User11Surname", 'M',Role.USER);
-        User user12 = new User("user12", passwordEncoder.encode("user12123"), "user12@gmail.com", "User12Name", "User12Surname", 'F',Role.USER);
-        User user13 = new User("user13", passwordEncoder.encode("user13123"), "user13@gmail.com", "User13Name", "User13Surname", 'F',Role.USER);
-        User user14 = new User("user14", passwordEncoder.encode("user14123"), "user14@gmail.com", "User14Name", "User14Surname", 'F',Role.USER);
-        User user15 = new User("user15", passwordEncoder.encode("user15123"), "user15@gmail.com", "User15Name", "User15Surname", 'M',Role.USER);
+        User fisnik = new User("fisnik", passwordEncoder.encode("fisnik123"), "fisnik_email@gmail.com", "Fisnik", "Limani", 'M', System.currentTimeMillis(), Role.USER);
+        User antonio = new User("antonio", passwordEncoder.encode("antonio123"), "antonio_email@gmail.com", "Antonio", "Avramovikj", 'M',System.currentTimeMillis(),Role.USER);
+        User admin = new User("admin", passwordEncoder.encode("admin123"), "admin_email@gmail.com", "AdminName", "AdminSurname", 'M',System.currentTimeMillis(),Role.ADMIN);
+        User moderator = new User("moderator", passwordEncoder.encode("moderator123"), "moderator_email@gmail.com", "ModeratorName", "ModeratorSurname", 'F',System.currentTimeMillis(),Role.MODERATOR);
+        User user5 = new User("user5", passwordEncoder.encode("user5123"), "user5@gmail.com", "User5Name", "User5Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user6 = new User("user6", passwordEncoder.encode("user6123"), "user6@gmail.com", "User6Name", "User6Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user7 = new User("user7", passwordEncoder.encode("user7123"), "user7@gmail.com", "User7Name", "User7Surname", 'M',System.currentTimeMillis(),Role.USER);
+        User user8 = new User("user8", passwordEncoder.encode("user8123"), "user8@gmail.com", "User8Name", "User8Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user9 = new User("user9", passwordEncoder.encode("user9123"), "user9@gmail.com", "User9Name", "User9Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user10 = new User("user10", passwordEncoder.encode("user10123"), "user10@gmail.com", "User10Name", "User10Surname", 'M',System.currentTimeMillis(),Role.USER);
+        User user11 = new User("user11", passwordEncoder.encode("user11123"), "user11@gmail.com", "User11Name", "User11Surname", 'M',System.currentTimeMillis(),Role.USER);
+        User user12 = new User("user12", passwordEncoder.encode("user12123"), "user12@gmail.com", "User12Name", "User12Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user13 = new User("user13", passwordEncoder.encode("user13123"), "user13@gmail.com", "User13Name", "User13Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user14 = new User("user14", passwordEncoder.encode("user14123"), "user14@gmail.com", "User14Name", "User14Surname", 'F',System.currentTimeMillis(),Role.USER);
+        User user15 = new User("user15", passwordEncoder.encode("user15123"), "user15@gmail.com", "User15Name", "User15Surname", 'M',System.currentTimeMillis(),Role.USER);
 
         List<User> users = Arrays.asList(fisnik, antonio, admin, moderator,user5, user6, user7, user8, user9, user10, user11, user12, user13, user14, user15);
 
