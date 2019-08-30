@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="posts")
-public class Post{
+public class Post implements Comparable<Post>{
 
     @Id
     @Column(name="post_id")
@@ -212,5 +212,12 @@ public class Post{
     @Override
     public int hashCode() {
         return Objects.hash(postId);
+    }
+
+    @Override
+    public int compareTo(Post o) {
+        if(timestamp > o.timestamp)
+            return -1;
+        return 1;
     }
 }

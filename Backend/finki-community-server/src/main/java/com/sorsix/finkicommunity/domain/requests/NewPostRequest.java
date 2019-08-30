@@ -4,26 +4,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class NewPostRequest {
-
+    @NotNull @NotEmpty
+    public String content;
     @NotNull
-    @NotEmpty
-    private String content;
-
+    public Long courseId;
     @NotNull
-    private Long courseId;
+    public Long userIdOwner;
 
-    @NotNull
-    private Long userIdOwner;
-
-    public String getContent() {
-        return content;
-    }
-
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public Long getUserIdOwner() {
-        return userIdOwner;
-    }
 }

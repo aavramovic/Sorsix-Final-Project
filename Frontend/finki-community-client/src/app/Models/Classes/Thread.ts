@@ -1,9 +1,8 @@
-import {Course} from './Course';
 import {Authorization} from '../Enumeration/Authorization';
 
 export class Thread {
     threadId: number;
-    username: string;
+
     courseName: string;
     timeOfPost: Date;
     numberOfLikes: number;
@@ -11,6 +10,8 @@ export class Thread {
     content: string;
     imageUrl: string;
     title: string;
+
+    username: string;
     sex: string;
     role: Authorization;
     isLiked: boolean;

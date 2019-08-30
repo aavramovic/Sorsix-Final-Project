@@ -8,9 +8,9 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class User implements Comparable<User>{
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private long userId;
 
@@ -36,8 +36,6 @@ public class User{
 
     private Role role;
 
-    private boolean active = true;
-
     private int numberOfFollowers = 0;
 
     private int numberOfFollowings = 0;
@@ -53,7 +51,7 @@ public class User{
             joinColumns = @JoinColumn(name="user_id_following"),
             inverseJoinColumns = @JoinColumn(name = "user_id_followed")
     )
-    private Set<User> followings = new HashSet<>();
+    private Set<User> followings = new TreeSet<>();
 
     /*
             USER --- followed by --- USER   ManyToMany
@@ -62,7 +60,7 @@ public class User{
             mappedBy = "followings",
             fetch=FetchType.EAGER
     )
-    private Set<User> followers = new HashSet<>();
+    private Set<User> followers = new TreeSet<>();
 
 
     /*
@@ -72,7 +70,7 @@ public class User{
             mappedBy = "user",
             fetch = FetchType.EAGER
     )
-    private Set<Post> posts = new HashSet<>();
+    private Set<Post> posts = new TreeSet<>();
 
     /*
         USER --- likes --- POST     ManyToMany
@@ -85,27 +83,13 @@ public class User{
             joinColumns = @JoinColumn(name = "fk_user_id"),
             inverseJoinColumns = @JoinColumn(name = "fk_post_id")
     )
-    private Set<Post> postsLiked = new HashSet<>();
+    private Set<Post> postsLiked = new TreeSet<>();
 
 
     /*
         This is used by JACKSON JSON when converts the POJO to json
      */
     public User() {
-    }
-
-    public User(String username, String password, Role role){
-        this.username = username;
-        this.password = password;
-        this.role = role;
-
-        Random random = new Random();
-        if(random.nextInt(2)==0){
-            this.sex='F';
-        }else{
-            this.sex='M';
-        }
-
     }
 
     public User(String username, String password, String email, String firstName, String lastName, char sex, Role role) {
@@ -118,6 +102,7 @@ public class User{
         this.role = role;
     }
 
+    // GETTERs, SETTERs
     public long getUserId() {
         return userId;
     }
@@ -182,14 +167,6 @@ public class User{
         this.sex = sex;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public int getNumberOfFollowings() {
         return numberOfFollowings;
     }
@@ -198,11 +175,42 @@ public class User{
         this.numberOfFollowings = numberOfFollowings;
     }
 
+    public int getNumberOfFollowers() {
+        return numberOfFollowers;
+    }
+
+    public void setNumberOfFollowers(int numberOfFollowers) {
+        this.numberOfFollowers = numberOfFollowers;
+    }
+
     public Set<Post> getPosts(){
         return posts;
     }
 
-    // FUNCTIONS
+    public Role getRole(){
+        return role;
+    }
+
+    public void setRole(Role role){
+        this.role = role;
+    }
+
+    @JsonIgnore
+    public Set<User> getFollowings() {
+        return followings;
+    }
+
+    @JsonIgnore
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    @JsonIgnore
+    public Set<Post> getPostsLiked() {
+        return postsLiked;
+    }
+
+    // HELPER FUNCTIONS
     public void incrementNumberOfPosts(){
         numberOfPosts++;
     }
@@ -251,37 +259,6 @@ public class User{
         return postsLiked.remove(postLiked);
     }
 
-    public int getNumberOfFollowers() {
-        return numberOfFollowers;
-    }
-
-    public void setNumberOfFollowers(int numberOfFollowers) {
-        this.numberOfFollowers = numberOfFollowers;
-    }
-
-    public Role getRole(){
-        return role;
-    }
-
-    public void setRole(Role role){
-        this.role = role;
-    }
-
-    @JsonIgnore
-    public Set<User> getFollowings() {
-        return followings;
-    }
-
-    @JsonIgnore
-    public Set<User> getFollowers() {
-        return followers;
-    }
-
-    @JsonIgnore
-    public Set<Post> getPostsLiked() {
-        return postsLiked;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -295,5 +272,11 @@ public class User{
     @Override
     public int hashCode() {
         return Objects.hash(userId, username, email);
+    }
+
+
+    @Override
+    public int compareTo(User o) {
+        return username.compareTo(o.username);
     }
 }

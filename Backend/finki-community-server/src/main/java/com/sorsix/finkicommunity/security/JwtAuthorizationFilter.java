@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +48,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .verify(token)
                     .getSubject();
             if(username != null){
-                User user = userRepository.findByUsername(username);
+                User user = userRepository.findByUsername(username).get(); // Hm
                 UserPrincipal principal = new UserPrincipal(user);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, principal.getAuthorities());
                 return auth;
