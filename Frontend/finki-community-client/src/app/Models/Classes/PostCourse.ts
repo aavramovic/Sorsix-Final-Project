@@ -4,7 +4,7 @@ import {Semester} from '../Enumeration/Semester';
 import {YearOfStudy} from '../Enumeration/YearOfStudy';
 import {Type} from '../Enumeration/Type';
 
-export class PostCourse implements IPostCourse{
+export class PostCourse implements IPostCourse {
     courseDescription: string;
     courseName: string;
     courseType: string;
@@ -12,7 +12,7 @@ export class PostCourse implements IPostCourse{
     semester: string;
     studyYear: string;
 
-    constructor(courseDescription: string, courseName: string, courseType: Type, programs: Program[], semester: Semester, studyYear: YearOfStudy) {
+    constructor(courseDescription: string, courseName: string, courseType: Type | string, programs: Program[] | string, semester: Semester | string, studyYear: YearOfStudy | string) {
         this.courseDescription = courseDescription;
         this.courseName = courseName;
         this.courseType = courseType;

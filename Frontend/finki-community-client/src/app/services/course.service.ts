@@ -13,6 +13,7 @@ import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/global-const-url-path
 import {IPostCourse} from '../Models/Interfaces/IPostCourse';
 import {PostCourse} from '../Models/Classes/PostCourse';
 import {Router} from '@angular/router';
+import {FormGroup} from '@angular/forms';
 
 
 @Injectable({
@@ -68,9 +69,16 @@ export class CourseService {
         return this.http.get<Course>(API_URL + COURSE_LIST + courseId);
     }
 
-    postCourse(courseName: string, courseDescription: string, programs: Program[], studyYear: YearOfStudy, semester: Semester, courseType: Type)/*:Observable<ICourse>*/ {
-        let postRequest: PostCourse = new PostCourse(courseName, courseDescription, courseType, programs, semester, studyYear);
+    postCourse(formGroup: FormGroup)/*:Observable<ICourse>*/ {
 
+        let postRequest: PostCourse = new PostCourse(
+            formGroup.get('courseDescription').value,
+            formGroup.get('courseName').value,
+            formGroup.get('courseType').value,
+            formGroup.get('programs').value,
+            formGroup.get('semester').value,
+            formGroup.get('year').value
+        );
         // return this.http.post<IPostCourse>(API_URL+POST_COURSE,postRequest, httpOptions)
         //     .pipe(
         //         catchError(this.handleError('addCourse', postRequest))

@@ -24,7 +24,4 @@ export class Course {
         this.type = type;
     }
 
-    toString(): string {
-        return this.type;
-    }
 }

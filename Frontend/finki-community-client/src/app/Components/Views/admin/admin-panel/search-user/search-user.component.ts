@@ -6,11 +6,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {NewFollowing} from '../../../user-details/models/classes/new-following';
 import {IUser} from '../../../../../Models/Interfaces/IUser';
 import {ChangeRole} from './models/change-role';
-
-
-
-const SEARCH_URL = 'http://localhost:8080/forum/users/search?q=';
-const CHANGE_ROLE_URL = 'http://localhost:8080/forum/users/role';
+import {CHANGE_ROLE_URL, SEARCH_URL} from '../../../../../Models/global-const-url-paths';
 
 @Component({
   selector: 'app-search-user',

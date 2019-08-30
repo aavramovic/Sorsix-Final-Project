@@ -27,7 +27,8 @@
                         {{getErrorMessage('password')}}
                     </mat-error>
 
-                    <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    <button mat-icon-button type="button" matSuffix (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
                         <i class="material-icons">{{hide ? 'visibility_off' : 'visibility'}}</i>
                     </button>
