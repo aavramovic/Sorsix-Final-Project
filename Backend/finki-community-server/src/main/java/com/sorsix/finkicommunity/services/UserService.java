@@ -61,6 +61,7 @@ public class UserService {
                             userDetailsResponse.firstName = user.getFirstName();
                             userDetailsResponse.lastName = user.getLastName();
                             userDetailsResponse.sex = user.getSex();
+                            userDetailsResponse.birthdate = user.getBirthdate();
                             userDetailsResponse.role = user.getRole();
 
                             userDetailsResponse.numberOfPosts = user.getNumberOfPosts();
@@ -207,6 +208,7 @@ public class UserService {
         user.setFirstName(newUserRequest.firstName);
         user.setLastName(newUserRequest.lastName);
         user.setSex(newUserRequest.sex);
+        user.setBirthdate(newUserRequest.birthdate);
         user.setRole(Role.USER);
 
         try {

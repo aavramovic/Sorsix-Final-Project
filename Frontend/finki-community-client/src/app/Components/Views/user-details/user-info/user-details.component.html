@@ -1,6 +1,6 @@
 <div *ngIf="user">
   <div id="info">
-    <div *ngIf="loggedin && user.username!='fisnik'">
+    <div *ngIf="isLoggedIn() && isNotHisOwnProfile()">
       <button ng-model="button" [class.following]="this.user.isFollowing" (click)="followClicked(user)">{{this.user.isFollowing ? 'FOLLOWING' : 'FOLLOW'}}</button>
     </div>
     <div>Username: {{user.username}}</div>

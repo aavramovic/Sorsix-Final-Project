@@ -12,6 +12,7 @@ public class UserDetailsResponse {
     public String firstName;
     public String lastName;
     public Character sex;
+    public long birthdate;
     public Role role;
     public boolean isFollowing;
 

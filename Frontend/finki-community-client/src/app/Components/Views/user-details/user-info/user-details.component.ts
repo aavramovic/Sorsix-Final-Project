@@ -11,12 +11,10 @@ import {NewFollowing} from '../models/classes/new-following';
   styleUrls: ['./user-details.component.css']
 })
 
+
 export class UserDetailsComponent implements OnInit {
   public user: IUserDetailsResponse;
   private URL = 'http://localhost:8080/forum/users/details?username=';
-  private isFollowing: boolean;
-  private followText: string;
-  private loggedin = true;
 
   constructor(
     private httpClient: HttpClient,
@@ -25,7 +23,7 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit() {
     const username = this.route.snapshot.paramMap.get('username');
-    const url = this.URL + username + '&loggedInUsername=' + 'fisnik';
+    const url = this.URL + username + '&loggedInUsername=' + localStorage.getItem('username');
     this.httpClient.get<IUserDetailsResponse>(url)
       .subscribe(
       u => {
@@ -36,9 +34,8 @@ export class UserDetailsComponent implements OnInit {
   }
 
   followClicked(user: IUserDetailsResponse){
-
     this.httpClient.post(
-      'http://localhost:8080/forum/users/new-following',
+      'http://localhost:8080/forum/users/follow',
       new NewFollowing(1, user.userId),
       { headers: new HttpHeaders(
           {
@@ -58,4 +55,12 @@ export class UserDetailsComponent implements OnInit {
       }
     );
   }
+
+    isLoggedIn(): boolean {
+      return true;
+    }
+
+    isNotHisOwnProfile() {
+      return this.user.username !== localStorage.getItem('username');
+    }
 }
