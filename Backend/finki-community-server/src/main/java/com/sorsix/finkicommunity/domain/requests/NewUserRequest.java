@@ -26,7 +26,6 @@ public class NewUserRequest {
     @NotNull
     private String lastName;
 
-    @NotEmpty
     @NotNull
     private Character sex;
 
