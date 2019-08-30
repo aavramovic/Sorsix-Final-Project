@@ -8,7 +8,6 @@ import {ThreadComponent} from './Components/AtomicComponents/thread/thread.compo
 import {RouterModule} from '@angular/router';
 import {MenuBarComponent} from './Components/Views/menu-bar/menu-bar.component';
 import {MainViewComponent} from './Components/Views/main-view/main-view.component';
-import {UserComponent} from './Components/AtomicComponents/user/user.component';
 import {LoginScreenComponent} from './Components/Views/login-screen/login-screen.component';
 import {CourseBarComponent} from './Components/SetsOfAtomicComponents/course-bar/course-bar.component';
 import {ThreadBarComponent} from './Components/SetsOfAtomicComponents/thread-bar/thread-bar.component';
@@ -48,7 +47,6 @@ import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-pa
         ThreadComponent,
         MenuBarComponent,
         MainViewComponent,
-        UserComponent,
         LoginScreenComponent,
         CourseBarComponent,
         ThreadBarComponent,

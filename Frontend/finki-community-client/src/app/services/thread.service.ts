@@ -65,7 +65,6 @@ export class ThreadService {
     }
 
     likes(username: string, threadId: number): Observable<NewPostLikeRequest> {
-
-        return this.http.put<NewPostLikeRequest>(API_URL + USERS + USER_LIKES_POST, new NewPostLikeRequest(username, threadId));
+        return this.http.post<NewPostLikeRequest>(API_URL + USERS + USER_LIKES_POST, new NewPostLikeRequest(username, threadId));
     }
 }

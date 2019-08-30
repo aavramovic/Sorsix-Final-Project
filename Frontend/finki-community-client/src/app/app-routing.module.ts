@@ -7,7 +7,6 @@ import {MainViewComponent} from './Components/Views/main-view/main-view.componen
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {AdminComponent} from './Components/Views/admin/admin.component';
-import {UserComponent} from './Components/AtomicComponents/user/user.component';
 import {UserDetailsComponent} from './Components/Views/user-details/user-info/user-details.component';
 import {AdminGuardService} from './services/guards/admin-guard.service';
 import {LoginGuardService} from './services/guards/login-guard.service';
@@ -23,7 +22,7 @@ const routes: Routes = [
     {path: 'courses', component: CourseBarComponent},
     {path: 'courses/:id', component: ThreadBarComponent},
     {path: 'threads', component: ThreadBarComponent},
-    {path: 'users', component: UserComponent},
+    {path: 'details/:username', component: UserDetailsComponent},
     {path: 'login', component: LoginScreenComponent, canActivate: [LoginGuardService]},
     {path: 'register', component: RegisterScreenComponent, canActivate: [LoginGuardService]},
     {path: 'admin', component: AdminComponent, canActivate: [AdminGuardService]},

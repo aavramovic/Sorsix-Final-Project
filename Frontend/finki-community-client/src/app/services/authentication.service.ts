@@ -37,6 +37,7 @@ export class AuthenticationService {
                         localStorage.setItem('id_token', response.idToken);
                         localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
                         localStorage.setItem('role', response.role.toString());
+                        localStorage.setItem('username', response.username);
                         this.isLoggedIn$.next(true);
                         return response;
                     }
@@ -52,6 +53,7 @@ export class AuthenticationService {
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
         localStorage.removeItem('role');
+        localStorage.removeItem('username');
         this.isLoggedIn$.next(false);
         this.router.navigate(['/']).then(() => {
         });
