@@ -1,6 +1,7 @@
 package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
+import com.sorsix.finkicommunity.domain.responses.course.ClickedCourseResponse;
 import com.sorsix.finkicommunity.domain.responses.course.SimpleCourseResponse;
 import com.sorsix.finkicommunity.services.CourseService;
 import org.springframework.http.HttpStatus;
@@ -35,13 +36,18 @@ public class CourseController {
     }
 
     @GetMapping("/clicked")
-    public ResponseEntity getCourseByCourseName(
+    public ResponseEntity<ClickedCourseResponse> getCourseByCourseName(
             @RequestParam String courseName,
             @RequestParam(required = false) Long noOfPosts
     ){
         return courseService.getPostsOfCourseByCourseName(courseName, noOfPosts)
                 .map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping("/coursenames")
+    public ResponseEntity<List<String>> getAllCourseNames(){
+        return ResponseEntity.ok(courseService.getAllCourseNames());
     }
 
     /*
