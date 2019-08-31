@@ -2,10 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {AdminComponent} from '../../Views/admin/admin.component';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
-import {CourseService} from '../../../services/course.service';
-import {UserService} from '../../../services/user.service';
 
 @Component({
     selector: 'app-new-post',
@@ -22,10 +19,7 @@ export class NewPostComponent implements OnInit {
     });
 
 
-
     constructor(private threadService: ThreadService,
-                private courseService: CourseService,
-                private userService: UserService,
                 public dialogRef: MatDialogRef<ThreadBarComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
     }
@@ -33,7 +27,7 @@ export class NewPostComponent implements OnInit {
 
     ngOnInit() {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
-        if(this.data.postId){
+        if (this.data.postId) {
             this.postPostForm.get('replyToPostId').setValue(this.data.postId);
         }
     }
@@ -41,6 +35,7 @@ export class NewPostComponent implements OnInit {
     onSubmit() {
         // console.log(this.postCourseForm.get('programs').value);
         this.threadService.postThread(this.postPostForm);
+        this.dialogRef.close();
     }
 
     close() {
