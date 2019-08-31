@@ -1,5 +1,10 @@
 <div class="container-fluid  pt-2">
     <form [formGroup]="postPostForm" (ngSubmit)="onSubmit()">
+        <button type="button" mat-icon-button matSuffix (click)="close()" class="right">
+            <i class="material-icons">
+                clear
+            </i>
+        </button>
         <div class="row">
             <mat-form-field class="col-sm-6">
                 <label>

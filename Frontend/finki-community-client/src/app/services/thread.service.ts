@@ -4,13 +4,8 @@ import {Observable, of} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
-import {catchError, map} from 'rxjs/operators';
-import {
-    COURSE_LIST,
-    THREAD_LIST_10,
-} from '../Models/global-const-url-paths';
-import {tap} from 'rxjs/operators';
-import {API_URL, THREAD_LIST, THREAD_REPLIES, USER_LIKES_POST, USERS} from '../Models/global-const-url-paths';
+import {map, tap} from 'rxjs/operators';
+import {API_URL, THREAD_LIST, THREAD_REPLIES, USER_LIKES_POST, USERS, POST_THREAD} from '../Models/global-const-url-paths';
 import {IClickedCourse} from '../Models/Interfaces/IClickedCourse';
 import {IGetRepliesByPostId} from '../Models/Interfaces/IGetRepliesByPostId';
 import {NewPostLikeRequest} from '../Models/Classes/NewPostLikeRequest';
@@ -18,7 +13,6 @@ import {Authorization} from '../Models/Enumeration/Authorization';
 import {FormGroup} from '@angular/forms';
 import {CourseService} from './course.service';
 import {PostThread} from '../Models/Classes/PostThread';
-import {PostReply} from '../Models/Classes/PostReply';
 
 @Injectable({
     providedIn: 'root'
@@ -84,7 +78,8 @@ export class ThreadService {
             .post<NewPostLikeRequest>(
                 API_URL + USERS + USER_LIKES_POST,
                 new NewPostLikeRequest(username, thread.threadId),
-                { headers: new HttpHeaders(
+                {
+                    headers: new HttpHeaders(
                         {
                             'Content-Type': 'application/json'
                         })
@@ -93,9 +88,9 @@ export class ThreadService {
             .subscribe(
                 res => {
                     thread.isLiked = !thread.isLiked;
-                    if(thread.isLiked === false){
+                    if (thread.isLiked === false) {
                         thread.numberOfLikes--;
-                    } else{
+                    } else {
                         thread.numberOfLikes++;
                     }
                 }
@@ -115,26 +110,5 @@ export class ThreadService {
             response => console.log(response),
             error => console.log('ERROR: ' + error.message)
         );
-        /*
-        if (threadIdString) {
-            let postThread: PostThread = new PostThread(
-                postPostForm.get('content').value,
-                postPostForm.get('title').value,
-                postPostForm.get('courseName').value,
-                postPostForm.get('username').value,
-                parseInt(threadIdString)
-            );
-            console.log(postThread);
-            this.http.post(API_URL + POST_THREAD, postThread);
-        } else {
-            let postReply: PostReply = new PostReply(
-                postPostForm.get('content').value,
-                postPostForm.get('title').value,
-                postPostForm.get('courseName').value,
-                postPostForm.get('username').value
-            );
-            console.log(postReply);
-            this.http.post(API_URL + POST_THREAD, postReply);
-        }*/
     }
 }
