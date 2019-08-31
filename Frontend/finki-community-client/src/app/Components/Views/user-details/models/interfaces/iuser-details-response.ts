@@ -9,6 +9,7 @@ export interface IUserDetailsResponse {
   lastName: string;
   sex: string;
   role: string;
+  birthdate: number;
   isFollowing: boolean;
 
   numberOfPosts: number;

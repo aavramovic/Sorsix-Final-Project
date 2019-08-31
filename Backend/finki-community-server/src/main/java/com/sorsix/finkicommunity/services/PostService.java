@@ -3,6 +3,8 @@ package com.sorsix.finkicommunity.services;
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
+import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
+import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
@@ -11,6 +13,7 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
+import net.bytebuddy.build.Plugin;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -60,6 +63,11 @@ public class PostService {
 
     public ClickedPostResponse getClickedPost(Long id, String username) {
 
+        Post post = postRepository.findByPostId(id).get();
+        Set<Post> postsLiked = getPostsLikedByUser(username);
+        ClickedPostResponse p = new ClickedPostResponse();
+        p.setPostResponse(createPostResponseObject(post, postsLiked));
+
 //        ClickedPostResponse clickedPostResponse =
 //                postRepository
 //                .findByPostId(id)
@@ -67,73 +75,31 @@ public class PostService {
 //                        post -> {
 //                             ClickedPostResponse p = new ClickedPostResponse();
 //                             p.setPostResponse(createPostResponseObject(post, username));
-//
 //                        }
-//                )
-//
-//
-//        Set<SimplePostResponse> simplePostResponses = convertFromPostToPostResponseSET(post.getReplies());
-//
-//        clickedPostResponse.setReplies(simplePostResponses);
-//
-//        return clickedPostResponse;
-        return null;
+//                );
+
+
+        Set<SimplePostResponse> simplePostResponses = convertFromPostToSimplePostResponseWithSet(post.getReplies(), username);
+
+        p.setReplies(simplePostResponses);
+
+        return p;
     }
 
-
-    /*
-    HELPER METHODS
-     */
-    private List<SimplePostResponse> convertFromPostToSimplePostResponse(List<Post> posts, String username) {
-        List<SimplePostResponse> postResponses = new ArrayList<>();
-
-        for (Post post : posts) {
-            postResponses.add(createPostResponseObject(post, username));
-        }
-
-        return postResponses;
-    }
-
-    private SimplePostResponse createPostResponseObject(Post post, String username) {
-        SimplePostResponse postResponse = new SimplePostResponse();
-
-        postResponse.id = post.getPostId();
-        postResponse.content = post.getContent();
-        postResponse.courseName = post.getCourse().getCourseName();
-        postResponse.noOfComments = post.getNumberOfReplies();
-        postResponse.noOfLikes = post.getNumberOfLikes();
-        postResponse.timeOfPost = post.getTimestamp();
-        postResponse.title = post.getTitle();
-        postResponse.username = post.getUser().getUsername();
-        postResponse.sex = post.getUser().getSex();
-        postResponse.role = post.getUser().getRole();
-
-        if(username==null) // Means that there is a visitor (not logged in user)
-            postResponse.isLiked = false;
-        else{
-            postResponse.isLiked =
-                    userRepository
-                            .findByUsername(username)
-                            .map(
-                                    user -> user.getPostsLiked().contains(post)
-                            )
-                            .orElse(
-                                    false
-                            );
-
-
-        }
-
-        return postResponse;
-    }
 
     public Post createNewPost(NewPostRequest newPostRequest) throws CourseNotFoundException, UserNotFoundException, Exception {
-        Optional<Course> course = courseRepository.findById(newPostRequest.courseId);
-        Post repliedTo = null;
-        Optional<User> user = userRepository.findById(newPostRequest.userIdOwner);
+        Optional<Course> course = courseRepository.findCourseByCourseName(newPostRequest.courseName);
+
+        Optional<User> user = userRepository.findByUsername(newPostRequest.username);
 
         Post newPost = new Post();
         newPost.setContent(newPostRequest.content);
+        newPost.setTitle(newPostRequest.title);
+
+        Post repliedTo = null;
+        if(newPostRequest.replyToPostId != null){
+            repliedTo = postRepository.findByPostId(newPostRequest.replyToPostId).get();
+        }
 
         course.map(
                 c -> {
@@ -141,7 +107,7 @@ public class PostService {
                     return c;
                 }
         ).orElseThrow(
-                ()->new CourseNotFoundException("No course found with id " + newPostRequest.courseId)
+                ()->new CourseNotFoundException("No course found with name " + newPostRequest.courseName)
         );
 
         user.map(
@@ -150,7 +116,7 @@ public class PostService {
                     return u;
                 }
         ).orElseThrow(
-                ()-> new UserNotFoundException("No user with id " + newPostRequest.userIdOwner)
+                ()-> new UserNotFoundException("No user with username " + newPostRequest.username)
         );
 
         newPost.setRepliedTo(repliedTo);
@@ -164,5 +130,64 @@ public class PostService {
         }
 
         return newPost;
+    }
+
+
+    /*
+    HELPER METHODS
+     */
+    private List<SimplePostResponse> convertFromPostToSimplePostResponse(List<Post> posts, String username) {
+        List<SimplePostResponse> postResponses = new ArrayList<>();
+
+        Set<Post> postsLiked = getPostsLikedByUser(username);
+
+        for (Post post : posts) {
+            postResponses.add(createPostResponseObject(post, postsLiked));
+        }
+
+        return postResponses;
+    }
+
+    private SimplePostResponse createPostResponseObject(Post post, Set<Post> postsLiked) {
+        SimplePostResponse postResponse = new SimplePostResponse();
+
+        postResponse.id = post.getPostId();
+        postResponse.content = post.getContent();
+        postResponse.courseName = post.getCourse().getCourseName();
+        postResponse.noOfComments = post.getNumberOfReplies();
+        postResponse.noOfLikes = post.getNumberOfLikes();
+        postResponse.timeOfPost = post.getTimestamp();
+        postResponse.title = post.getTitle();
+        postResponse.username = post.getUser().getUsername();
+        postResponse.sex = post.getUser().getSex();
+        postResponse.role = post.getUser().getRole();
+        postResponse.isLiked = postsLiked.contains(post);
+
+        return postResponse;
+    }
+
+    private Set<SimplePostResponse> convertFromPostToSimplePostResponseWithSet(Set<Post> replies, String username) {
+        Set<SimplePostResponse> postResponses = new TreeSet<>();
+
+        Set<Post> postsLiked = getPostsLikedByUser(username);
+
+        for (Post post : replies) {
+            postResponses.add(createPostResponseObject(post, postsLiked));
+        }
+
+        return postResponses;
+    }
+
+    private Set<Post> getPostsLikedByUser(String username){
+        if(username == null)
+            return new TreeSet<>();
+        return userRepository
+                .findByUsername(username)
+                .map(
+                        user -> user.getPostsLiked()
+                )
+                .orElse(
+                        new TreeSet<>()
+                );
     }
 }

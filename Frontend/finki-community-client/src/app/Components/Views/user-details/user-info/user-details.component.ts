@@ -36,7 +36,7 @@ export class UserDetailsComponent implements OnInit {
   followClicked(user: IUserDetailsResponse){
     this.httpClient.post(
       'http://localhost:8080/forum/users/follow',
-      new NewFollowing(1, user.userId),
+      new NewFollowing(localStorage.getItem('username'), user.userId),
       { headers: new HttpHeaders(
           {
             'Content-Type': 'application/json'

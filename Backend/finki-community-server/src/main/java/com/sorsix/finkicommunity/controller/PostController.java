@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
+import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.services.PostService;
 import org.springframework.http.HttpStatus;
@@ -40,13 +41,13 @@ public class PostController {
         return ResponseEntity.ok(postService.getTopPosts(noOfPosts, username));
     }
 
-//    @GetMapping("/clicked")
-//    public ResponseEntity<ClickedPostResponse> getClickedPost(
-//            @RequestParam Long postId
-//            @RequestParam String username
-//    ){
-//        return ResponseEntity.ok(postService.getClickedPost(postId));
-//    }
+    @GetMapping("/clicked")
+    public ResponseEntity<ClickedPostResponse> getClickedPost(
+            @RequestParam Long postId,
+            @RequestParam String username
+    ){
+        return ResponseEntity.ok(postService.getClickedPost(postId, username));
+    }
 
     /*
     POST METHODS

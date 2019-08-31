@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../Models/Classes/User';
 import {Observable, throwError} from 'rxjs';
-import {MockClassesCreationService} from './mock-classes-creation.service';
 import {API_URL} from '../Models/global-const-url-paths';
 import {FormGroup} from '@angular/forms';
 import {IRegisterUserResponse} from '../Models/Interfaces/IRegisterUserResponse';
