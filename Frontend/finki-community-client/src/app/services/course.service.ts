@@ -9,7 +9,7 @@ import {ICourse} from '../Models/Interfaces/ICourse';
 import {catchError, map, tap} from 'rxjs/operators';
 import {getKeyByValue, YearOfStudy} from '../Models/Enumeration/YearOfStudy';
 import {Semester} from '../Models/Enumeration/Semester';
-import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/global-const-url-paths';
+import {API_URL, COURSE_LIST, COURSE_NAMES, POST_COURSE} from '../Models/global-const-url-paths';
 import {IPostCourse} from '../Models/Interfaces/IPostCourse';
 import {PostCourse} from '../Models/Classes/PostCourse';
 import {Router} from '@angular/router';
@@ -108,4 +108,7 @@ export class CourseService {
     }
 
 
+    getCourseNames(): Observable<string[]> {
+        return this.http.get<string[]>(API_URL + COURSE_NAMES);
+    }
 }

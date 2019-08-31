@@ -3,6 +3,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
+import {Subject} from 'rxjs';
+import {Course} from '../../../Models/Classes/Course';
+import {CourseService} from '../../../services/course.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-new-post',
@@ -18,9 +22,12 @@ export class NewPostComponent implements OnInit {
         replyToPostId: new FormControl('')
     });
 
+    course$ = new Subject();
+    courses: string[] = [];
 
     constructor(private threadService: ThreadService,
                 public dialogRef: MatDialogRef<ThreadBarComponent>,
+                private courseService: CourseService,
                 @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
@@ -30,6 +37,11 @@ export class NewPostComponent implements OnInit {
         if (this.data.postId) {
             this.postPostForm.get('replyToPostId').setValue(this.data.postId);
         }
+        this.course$.pipe(switchMap(() =>
+            this.courseService.getCourseNames()
+        )).subscribe(courses => this.courses = courses);
+        this.course$.next();
+
     }
 
     onSubmit() {

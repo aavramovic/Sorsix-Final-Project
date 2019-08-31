@@ -11,3 +11,4 @@ export const LOGIN_USER = 'login';
 export const USER_LIKES_POST = 'likes';
 export const SEARCH_URL = 'http://localhost:8080/forum/users/search?q=';
 export const CHANGE_ROLE_URL = 'http://localhost:8080/forum/users/role';
+export const COURSE_NAMES = 'forum/courses/coursenames';
