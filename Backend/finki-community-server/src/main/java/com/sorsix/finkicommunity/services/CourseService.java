@@ -104,6 +104,13 @@ public class CourseService {
         }
     }
 
+    public List<String> getAllCourseNames(){
+        return courseRepository.findAll()
+                .stream()
+                .map(course -> course.getCourseName())
+                .collect(Collectors.toList());
+    }
+
 
     /*
      HELPER METHODS
