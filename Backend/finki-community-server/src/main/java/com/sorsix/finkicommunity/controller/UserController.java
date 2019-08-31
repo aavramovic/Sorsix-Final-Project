@@ -83,7 +83,7 @@ public class UserController {
 
     @PostMapping("/follow")
     public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
-        Optional<NewFollowingRequest> result = userService.addNewFollowing(newFollowingRequest);
+        Optional<?> result = userService.addNewFollowing(newFollowingRequest);
         return ResponseEntity.ok(newFollowingRequest);
     }
 

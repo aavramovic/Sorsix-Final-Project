@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ClickedPostResponse {
     private SimplePostResponse postResponse;
-    private Set<SimplePostResponse> replies = new HashSet<>();
+    private Set<SimplePostResponse> replies = new TreeSet<>();
 
     @JsonGetter(value = "post")
     public SimplePostResponse getPostResponse() {

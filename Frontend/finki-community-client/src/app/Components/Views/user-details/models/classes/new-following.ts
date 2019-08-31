@@ -1,9 +1,9 @@
 export class NewFollowing {
-  userIdFollowing: number;
+  usernameFollowing: string;
   userIdFollowed: number;
 
-  constructor(userIdFollowing: number, userIdFollowed: number){
-    this.userIdFollowing = userIdFollowing;
+  constructor(userIdFollowing: string, userIdFollowed: number){
+    this.usernameFollowing = userIdFollowing;
     this.userIdFollowed = userIdFollowed;
   }
 }

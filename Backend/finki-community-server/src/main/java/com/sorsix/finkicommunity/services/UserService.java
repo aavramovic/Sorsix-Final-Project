@@ -218,34 +218,33 @@ public class UserService {
         }
     }
 
-    public Optional<NewFollowingRequest> addNewFollowing(NewFollowingRequest newFollowingRequest) {
-
-//        return userRepository
-//                .findById(newFollowingRequest.getUserIdFollowing())
-//                .map(
-//                        userFollowing ->
-//                                userRepository
-//                                    .findById(newFollowingRequest.getUserIdFollowed())
-//                                    .map(
-//                                            userFollowed -> {
-//                                                if(userFollowing.getFollowings().contains(userFollowed)) {
-//                                                    userFollowing.removeFollowing(userFollowed);
-//                                                }else{
-//                                                    userFollowing.addNewFollowing(userFollowed);
-//                                                }
-//                                                try {
-//                                                    userRepository.save(userFollowing);
-//                                                    userRepository.save(userFollowed);
-//                                                    return Optional.of(newFollowingRequest);
-//                                                }catch(Exception ex) {
-//                                                    return Optional.empty();
-//                                                }
-//                                            }
-//                                    )
-//                                    .orElseGet(()->Optional.empty())
-//                )
-//                .orElseGet(()->Optional.empty());
-        return Optional.empty();
+    public Optional<?> addNewFollowing(NewFollowingRequest newFollowingRequest) {
+        return userRepository
+                .findByUsername(newFollowingRequest.usernameFollowing)
+                .map(
+                        userFollowing ->{
+                            return userRepository
+                                    .findById(newFollowingRequest.userIdFollowed)
+                                    .map(
+                                            userFollowed -> {
+                                                if(userFollowing.getFollowings().contains(userFollowed)) {
+                                                    userFollowing.removeFollowing(userFollowed);
+                                                }else{
+                                                    userFollowing.addNewFollowing(userFollowed);
+                                                }
+                                                try {
+                                                    userRepository.save(userFollowing);
+                                                    userRepository.save(userFollowed);
+                                                    return Optional.of(newFollowingRequest);
+                                                }catch(Exception ex) {
+                                                    return Optional.empty();
+                                                }
+                                            }
+                                    )
+                                    .orElseGet(()->Optional.empty());
+                        }
+                )
+                .orElseGet(()->Optional.empty());
     }
 
     public Optional<NewPostLikeRequest> newPostLike(NewPostLikeRequest newPostLikeRequest) {
