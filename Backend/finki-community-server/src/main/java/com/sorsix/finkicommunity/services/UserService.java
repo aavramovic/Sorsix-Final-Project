@@ -218,73 +218,85 @@ public class UserService {
         }
     }
 
-    public Optional<?> addNewFollowing(NewFollowingRequest newFollowingRequest) {
-        return userRepository
-                .findByUsername(newFollowingRequest.usernameFollowing)
-                .map(
-                        userFollowing ->{
-                            return userRepository
-                                    .findById(newFollowingRequest.userIdFollowed)
-                                    .map(
-                                            userFollowed -> {
-                                                if(userFollowing.getFollowings().contains(userFollowed)) {
-                                                    userFollowing.removeFollowing(userFollowed);
-                                                }else{
-                                                    userFollowing.addNewFollowing(userFollowed);
-                                                }
-                                                try {
-                                                    userRepository.save(userFollowing);
-                                                    userRepository.save(userFollowed);
-                                                    return Optional.of(newFollowingRequest);
-                                                }catch(Exception ex) {
-                                                    return Optional.empty();
-                                                }
-                                            }
-                                    )
-                                    .orElseGet(()->Optional.empty());
-                        }
-                )
-                .orElseGet(()->Optional.empty());
+    public Optional<NewFollowingRequest> addNewFollowing(NewFollowingRequest newFollowingRequest) {
+
+       User userFollowing = userRepository
+               .findByUsername(newFollowingRequest.usernameFollowing)
+               .map(
+                       user ->  user
+               )
+               .orElseGet(
+                       null
+               );
+
+       if(userFollowing == null)
+           return Optional.empty();
+
+       User userFollowed = userRepository
+               .findById(newFollowingRequest.userIdFollowed)
+               .map(
+                       user ->  user
+               )
+               .orElseGet(
+                       null
+               );
+
+       if(userFollowed == null){
+           return Optional.empty();
+       }
+
+        if(userFollowing.getFollowings().contains(userFollowed)) {
+            userFollowing.removeFollowing(userFollowed);
+        }else{
+            userFollowing.addNewFollowing(userFollowed);
+        }
+        try {
+            userRepository.save(userFollowing);
+            userRepository.save(userFollowed);
+            return Optional.of(newFollowingRequest);
+        }catch(Exception ex) {
+            return Optional.empty();
+        }
     }
 
     public Optional<NewPostLikeRequest> newPostLike(NewPostLikeRequest newPostLikeRequest) {
-//        try {
-//            userRepository
-//                    .findByUsername(newPostLikeRequest.username)
-//                    .map(
-//                            user ->
-//                            {
-//                                try {
-//                                    return postRepository
-//                                            .findByPostId(newPostLikeRequest.postId)
-//                                            .map(
-//                                                    post -> {
-//                                                        if (user.getPostsLiked().contains(post)) {
-//                                                            user.removePostLiked(post);
-//                                                        } else {
-//                                                            user.addPostLiked(post);
-//                                                        }
-//
-//                                                        userRepository.save(user);
-//                                                        postRepository.save(post);
-//                                                        return Optional.of(newPostLikeRequest);
-//                                                    }
-//                                            ).orElseThrow
-//                                                    (
-//                                                            () -> new PostNotFoundException("No post found with post id: " + newPostLikeRequest.postId)
-//                                                    );
-//                                } catch (PostNotFoundException e) {
-//                                    return Optional.empty();
-//                                }
-//                            }
-//                    )
-//                    .orElseThrow(
-//                            () -> new UsernameNotFoundException("No user found with username: " + newPostLikeRequest.username)
-//                    );
-//        }catch(UsernameNotFoundException e){
-//            return Optional.empty();
-//        }
-        return Optional.empty();
+        User user = userRepository
+                .findByUsername(newPostLikeRequest.username)
+                .map(
+                        u ->  u
+                )
+                .orElseGet(
+                        null
+                );
+
+        if(user == null)
+            return Optional.empty();
+
+        Post post = postRepository
+                .findById(newPostLikeRequest.postId)
+                .map(
+                        u ->  u
+                )
+                .orElseGet(
+                        null
+                );
+
+        if(post == null){
+            return Optional.empty();
+        }
+
+        if(user.getPostsLiked().contains(post)) {
+            user.removePostLiked(post);
+        }else{
+            user.addPostLiked(post);
+        }
+        try {
+            userRepository.save(user);
+            postRepository.save(post);
+            return Optional.of(newPostLikeRequest);
+        }catch(Exception ex) {
+            return Optional.empty();
+        }
     }
 
     public List<SearchUserResponse> getResultFromSearch(String q){

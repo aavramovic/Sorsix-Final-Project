@@ -2,13 +2,11 @@ import {Authorization} from '../Enumeration/Authorization';
 
 export class Thread {
     threadId: number;
-
     courseName: string;
     timeOfPost: Date;
     numberOfLikes: number;
     numberOfComments: number;
     content: string;
-    imageUrl: string;
     title: string;
 
     username: string;
@@ -16,31 +14,35 @@ export class Thread {
     role: Authorization;
     isLiked: boolean;
 
+    imageUrl: string;
     comments: Thread[];
 
+
     constructor(threadId: number,
-                username: string,
                 courseName: string,
                 timeOfPost: Date,
-                noOfLikes: number,
-                noOfComments: number,
+                numberOfLikes: number,
+                numberOfComments: number,
                 content: string,
-                imageUrl: string,
                 title: string,
+                username: string,
                 sex: string,
-                role: Authorization) {
+                role: Authorization,
+                isLiked: boolean,
+                imageUrl: string,
+                ){
         this.threadId = threadId;
-        this.username = username;
         this.courseName = courseName;
         this.timeOfPost = timeOfPost;
-        this.numberOfLikes = noOfLikes;
-        this.numberOfComments = noOfComments;
+        this.numberOfLikes = numberOfLikes;
+        this.numberOfComments = numberOfComments;
         this.content = content;
-        this.imageUrl = imageUrl;
         this.title = title;
+        this.username = username;
         this.sex = sex;
         this.role = role;
-
+        this.isLiked = isLiked;
+        this.imageUrl = imageUrl;
         this.comments = [];
     }
 }

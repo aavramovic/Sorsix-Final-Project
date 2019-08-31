@@ -13,8 +13,7 @@ import {Authorization} from '../../../Models/Enumeration/Authorization';
     styleUrls: ['./thread.component.css']
 })
 export class ThreadComponent implements OnInit {
-    @Input()
-    private thread: Thread;
+    @Input() private thread: Thread;
     replie$ = new Subject<Thread[]>();
     replies: Thread[];
     isLoggedIn: boolean = false;
@@ -55,7 +54,7 @@ export class ThreadComponent implements OnInit {
         this.replie$.next();
     }
 
-    likes() {
-        this.threadService.likes(localStorage.getItem('username'), this.thread.threadId);
+    likes(thread: Thread) {
+        this.threadService.likes(localStorage.getItem('username'), thread);
     }
 }
