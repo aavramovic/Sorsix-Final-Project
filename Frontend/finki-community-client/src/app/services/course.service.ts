@@ -6,7 +6,7 @@ import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Program} from '../Models/Enumeration/Program';
 import {Type} from '../Models/Enumeration/Type';
 import {ICourse} from '../Models/Interfaces/ICourse';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {getKeyByValue, YearOfStudy} from '../Models/Enumeration/YearOfStudy';
 import {Semester} from '../Models/Enumeration/Semester';
 import {API_URL, COURSE_LIST, POST_COURSE} from '../Models/global-const-url-paths';
@@ -14,12 +14,15 @@ import {IPostCourse} from '../Models/Interfaces/IPostCourse';
 import {PostCourse} from '../Models/Classes/PostCourse';
 import {Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
+import {EnumService} from './enum.service';
+import {empty} from 'rxjs/internal/Observer';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class CourseService {
+    programs: string[] = EnumService.getPrograms();
 
     constructor(private http: HttpClient,
                 private router: Router) {
@@ -70,19 +73,31 @@ export class CourseService {
     }
 
     postCourse(formGroup: FormGroup)/*:Observable<ICourse>*/ {
-
+        let arrayOfPrograms: string[] = [];
+        this.programs.forEach(program => {
+            if ((<FormGroup> formGroup.get('programs')).get(program).value) {
+                arrayOfPrograms.push(program);
+            }
+        });
         let postRequest: PostCourse = new PostCourse(
             formGroup.get('courseDescription').value,
             formGroup.get('courseName').value,
-            formGroup.get('courseType').value,
-            formGroup.get('programs').value,
-            formGroup.get('semester').value,
-            formGroup.get('year').value
+            (<string> formGroup.get('courseType').value).toUpperCase(),
+            arrayOfPrograms.join(' '),
+            formGroup.get('semester').value.toString().toUpperCase(),
+            getKeyByValue(<string> formGroup.get('year').value),
+            formGroup.get('code').value
         );
-        // return this.http.post<IPostCourse>(API_URL+POST_COURSE,postRequest, httpOptions)
-        //     .pipe(
-        //         catchError(this.handleError('addCourse', postRequest))
-        //     )
+        console.log(postRequest);
+        this.http.post<IPostCourse>(API_URL + POST_COURSE, postRequest)/*.pipe(
+            tap(console.log),
+            catchError(this.handleError('addCourse', postRequest))
+        )*/.subscribe(() => alert('Course created'),
+            error => {
+                alert('There has been an error!\n');
+                console.log(error.message);
+                return of(empty);
+            });
     }
 
 

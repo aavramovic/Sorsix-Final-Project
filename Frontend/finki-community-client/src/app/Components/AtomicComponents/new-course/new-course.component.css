@@ -5,3 +5,17 @@ mat-form-field {
 label {
     width: 100%;
 }
+
+.mat-card-subtitle {
+    font-size: large;
+}
+
+.btn-outline-dark:hover:disabled {
+    background-color: white !important;
+    color: darkred !important;
+}
+
+.btn-outline-dark:disabled {
+    border-color: darkred !important;
+    color: darkred !important;
+}

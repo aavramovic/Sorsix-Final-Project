@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../Models/Classes/User';
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {API_URL} from '../Models/global-const-url-paths';
 import {FormGroup} from '@angular/forms';
@@ -10,6 +10,7 @@ import {catchError, flatMap, tap} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {AuthenticationService} from './authentication.service';
 import {LoginResponse} from '../Models/Classes/LoginResponse';
+import {empty} from 'rxjs/internal/Observer';
 
 @Injectable({
     providedIn: 'root'
@@ -34,9 +35,9 @@ export class UserService {
     }
 
     // noinspection JSMethodCanBeStatic
-    private handleError(error: HttpErrorResponse): Observable<never> | null {
+    private handleError(error: HttpErrorResponse): Observable<never> | any {
         console.log(error.error);
-        return throwError(error);
+        return of(empty);
     }
 
 

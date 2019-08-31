@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from 
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {Subject, throwError} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {PostUser} from '../../../Models/Classes/PostUser';
 
@@ -63,12 +63,12 @@ export class RegisterScreenComponent implements OnInit {
         this.user$.pipe(switchMap(() =>
             this.userService.postNewUser(this.newUser)))
             .subscribe(response => {
-                if (response.valid) {
-                    this.router.navigate(['/']).then(r => r.valueOf());
-                } else {
-                    alert('This account exists and has been disabled');
-                }
-            });
+                    if (response.valid) {
+                        this.router.navigate(['/']).then(r => r.valueOf());
+                    } else {
+                        alert('This account exists and has been disabled');
+                    }
+                });
 
 
         this.today = new Date();

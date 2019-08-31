@@ -1,13 +1,7 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CourseService} from '../../../services/course.service';
 import {Course} from '../../../Models/Classes/Course';
-import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
-import {YearOfStudy} from '../../../Models/Enumeration/YearOfStudy';
-import {Program} from '../../../Models/Enumeration/Program';
-import {Type} from '../../../Models/Enumeration/Type';
 import {Subject} from 'rxjs';
-import {Semester} from '../../../Models/Enumeration/Semester';
-import {toTitleCase} from 'codelyzer/util/utils';
 import {switchMap} from 'rxjs/operators';
 import {EnumService} from '../../../services/enum.service';
 

@@ -17,11 +17,6 @@ export interface NewCourseDialogData {
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-    programs: string[] = EnumService.getPrograms();
-    years: string[] = EnumService.getYears();
-    semesters: string[] = EnumService.getSemesters();
-    types: string[] = EnumService.getTypes();
-
     program: string;
     year: string;
     semester: string;
@@ -37,16 +32,15 @@ export class AdminComponent implements OnInit {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
-            programs: this.programs,
-            years: this.years,
-            semesters: this.semesters,
-            types: this.types
+            programs: [],
+            years: [],
+            semesters: [],
+            types: []
         };
 
-        const dialogRef = this.dialog.open(NewCourseComponent, dialogConfig.data);
+        //We don't return data back from the modal components instead they communicate themselves
+        //Maybe let it return a boolean that tells us
+        this.dialog.open(NewCourseComponent, dialogConfig.data);
 
-        dialogRef.afterClosed().subscribe(
-            data => console.log(data)
-        );
     }
 }

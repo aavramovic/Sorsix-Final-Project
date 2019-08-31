@@ -24,7 +24,7 @@ import {
     MatIconModule,
     MatRadioModule,
     MatSelectModule,
-    MatNativeDateModule
+    MatNativeDateModule, MatCardModule
 } from '@angular/material';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
@@ -85,7 +85,8 @@ import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-pa
         MatRadioModule,
         MatDialogModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatCardModule
     ],
     providers: [MatDatepickerModule],
     bootstrap: [AppComponent],

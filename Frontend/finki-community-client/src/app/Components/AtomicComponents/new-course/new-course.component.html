@@ -1,9 +1,14 @@
 <div class="container-fluid">
     <form *ngIf="postCourseForm" [formGroup]="postCourseForm" (ngSubmit)="onSubmit()">
-        <div>
-            <mat-form-field>
+        <div class="row">
+            <mat-form-field class="col-sm-8">
                 <label>
-                    <input matInput placeholder="Course Name" id="courseName" type="text" formControlName="courseName">
+                    <input matInput placeholder="Course Name" type="text" formControlName="courseName">
+                </label>
+            </mat-form-field>
+            <mat-form-field class="col-sm-4">
+                <label>
+                    <input matInput placeholder="Course code" type="text" formControlName="code">
                 </label>
             </mat-form-field>
         </div>
@@ -15,40 +20,47 @@
                 </label>
             </mat-form-field>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-3" *ngFor="let program of programs" formGroupName="programs">
-                        <mat-checkbox color="primary" value="{{program}}" formControlName="{{program}}">
-                            {{program}}
-                        </mat-checkbox>
+        <mat-card class="shadow-none p-0">
+            <mat-card-subtitle class="mb-0 mt-1">Programs</mat-card-subtitle>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-3" *ngFor="let program of programs" formGroupName="programs">
+                            <mat-checkbox color="primary" value="{{program}}" formControlName="{{program}}">
+                                {{program}}
+                            </mat-checkbox>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </mat-card>
         <div>
             <mat-form-field>
-                <mat-select placeholder="Year of study">
+                <mat-select placeholder="Year of study" formControlName="year">
                     <mat-option value="{{year}}" *ngFor="let year of years">{{year}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div>
             <mat-form-field>
-                <mat-select placeholder="Program">
+                <mat-select placeholder="Semester" formControlName="semester">
                     <mat-option value="{{semester}}" *ngFor="let semester of semesters">{{semester}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div>
             <mat-form-field>
-                <mat-select placeholder="Program">
+                <mat-select placeholder="Course Type" formControlName="courseType">
                     <mat-option value="{{type}}" *ngFor="let type of types">{{type}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div>
-            <input type="submit">
+            <input type="submit" class="btn btn-outline-dark mt-4" [disabled]="postCourseForm.invalid">
+        </div>
+        <div>
+            <input type="reset" class="btn btn-outline-dark mt-4" [disabled]="postCourseForm.invalid">
         </div>
     </form>
 </div>
