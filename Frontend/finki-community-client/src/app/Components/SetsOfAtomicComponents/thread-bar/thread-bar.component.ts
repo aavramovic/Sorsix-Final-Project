@@ -62,12 +62,16 @@ export class ThreadBarComponent implements OnInit {
         this.threadByCourse$.next();
     }
 
-    openDialog(): void {
+    openDialog(threadId?: string): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
         dialogConfig.disableClose = true;
-        dialogConfig.height = '480px';
+        dialogConfig.height = 'max-content';
+
         dialogConfig.width = '600px';
+        dialogConfig.data = {
+            postId: threadId
+        };
         //We don't return data back from the modal components instead they communicate themselves
         //Maybe let it return a boolean that tells us
         this.dialog.open(NewPostComponent, dialogConfig);

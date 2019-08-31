@@ -1,7 +1,12 @@
-<div class="container-fluid mt-5">
-    <form *ngIf="postPostForm" [formGroup]="postPostForm" (ngSubmit)="onSubmit()">
-        <div>
-            <mat-form-field>
+<div class="container-fluid  pt-2">
+    <form [formGroup]="postPostForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <mat-form-field class="col-sm-6">
+                <label>
+                    <input matInput placeholder="Title" type="text" formControlName="title">
+                </label>
+            </mat-form-field>
+            <mat-form-field class="col-sm-6">
                 <label>
                     <input matInput placeholder="Course Name" type="text" formControlName="courseName">
                 </label>

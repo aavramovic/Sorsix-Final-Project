@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {
     API_URL,
     COURSE_LIST,
@@ -21,6 +21,8 @@ import {NewPostLikeRequest} from '../Models/Classes/NewPostLikeRequest';
 import {Authorization} from '../Models/Enumeration/Authorization';
 import {FormGroup} from '@angular/forms';
 import {CourseService} from './course.service';
+import {PostThread} from '../Models/Classes/PostThread';
+import {PostReply} from '../Models/Classes/PostReply';
 
 @Injectable({
     providedIn: 'root'
@@ -77,21 +79,43 @@ export class ThreadService {
     }
 
     likes(username: string, threadId: number): Observable<NewPostLikeRequest> {
+        //TODO TODO TO DO TO DO TO DO TO DO
         return this.http.post<NewPostLikeRequest>(API_URL + USERS + USER_LIKES_POST, new NewPostLikeRequest(username, threadId));
     }
 
     postThread(postPostForm: FormGroup) {
-        let courseId;
-        this.courseService.getCourses().subscribe(
-            courses => {
-                courseId = courses.filter(
-                    course => {
-                        return course.courseName == postPostForm.get('courseName').value;
-                    }
-                ).pop().courseId;
-            }
+        let threadIdString = postPostForm.get('replyToPostId').value;
+        let postThread: PostThread = new PostThread(
+            postPostForm.get('content').value,
+            postPostForm.get('title').value,
+            postPostForm.get('courseName').value,
+            postPostForm.get('username').value,
+            threadIdString ? parseInt(threadIdString) : null);
+        console.log(postThread);
+        this.http.post(API_URL + POST_THREAD, postThread).subscribe(
+            response => console.log(response),
+            error => console.log('ERROR: ' + error.message)
         );
-        //TODO IDK VEKJE
-        this.http.post(API_URL + POST_THREAD, {});
+        /*
+        if (threadIdString) {
+            let postThread: PostThread = new PostThread(
+                postPostForm.get('content').value,
+                postPostForm.get('title').value,
+                postPostForm.get('courseName').value,
+                postPostForm.get('username').value,
+                parseInt(threadIdString)
+            );
+            console.log(postThread);
+            this.http.post(API_URL + POST_THREAD, postThread);
+        } else {
+            let postReply: PostReply = new PostReply(
+                postPostForm.get('content').value,
+                postPostForm.get('title').value,
+                postPostForm.get('courseName').value,
+                postPostForm.get('username').value
+            );
+            console.log(postReply);
+            this.http.post(API_URL + POST_THREAD, postReply);
+        }*/
     }
 }
