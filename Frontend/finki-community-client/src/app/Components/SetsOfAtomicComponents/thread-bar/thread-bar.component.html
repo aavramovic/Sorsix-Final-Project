@@ -4,7 +4,9 @@
     <div>
         <section class="section">
             <label class="margin">Threads per page:</label>
-            <mat-radio-group [(ngModel)]="numberOfPostsByPage" (change)="onValueChange()" class="mt-2" color="primary">
+            <mat-radio-group [(ngModel)]="numberOfPostsByPage"
+                             (change)="onValueChange()"
+                             class="mt-2" color="primary">
                 <mat-radio-button class="margin" value="10">10</mat-radio-button>
                 <mat-radio-button class="margin" value="25">25</mat-radio-button>
                 <mat-radio-button class="margin" value="50">50</mat-radio-button>

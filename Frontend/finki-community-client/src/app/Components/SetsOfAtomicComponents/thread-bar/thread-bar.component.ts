@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
@@ -7,8 +7,8 @@ import {switchMap} from 'rxjs/operators';
 import {NavigationEnd, Router} from '@angular/router';
 import {UrlService} from '../../../services/url.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
-import {NewCourseComponent} from '../../AtomicComponents/new-course/new-course.component';
 import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
+import {MatRadioChange} from '@angular/material/radio';
 
 @Component({
     selector: 'app-thread-bar',
@@ -16,9 +16,10 @@ import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.compone
     styleUrls: ['./thread-bar.component.css']
 })
 export class ThreadBarComponent implements OnInit {
+    @Input() checked = true;
     threads: Thread[];
-    selectedCourse: string = '';
-    numberOfPostsByPage: number = 10;//TODO napravi komponenta ili delche za biranje na ova
+    selectedCourse = '';
+    numberOfPostsByPage = '10'; // TODO napravi komponenta ili delche za biranje na ova
     threadByCourse$ = new Subject();
 
     constructor(private threadService: ThreadService,
@@ -35,7 +36,7 @@ export class ThreadBarComponent implements OnInit {
     urlChange() {
         this.selectedCourse = this.url.getLastPartOfUrl();
 
-        if (this.selectedCourse == 'start' || this.selectedCourse == 'threads') {
+        if (this.selectedCourse === 'start' || this.selectedCourse === 'threads') {
             this.selectedCourse = '';
         }
 
@@ -50,13 +51,13 @@ export class ThreadBarComponent implements OnInit {
         });
         this.selectedCourse = this.url.getLastPartOfUrl();
 
-        //TODO: ne go menjaj te mrzi
-        if (this.selectedCourse == 'start' || this.selectedCourse == 'threads') {
+        // TODO: ne go menjaj te mrzi
+        if (this.selectedCourse === 'start' || this.selectedCourse === 'threads') {
             this.selectedCourse = '';
         }
 
         this.threadByCourse$.pipe(switchMap(() =>
-            this.threadService.getTopNThreadsByCourse(this.numberOfPostsByPage, this.selectedCourse)))
+            this.threadService.getTopNThreadsByCourse(+this.numberOfPostsByPage, this.selectedCourse)))
             .subscribe(threads => this.threads = threads);
 
         this.threadByCourse$.next();
@@ -72,8 +73,8 @@ export class ThreadBarComponent implements OnInit {
         dialogConfig.data = {
             postId: threadId
         };
-        //We don't return data back from the modal components instead they communicate themselves
-        //Maybe let it return a boolean that tells us
+        // We don't return data back from the modal components instead they communicate themselves
+        // Maybe let it return a boolean that tells us
         this.dialog.open(NewPostComponent, dialogConfig);
 
     }
