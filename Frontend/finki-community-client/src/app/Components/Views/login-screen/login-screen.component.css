@@ -9,6 +9,13 @@
     overflow-x: hidden;
     height: 50%;
 }
+mat-form-field {
+    width: 100%;
+}
+
+label {
+    width: 100%;
+}
 
 hr {
     width: 50%;

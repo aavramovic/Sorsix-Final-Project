@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EnumService} from '../../../services/enum.service';
-import {NewCourseComponent} from '../new-course/new-course.component';
+import {NewCourseComponent} from '../../AtomicComponents/new-course/new-course.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 export interface NewCourseDialogData {

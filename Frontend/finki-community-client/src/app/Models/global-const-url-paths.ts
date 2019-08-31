@@ -8,3 +8,5 @@ export const USERS: string = 'forum/users/';
 export const REGISTER_USER = 'register';
 export const LOGIN_USER = 'login';
 export const USER_LIKES_POST = 'post';
+export const SEARCH_URL = 'http://localhost:8080/forum/users/search?q=';
+export const CHANGE_ROLE_URL = 'http://localhost:8080/forum/users/role';

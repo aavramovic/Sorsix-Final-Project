@@ -30,7 +30,7 @@ import {RegisterScreenComponent} from './Components/Views/register-screen/regist
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-select.component';
 import {AdminComponent} from './Components/Views/admin/admin.component';
-import {NewCourseComponent} from './Components/Views/new-course/new-course.component';
+import {NewCourseComponent} from './Components/AtomicComponents/new-course/new-course.component';
 import {MatDialogModule} from '@angular/material';
 import {SearchUserComponent} from './Components/Views/admin/admin-panel/search-user/search-user.component';
 import {UserDetailsComponent} from './Components/Views/user-details/user-info/user-details.component';
