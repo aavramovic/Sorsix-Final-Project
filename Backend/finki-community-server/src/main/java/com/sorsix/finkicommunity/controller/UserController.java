@@ -83,14 +83,26 @@ public class UserController {
 
     @PostMapping("/follow")
     public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
-        Optional<?> result = userService.addNewFollowing(newFollowingRequest);
-        return ResponseEntity.ok(newFollowingRequest);
+        return userService
+                .addNewFollowing(newFollowingRequest)
+                .map(
+                        res -> ResponseEntity.status(HttpStatus.CREATED).body(newFollowingRequest)
+                )
+                .orElseGet(
+                        ()-> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+                );
     }
 
     @PostMapping("/likes")
     public ResponseEntity<NewPostLikeRequest> newPostLike(@RequestBody @Valid NewPostLikeRequest newPostLikeRequest){
-        Optional<NewPostLikeRequest> result = userService.newPostLike(newPostLikeRequest);
-        return ResponseEntity.ok(newPostLikeRequest);
+        return userService
+                .newPostLike(newPostLikeRequest)
+                .map(
+                        res -> ResponseEntity.status(HttpStatus.CREATED).body(newPostLikeRequest)
+                )
+                .orElseGet(
+                        ()-> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+                );
     }
 
     @PostMapping("/role")

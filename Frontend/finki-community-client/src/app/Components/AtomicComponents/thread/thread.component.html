@@ -36,8 +36,7 @@
     </div>
 
     <div *ngIf="isLoggedIn">
-        <button class="float-right font-weight-light mr-1 btn btn-light" [class.liked]="false" (click)="likes()">Like
-        </button>
+        <button class="float-right font-weight-light mr-1 btn" [class.btn-primary]="thread.isLiked" [class.btn-light]="!thread.isLiked" (click)="likes(thread)">{{thread.isLiked ? 'LIKED' : 'LIKE'}}</button>
     </div>
 
     <div *ngIf="thread.numberOfLikes>=0" class="float-right mr-1 mt-2">

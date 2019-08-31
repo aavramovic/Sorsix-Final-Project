@@ -1,7 +1,3 @@
-import {Thread} from '../Classes/Thread';
-import {IUser} from './IUser';
-import {Authorization} from '../Enumeration/Authorization';
-
 export interface IThread {
     id: number;
     courseName: string;
@@ -9,14 +5,12 @@ export interface IThread {
     noOfLikes: number;
     noOfComments: number;
     content: string;
-    imageUrl: string;
+    title: string;
 
     username: string;
     sex: string;
     role: string;
     isLiked: boolean;
 
-    title?: string;
     replies?: IThread[];
-    usersLiked?: IUser[];
 }

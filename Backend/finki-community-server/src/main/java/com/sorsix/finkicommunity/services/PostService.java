@@ -68,17 +68,6 @@ public class PostService {
         ClickedPostResponse p = new ClickedPostResponse();
         p.setPostResponse(createPostResponseObject(post, postsLiked));
 
-//        ClickedPostResponse clickedPostResponse =
-//                postRepository
-//                .findByPostId(id)
-//                .map(
-//                        post -> {
-//                             ClickedPostResponse p = new ClickedPostResponse();
-//                             p.setPostResponse(createPostResponseObject(post, username));
-//                        }
-//                );
-
-
         Set<SimplePostResponse> simplePostResponses = convertFromPostToSimplePostResponseWithSet(post.getReplies(), username);
 
         p.setReplies(simplePostResponses);
