@@ -41,10 +41,12 @@ export class NewCourseComponent implements OnInit {
 
 
     onSubmit() {
-        // (<Map<string, string>> this.postCourseForm.get('programs').value).forEach((key, value) => value ? console.log(key) : '');
-        // this.programs.forEach(item => console.log((<FormGroup> this.postCourseForm.get('programs')).get(item).value));
         // console.log(this.postCourseForm.get('programs').value);
 
         this.courseService.postCourse(this.postCourseForm);
+    }
+
+    close() {
+        this.dialogRef.close();
     }
 }

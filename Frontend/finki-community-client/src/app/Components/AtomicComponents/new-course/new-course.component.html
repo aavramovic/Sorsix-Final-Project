@@ -1,5 +1,11 @@
 <div class="container-fluid">
     <form *ngIf="postCourseForm" [formGroup]="postCourseForm" (ngSubmit)="onSubmit()">
+        <button type="button" mat-icon-button matSuffix (click)="close()" class="right">
+            <i class="material-icons">
+                clear
+            </i>
+        </button>
+        <mat-card-title class="mb-1 mt-1">New course</mat-card-title>
         <div class="row">
             <mat-form-field class="col-sm-8">
                 <label>
@@ -56,11 +62,9 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div>
-            <input type="submit" class="btn btn-outline-dark mt-4" [disabled]="postCourseForm.invalid">
-        </div>
-        <div>
-            <input type="reset" class="btn btn-outline-dark mt-4" [disabled]="postCourseForm.invalid">
+        <div class="row">
+            <input type="submit" class="btn btn-outline-dark w-100 m-4"
+                   [disabled]="postCourseForm.invalid">
         </div>
     </form>
 </div>

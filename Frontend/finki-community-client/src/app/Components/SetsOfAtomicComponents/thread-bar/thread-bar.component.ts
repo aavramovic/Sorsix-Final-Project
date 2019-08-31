@@ -6,6 +6,9 @@ import {Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {NavigationEnd, Router} from '@angular/router';
 import {UrlService} from '../../../services/url.service';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import {NewCourseComponent} from '../../AtomicComponents/new-course/new-course.component';
+import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
 
 @Component({
     selector: 'app-thread-bar',
@@ -21,7 +24,8 @@ export class ThreadBarComponent implements OnInit {
     constructor(private threadService: ThreadService,
                 private mock: MockClassesCreationService,
                 private router: Router,
-                private url: UrlService) {
+                private url: UrlService,
+                public dialog: MatDialog) {
     }
 
     onValueChange() {
@@ -58,6 +62,16 @@ export class ThreadBarComponent implements OnInit {
         this.threadByCourse$.next();
     }
 
+    openDialog(): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = true;
+        dialogConfig.disableClose = true;
+        dialogConfig.height = '480px';
+        dialogConfig.width = '600px';
+        //We don't return data back from the modal components instead they communicate themselves
+        //Maybe let it return a boolean that tells us
+        this.dialog.open(NewPostComponent, dialogConfig);
 
+    }
 }
 

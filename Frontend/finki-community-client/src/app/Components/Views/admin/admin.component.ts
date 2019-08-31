@@ -31,16 +31,10 @@ export class AdminComponent implements OnInit {
     openDialog(): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = true;
-        dialogConfig.data = {
-            programs: [],
-            years: [],
-            semesters: [],
-            types: []
-        };
+        dialogConfig.disableClose = true;
 
-        //We don't return data back from the modal components instead they communicate themselves
-        //Maybe let it return a boolean that tells us
-        this.dialog.open(NewCourseComponent, dialogConfig.data);
+        //We don't return data back from the modal components instead they communicate by themselves
+        this.dialog.open(NewCourseComponent, dialogConfig);
 
     }
 }

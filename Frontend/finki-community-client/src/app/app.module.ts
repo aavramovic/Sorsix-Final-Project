@@ -39,6 +39,7 @@ import {UserPostsLikedComponent} from './Components/Views/user-details/user-post
 import {UserFollowingsComponent} from './Components/Views/user-details/user-followings/user-followings.component';
 import {UserFollowersComponent} from './Components/Views/user-details/user-followers/user-followers.component';
 import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-panel.component';
+import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.component';
 
 @NgModule({
     declarations: [
@@ -63,7 +64,8 @@ import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-pa
         UserFollowingsComponent,
         UserFollowersComponent,
         AdminPanelComponent,
-        SearchUserComponent
+        SearchUserComponent,
+        NewPostComponent
     ],
     imports: [
         BrowserModule,
@@ -90,7 +92,7 @@ import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-pa
     ],
     providers: [MatDatepickerModule],
     bootstrap: [AppComponent],
-    entryComponents: [NewCourseComponent]
+    entryComponents: [NewCourseComponent, NewPostComponent]
 })
 export class AppModule {
 }
