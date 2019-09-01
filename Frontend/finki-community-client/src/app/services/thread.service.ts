@@ -16,6 +16,7 @@ import {PostThread} from '../Models/Classes/PostThread';
 import {IPageResponse} from '../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response';
 import {MatSnackBar} from '@angular/material';
 import {empty} from 'rxjs/internal/Observer';
+import {PostReply} from '../Models/Classes/PostReply';
 
 @Injectable({
     providedIn: 'root'
@@ -121,15 +122,22 @@ export class ThreadService {
     }
 
     postThread(postPostForm: FormGroup) {
-        let threadIdString = postPostForm.get('replyToPostId').value;
-        let postThread: PostThread = new PostThread(
-            postPostForm.get('content').value,
-            postPostForm.get('title').value,
-            postPostForm.get('courseName').value,
-            postPostForm.get('username').value,
-            threadIdString ? parseInt(threadIdString) : null);
+        let content = postPostForm.get('content').value;
+        let title = postPostForm.get('title').value;
+        let username = postPostForm.get('username').value;
+        let courseName = postPostForm.get('courseName') ? postPostForm.get('courseName').value : null;
+        let threadIdString = postPostForm.get('replyToPostId') ? parseInt(postPostForm.get('replyToPostId').value) : null;
+
+        let post;
+        if (threadIdString !== null) {
+            post = new PostReply(content, title, username, threadIdString);
+        } else if (courseName !== null) {
+            post = new PostThread(content, title, username, courseName);
+        } else {
+            console.log('Error with the post');
+        }
         // console.log(postThread);
-        this.http.post(API_URL + POST_THREAD, postThread).subscribe(
+        this.http.post(API_URL + POST_THREAD, post).subscribe(
             response => this.openSnackBar('Thread posted'),
             error => this.openSnackBar('An error has occurred please try again')
         );

@@ -7,38 +7,21 @@ import {Subject} from 'rxjs';
 import {Course} from '../../../Models/Classes/Course';
 import {CourseService} from '../../../services/course.service';
 import {switchMap} from 'rxjs/operators';
-import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
-    selector: 'app-new-post',
-    templateUrl: './new-post.component.html',
-    styleUrls: ['./new-post.component.css']
+    selector: 'app-new-reply',
+    templateUrl: './new-reply.component.html',
+    styleUrls: ['./new-reply.component.css']
 })
-export class NewPostComponent implements OnInit {
+export class NewReplyComponent implements OnInit {
     postPostForm = new FormGroup({
         content: new FormControl('', [Validators.required, Validators.maxLength(300)]),
-        courseName: new FormControl('', Validators.required),
         username: new FormControl('', Validators.required),
         title: new FormControl('', Validators.required),
-    }, [this.courseValidator('courseName')]);
+        replyToPostId: new FormControl('')
+    });
 
-    private courseValidator(value): ValidatorFn {
-        return (group: FormGroup): ValidationErrors => {
-            const val = group.get(value);
-            if (!val) {
-                return;
-            }
-            if (this.courses && !this.courses.includes(val.value)) {
-                val.setErrors({notEquivalent: true});
-            } else {
-                val.setErrors(null);
-            }
-            return;
-        };
-    }
-
-    course$ = new Subject();
-    courses: string[] = [];
 
     constructor(private threadService: ThreadService,
                 public dialogRef: MatDialogRef<ThreadBarComponent>,
@@ -50,19 +33,13 @@ export class NewPostComponent implements OnInit {
 
     ngOnInit() {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
-
-        this.course$.pipe(switchMap(() =>
-            this.courseService.getCourseNames()
-        )).subscribe(courses => this.courses = courses);
-        this.course$.next();
-
-
     }
 
     onSubmit() {
         // console.log(this.postPostForm.get('replyToPostId').value);
         this.threadService.postThread(this.postPostForm);
-        this.route.navigate([`/start${this.postPostForm.get('courseName') ? '/' + this.postPostForm.get('courseName').value : ''}`]).then(r => {});
+        this.route.navigate(['/start']).then(r => {
+        });
         this.dialogRef.close();
     }
 

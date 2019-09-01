@@ -2,12 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {Subject} from 'rxjs';
-import {switchMap, tap} from 'rxjs/operators';
+import {delay, switchMap, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Authorization} from '../../../Models/Enumeration/Authorization';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NewPostComponent} from '../new-post/new-post.component';
+import {NewReplyComponent} from '../new-reply/new-reply.component';
 
 @Component({
     selector: 'app-thread',
@@ -63,7 +64,7 @@ export class ThreadComponent implements OnInit {
         this.threadService.likes(localStorage.getItem('username'), thread);
     }
 
-    openDialog(threadId?: number): void {
+    openDialog(threadId?: number, courseName?: string): void {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.autoFocus = false;
         dialogConfig.disableClose = true;
@@ -72,10 +73,19 @@ export class ThreadComponent implements OnInit {
         dialogConfig.width = '600px';
         dialogConfig.data = {
             postId: threadId,
-            replie$: this.replie$
         };
         // We don't return data back from the modal components instead they communicate themselves
         // Maybe let it return a boolean that tells us
-        this.dialog.open(NewPostComponent, dialogConfig);
+
+        if (threadId) {
+            console.log('Post was a reply');
+            this.dialog.open(NewReplyComponent, dialogConfig);
+
+        }
+        if (courseName) {
+            console.log('Post was a new thread');
+            this.dialog.open(NewPostComponent, dialogConfig);
+        }
+
     }
 }

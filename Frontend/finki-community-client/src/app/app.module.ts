@@ -43,6 +43,7 @@ import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.
 import {NgxPaginationModule} from 'ngx-pagination';
 
 import {OverlayModule} from '@angular/cdk/overlay';
+import {NewReplyComponent} from './Components/AtomicComponents/new-reply/new-reply.component';
 
 @NgModule({
     declarations: [
@@ -69,6 +70,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
         AdminPanelComponent,
         SearchUserComponent,
         NewPostComponent,
+        NewReplyComponent
     ],
     imports: [
         BrowserModule,
@@ -99,7 +101,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     ],
     providers: [MatDatepickerModule],
     bootstrap: [AppComponent],
-    entryComponents: [NewCourseComponent, NewPostComponent]
+    entryComponents: [NewCourseComponent, NewPostComponent, NewReplyComponent]
 })
 export class AppModule {
 }
