@@ -18,6 +18,8 @@ public class SimplePostResponse implements Comparable<SimplePostResponse>{
     public String title;
     public String content;
 
+    public Long repliedTo;
+
     @Override
     public int compareTo(SimplePostResponse o) {
         if(timeOfPost > o.timeOfPost)

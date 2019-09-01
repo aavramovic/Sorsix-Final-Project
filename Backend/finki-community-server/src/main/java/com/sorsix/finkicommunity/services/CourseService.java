@@ -171,6 +171,9 @@ public class CourseService {
         if(user!= null)
             postResponse.isLiked = user.getPostsLiked().contains(post);
 
+        Post repliedTo = post.getRepliedTo();
+        postResponse.repliedTo = repliedTo != null ? repliedTo.getPostId() : null;
+
         return postResponse;
     }
 }

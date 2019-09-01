@@ -324,6 +324,7 @@ public class UserService {
                     .map(
                             user -> {
                                 user.setRole(roleChangeRequest.role);
+                                userRepository.save(user);
                                 return roleChangeRequest;
                             }
                     )

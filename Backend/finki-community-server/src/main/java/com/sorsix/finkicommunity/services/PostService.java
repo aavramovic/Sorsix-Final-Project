@@ -162,6 +162,9 @@ public class PostService {
         postResponse.role = post.getUser().getRole();
         postResponse.isLiked = postsLiked.contains(post);
 
+        Post repliedTo = post.getRepliedTo();
+        postResponse.repliedTo = repliedTo != null ? repliedTo.getPostId() : null;
+
         return postResponse;
     }
 
