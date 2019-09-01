@@ -79,7 +79,8 @@ public class UserService {
                                 userDetailsPost.timeOfPost = post.getTimestamp();
                                 userDetailsPost.courseName = post.getCourse().getCourseName();
                                 userDetailsPost.title = post.getTitle();
-                                userDetailsPost.content = post.getContent().substring(0, 50);
+                                String content = post.getContent();
+                                userDetailsPost.content = post.getContent().substring(0, content.length() > 50 ? 50 : content.length());
 
                                 userDetailsPosts.add(userDetailsPost);
                             }
