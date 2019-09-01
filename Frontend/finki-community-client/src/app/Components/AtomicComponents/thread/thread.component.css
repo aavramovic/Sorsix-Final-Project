@@ -24,3 +24,9 @@
     background-color: rebeccapurple;
     color: white;
 }
+
+.center {
+    vertical-align: center;
+    height: 100%;
+    line-height: 250%;
+}

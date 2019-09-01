@@ -77,9 +77,9 @@ export class ThreadService {
                 Authorization[thread.role],
                 thread.isLiked,
                 thread.sex == 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG',
-                !thread.repliedTo
+                thread.repliedTo
             ));
-            console.log(thread.repliedTo);
+            // console.log(thread.repliedTo);
         });
         return tempThreads;
     }

@@ -39,44 +39,45 @@
     <hr>
 
     <!--BOTTOM PART START-->
-    <div *ngIf="isLoggedIn">
-        <button class="float-right font-weight-light mr-1 btn"
-                [class.like]="thread.isLiked"
-                [class.btn-outline-dark]="!thread.isLiked" (click)="likes(thread)">
-
-            <i *ngIf="!thread.isLiked" class="material-icons btn p-0 pr-2">
-                thumb_up
-            </i>
-            {{thread.isLiked ? 'LIKED' : 'LIKE'}}
-
-
-        </button>
-    </div>
-
-    <div *ngIf="thread.numberOfLikes>=0" class="float-right mr-1 mt-2">
-        ▲{{thread.numberOfLikes}}
-    </div>
-    <div>
-        Number of comments:
-        {{thread.numberOfComments}}
-        <button *ngIf="isLoggedIn && thread.isThread" class="btn btn-outline-dark"
-                (click)="openDialog(thread.threadId)">
-            Leave a comment
+    <div class="row">
+        <div *ngIf="isLoggedIn && !thread.repliedTo" class="col-sm-5 ml-1 mb-1 mr-auto">
+            {{thread.numberOfComments}}
             <i class="material-icons btn p-0">
                 mode_comment
             </i>
-        </button>
+            <button class="btn btn-outline-dark"
+                    (click)="openDialog(thread.threadId)">
+                Leave a comment
+            </button>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="col-sm-5 mr-1 ml-auto text-right">
+            <!--LIKE BUTTON-->
+            <button class="float-right font-weight-light mr-1 btn"
+                    [class.like]="thread.isLiked"
+                    [class.btn-outline-dark]="!thread.isLiked" (click)="likes(thread)">
+
+                <i *ngIf="!thread.isLiked" class="material-icons btn p-0 pr-2">
+                    thumb_up
+                </i>
+                {{thread.isLiked ? 'LIKED' : 'LIKE'}}
+            </button>
+            <span class="mr-2 center">
+                ▲{{thread.numberOfLikes}}
+            </span>
+        </div>
     </div>
+
 
     <button *ngIf="!isOpen && thread.numberOfComments>0" type="button" class="btn btn-light col mt-2"
             (click)="loadComments()">
         · · · LoadComments · · ·
     </button>
     <section class="mt-3 pt-2">
-        <div class="list-group" *ngIf="isOpen && replies && replies.length>0">
-            <ul>
-                <li *ngFor="let reply of replies" class="list-group-item">
-                    <app-thread [thread]="reply"></app-thread>
+        <div *ngIf="isOpen && replies && replies.length>0">
+            <ul class="list-group list-unstyled">
+                <li *ngFor="let reply of replies">
+                    <app-thread [thread]="reply" class="list-group-item "></app-thread>
                 </li>
             </ul>
         </div>
