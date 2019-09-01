@@ -11,7 +11,7 @@ export class MenuBarComponent implements OnInit {
     isLoggedIn: boolean;
     // token: string;
     role: string;
-
+    username: string;
     constructor(private authService: AuthenticationService) {
 
     }
@@ -20,6 +20,7 @@ export class MenuBarComponent implements OnInit {
         this.isLoggedIn = AuthenticationService.isLoggedIn();
         if (this.isLoggedIn) {
             this.role = localStorage.getItem('role');
+            this.username = localStorage.getItem('username');
         }
         this.authService.isLoggedIn$.subscribe(r => {
             this.isLoggedIn = r;

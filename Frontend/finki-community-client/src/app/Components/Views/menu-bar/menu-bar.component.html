@@ -18,13 +18,16 @@
             <li class="nav-item" *ngIf="isLoggedIn && role==='ADMIN'">
                 <a class="nav-link" routerLink="/admin">Admin</a>
             </li>
+            <li class="nav-item" *ngIf="isLoggedIn">
+                <a class="nav-link" routerLink="/details/{{username}}">{{username}}</a>
+            </li>
             <li class="nav-item" *ngIf="!isLoggedIn">
                 <a class="nav-link" routerLink="/login">Login</a>
             </li>
             <li class="nav-item" *ngIf="!isLoggedIn">
                 <a class="nav-link" routerLink="/register">Register</a>
             </li>
-            <li class="nav-item" *ngIf="isLoggedIn">
+            <li class="nav-item ml-5" *ngIf="isLoggedIn">
                 <button mat-raised-button color="warn" class="mt-1" (click)="logout()">Logout</button>
             </li>
         </ul>

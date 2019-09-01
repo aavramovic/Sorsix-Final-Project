@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
-import {map, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {API_URL, THREAD_LIST, THREAD_REPLIES, USER_LIKES_POST, USERS, POST_THREAD} from '../Models/global-const-url-paths';
 import {IClickedCourse} from '../Models/Interfaces/IClickedCourse';
 import {IGetRepliesByPostId} from '../Models/Interfaces/IGetRepliesByPostId';
@@ -15,6 +15,7 @@ import {CourseService} from './course.service';
 import {PostThread} from '../Models/Classes/PostThread';
 import {IPageResponse} from '../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response';
 import {MatSnackBar} from '@angular/material';
+import {empty} from 'rxjs/internal/Observer';
 
 @Injectable({
     providedIn: 'root'
@@ -24,7 +25,8 @@ export class ThreadService {
     constructor(private http: HttpClient,
                 private courseService: CourseService,
                 private mock: MockClassesCreationService,
-                private _snackBar: MatSnackBar) {
+                private _snackBar: MatSnackBar
+    ) {
     }
 
     getTopNPosts(numberOfPosts: number): Observable<Thread[]> {
@@ -52,8 +54,15 @@ export class ThreadService {
                         ''))
                 .pipe(map(course => {
                     return this.mapIThreadsToThreads(course.posts);
-                }));
+                }), catchError(this.handleError));
         }
+    }
+
+    // noinspection JSMethodCanBeStatic
+    private handleError(error): Observable<Thread[]> {
+        console.log(error);
+        this.openSnackBar('error');
+        return of([]);
     }
 
     getReplies(postId: number): Observable<Thread[]> {

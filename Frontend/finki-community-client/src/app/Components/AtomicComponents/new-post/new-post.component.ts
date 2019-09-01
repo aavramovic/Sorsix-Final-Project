@@ -62,6 +62,7 @@ export class NewPostComponent implements OnInit {
     onSubmit() {
         // console.log(this.postPostForm.get('replyToPostId').value);
         this.threadService.postThread(this.postPostForm);
+        this.data.replie$.next();
         this.dialogRef.close();
     }
 

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IUserDetailsResponse} from '../models/interfaces/iuser-details-response';
 import {UserDetailsFollow} from '../models/classes/user-details-follow';
 import {NewFollowing} from '../models/classes/new-following';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-user-details',
@@ -18,7 +19,9 @@ export class UserDetailsComponent implements OnInit {
 
     constructor(
         private httpClient: HttpClient,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private _snackBar: MatSnackBar,
+        private router: Router
     ) {
     }
 
@@ -30,6 +33,10 @@ export class UserDetailsComponent implements OnInit {
                 u => {
                     this.user = u;
                     console.log(this.user);
+                }, error => {
+                    this.openSnackBar('No such username');
+                    this.router.navigate(['/']).then(r => {
+                    });
                 }
             );
     }
@@ -56,6 +63,12 @@ export class UserDetailsComponent implements OnInit {
                 this.user.isFollowing = !this.user.isFollowing;
             }
         );
+    }
+
+    openSnackBar(message: string) {
+        this._snackBar.open(message, 'Close', {
+            duration: 3000,
+        });
     }
 
     isLoggedIn(): boolean {

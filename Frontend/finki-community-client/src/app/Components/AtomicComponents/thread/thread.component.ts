@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {Subject} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Authorization} from '../../../Models/Enumeration/Authorization';
@@ -39,9 +39,11 @@ export class ThreadComponent implements OnInit {
             this.role = localStorage.getItem('role');
         }
 
-        this.replie$.pipe(switchMap(() =>
-            this.threadService.getReplies(this.thread.threadId)
-        )).subscribe(replies => this.replies = replies);
+        this.replie$.pipe(tap(console.log),
+            switchMap(() =>
+                this.threadService.getReplies(this.thread.threadId)
+            )).subscribe(replies => this.replies = replies);
+
         this.authService.isLoggedIn$.subscribe(r => {
             this.isLoggedIn = r;
             if (this.isLoggedIn) {
@@ -69,7 +71,8 @@ export class ThreadComponent implements OnInit {
 
         dialogConfig.width = '600px';
         dialogConfig.data = {
-            postId: threadId
+            postId: threadId,
+            replie$: this.replie$
         };
         // We don't return data back from the modal components instead they communicate themselves
         // Maybe let it return a boolean that tells us
