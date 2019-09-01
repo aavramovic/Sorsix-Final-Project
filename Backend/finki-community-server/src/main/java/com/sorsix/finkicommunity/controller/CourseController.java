@@ -38,9 +38,10 @@ public class CourseController {
     @GetMapping("/clicked")
     public ResponseEntity<ClickedCourseResponse> getCourseByCourseName(
             @RequestParam String courseName,
-            @RequestParam(required = false) Long noOfPosts
+            @RequestParam(required = false) Long noOfPosts,
+            @RequestParam(required = false) String username
     ){
-        return courseService.getPostsOfCourseByCourseName(courseName, noOfPosts)
+        return courseService.getPostsOfCourseByCourseName(courseName, noOfPosts, username)
                 .map(ResponseEntity::ok)
                 .orElseGet(()-> ResponseEntity.badRequest().build());
     }

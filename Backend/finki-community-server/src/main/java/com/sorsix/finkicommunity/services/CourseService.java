@@ -2,6 +2,7 @@ package com.sorsix.finkicommunity.services;
 
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
+import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.enums.CourseType;
 import com.sorsix.finkicommunity.domain.enums.Program;
 import com.sorsix.finkicommunity.domain.enums.Semester;
@@ -11,6 +12,7 @@ import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.domain.responses.course.SimpleCourseResponse;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.domain.responses.course.ClickedCourseResponse;
+import com.sorsix.finkicommunity.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,9 +21,13 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     private CourseRepository courseRepository;
+    private UserRepository userRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(
+            CourseRepository courseRepository,
+            UserRepository userRepository) {
         this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
 
     public Optional<List<SimpleCourseResponse>> getCoursesByProgramStudyYearSemesterCourseType(String _program, String _studyYear, String _semester, String _type) {
@@ -55,8 +61,7 @@ public class CourseService {
         return Optional.of(courseResponses);
     }
 
-    public Optional<ClickedCourseResponse> getPostsOfCourseByCourseName(String courseName, Long noOfPosts) {
-        courseRepository.findCourseByCourseName(courseName);
+    public Optional<ClickedCourseResponse> getPostsOfCourseByCourseName(String courseName, Long noOfPosts, String username) {
 
         return courseRepository
                 .findCourseByCourseName(courseName)
@@ -73,11 +78,19 @@ public class CourseService {
                             clickedCourseResponse.courseType = course.getCourseType();
                             clickedCourseResponse.numberOfPosts = course.getNumberOfPosts();
                             clickedCourseResponse.numberOfReplies = course.getNumberOfReplies();
+                            User user = null;
+                            if(username != null) {
+                                user = userRepository
+                                        .findByUsername(username)
+                                        .map(u -> u)
+                                        .orElseGet(null);
+                            }
+
                             if (noOfPosts != null) {
-                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(noOfPosts).collect(Collectors.toList()));
+                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(noOfPosts).collect(Collectors.toList()), user);
                             } else {
                                 // DEFAULT 10
-                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(10).collect(Collectors.toList()));
+                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(10).collect(Collectors.toList()), user);
                             }
                             return Optional.of(clickedCourseResponse);
                         })
@@ -108,6 +121,7 @@ public class CourseService {
         return courseRepository.findAll()
                 .stream()
                 .map(course -> course.getCourseName())
+                .sorted()
                 .collect(Collectors.toList());
     }
 
@@ -131,17 +145,17 @@ public class CourseService {
         return courseResponses;
     }
 
-    private Set<SimplePostResponse> convertFromPostToSimplePostResponse(List<Post> posts) {
+    private Set<SimplePostResponse> convertFromPostToSimplePostResponse(List<Post> posts, User user) {
         Set<SimplePostResponse> postResponses = new TreeSet<>();
 
         for (Post post : posts) {
-            postResponses.add(createSimplePostResponseFromPost(post));
+            postResponses.add(createSimplePostResponseFromPost(post, user));
         }
 
         return postResponses;
     }
 
-    private SimplePostResponse createSimplePostResponseFromPost(Post post) {
+    private SimplePostResponse createSimplePostResponseFromPost(Post post, User user) {
         SimplePostResponse postResponse = new SimplePostResponse();
 
         postResponse.id = post.getPostId();
@@ -152,6 +166,8 @@ public class CourseService {
         postResponse.timeOfPost = post.getTimestamp();
         postResponse.title = post.getTitle();
         postResponse.username = post.getUser().getUsername();
+        if(user!= null)
+            postResponse.isLiked = user.getPostsLiked().contains(post);
 
         return postResponse;
     }

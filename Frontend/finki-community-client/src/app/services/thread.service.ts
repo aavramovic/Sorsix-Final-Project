@@ -37,7 +37,7 @@ export class ThreadService {
             return this.getTopNPosts(numberOfPosts);
         } else {
 
-            return this.http.get<IClickedCourse>(API_URL + 'forum/courses/clicked?courseName=' + courseName + '&noOfPosts=' + numberOfPosts)
+            return this.http.get<IClickedCourse>(API_URL + 'forum/courses/clicked?courseName=' + courseName + '&noOfPosts=' + numberOfPosts + '&username=' + localStorage.getItem('username'))
                 .pipe(map(course => {
                     return this.mapIThreadsToThreads(course.posts);
                 }));

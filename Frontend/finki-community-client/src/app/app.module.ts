@@ -40,6 +40,8 @@ import {UserFollowingsComponent} from './Components/Views/user-details/user-foll
 import {UserFollowersComponent} from './Components/Views/user-details/user-followers/user-followers.component';
 import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-panel.component';
 import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.component';
+import { PaginationComponent } from './Components/AtomicComponents/pagination/pagination.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -65,7 +67,8 @@ import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.
         UserFollowersComponent,
         AdminPanelComponent,
         SearchUserComponent,
-        NewPostComponent
+        NewPostComponent,
+        PaginationComponent
     ],
     imports: [
         BrowserModule,
@@ -88,7 +91,8 @@ import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.
         MatDialogModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatCardModule
+        MatCardModule,
+        NgxPaginationModule
     ],
     providers: [MatDatepickerModule],
     bootstrap: [AppComponent],

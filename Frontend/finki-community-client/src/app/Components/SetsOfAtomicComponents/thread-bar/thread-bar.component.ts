@@ -1,14 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
-import {MockClassesCreationService} from '../../../services/mock-classes-creation.service';
 import {Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {NavigationEnd, Router} from '@angular/router';
 import {UrlService} from '../../../services/url.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
-import {MatRadioChange} from '@angular/material/radio';
 
 @Component({
     selector: 'app-thread-bar',
@@ -23,7 +21,6 @@ export class ThreadBarComponent implements OnInit {
     threadByCourse$ = new Subject();
 
     constructor(private threadService: ThreadService,
-                private mock: MockClassesCreationService,
                 private router: Router,
                 private url: UrlService,
                 public dialog: MatDialog) {
