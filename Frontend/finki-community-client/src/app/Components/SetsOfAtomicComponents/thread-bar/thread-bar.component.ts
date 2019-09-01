@@ -65,7 +65,7 @@ export class ThreadBarComponent implements OnInit {
 
     openDialog(threadId?: string): void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
+        dialogConfig.autoFocus = false;
         dialogConfig.disableClose = true;
         dialogConfig.height = 'max-content';
 
