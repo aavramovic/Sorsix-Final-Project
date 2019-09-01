@@ -9,6 +9,7 @@ import {UrlService} from '../../../services/url.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
 import {MatRadioChange} from '@angular/material/radio';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
     selector: 'app-thread-bar',
@@ -22,11 +23,14 @@ export class ThreadBarComponent implements OnInit {
     numberOfPostsByPage = '10'; // TODO napravi komponenta ili delche za biranje na ova
     threadByCourse$ = new Subject();
 
+    isLoggedIn: boolean;
+
     constructor(private threadService: ThreadService,
                 private mock: MockClassesCreationService,
                 private router: Router,
                 private url: UrlService,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private authService: AuthenticationService) {
     }
 
     onValueChange() {
@@ -61,6 +65,12 @@ export class ThreadBarComponent implements OnInit {
             .subscribe(threads => this.threads = threads);
 
         this.threadByCourse$.next();
+
+        this.isLoggedIn = AuthenticationService.isLoggedIn();
+
+        this.authService.isLoggedIn$.subscribe(r => {
+            this.isLoggedIn = r;
+        });
     }
 
     openDialog(threadId?: string): void {
