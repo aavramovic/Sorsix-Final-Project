@@ -5,6 +5,7 @@ import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
+import com.sorsix.finkicommunity.domain.responses.exceptions.PostNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.post.PageResponse;
 import com.sorsix.finkicommunity.repository.CourseRepository;
@@ -12,6 +13,7 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -86,47 +88,49 @@ public class PostService {
     }
 
 
-    public Post createNewPost(NewPostRequest newPostRequest) throws CourseNotFoundException, UserNotFoundException, Exception {
-        Optional<Course> course = courseRepository.findCourseByCourseName(newPostRequest.courseName);
+    public Post createNewPost(NewPostRequest newPostRequest) throws CourseNotFoundException, UserNotFoundException, PostNotFoundException {
+        User user = userRepository
+                .findByUsername(newPostRequest.username)
+                .orElseThrow(
+                        ()->new UserNotFoundException("No user with username " + newPostRequest.username)
+                );
 
-        Optional<User> user = userRepository.findByUsername(newPostRequest.username);
+        Course course = null;
+        if(newPostRequest.courseName != null)
+           course = courseRepository
+                   .findCourseByCourseName(newPostRequest.courseName)
+                   .orElseThrow(
+                           () -> new CourseNotFoundException("No course found with name " + newPostRequest.courseName)
+                   );
 
-        Post newPost = new Post();
-        newPost.setContent(newPostRequest.content);
-        newPost.setTitle(newPostRequest.title);
 
         Post repliedTo = null;
         if(newPostRequest.replyToPostId != null){
-            repliedTo = postRepository.findByPostId(newPostRequest.replyToPostId).get();
+            repliedTo = postRepository
+                    .findByPostId(newPostRequest.replyToPostId)
+                    .orElseThrow(
+                            () -> new PostNotFoundException("No post found with id " + newPostRequest.replyToPostId)
+                    );
         }
 
-        course.map(
-                c -> {
-                    newPost.setCourse(c);
-                    return c;
-                }
-        ).orElseThrow(
-                ()->new CourseNotFoundException("No course found with name " + newPostRequest.courseName)
-        );
 
-        user.map(
-                u -> {
-                    newPost.setUser(u);
-                    return u;
-                }
-        ).orElseThrow(
-                ()-> new UserNotFoundException("No user with username " + newPostRequest.username)
-        );
+        Post newPost = null;
 
-        newPost.setRepliedTo(repliedTo);
-        newPost.setTimestamp(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
-        newPost.setNumberOfLikes(0);
-        newPost.setNumberOfReplies(0);
-        try{
-            postRepository.save(newPost);
-        }catch(Exception ex){
-            throw ex;
+        if(course == null)
+            newPost = new Post(newPostRequest.title, newPostRequest.content, user, repliedTo);
+        else
+            newPost = new Post(newPostRequest.title, newPostRequest.content, user, course);
+
+
+
+        userRepository.save(user);
+        if(course != null)
+            courseRepository.save(course);
+        else {
+            courseRepository.save(repliedTo.getCourse());
+            postRepository.save(repliedTo);
         }
+        postRepository.save(newPost);
 
         return newPost;
     }

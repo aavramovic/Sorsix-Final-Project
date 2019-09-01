@@ -1,11 +1,10 @@
 package com.sorsix.finkicommunity.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.*;
 
 @Entity
 @Table(name="posts")
@@ -32,8 +31,11 @@ public class Post implements Comparable<Post>{
     private int numberOfReplies = 0;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "postsLiked", fetch = FetchType.EAGER)
-    private Set<User> usersLiked;
+    @ManyToMany(
+            mappedBy = "postsLiked",
+            fetch = FetchType.EAGER
+    )
+    private Set<User> usersLiked = new HashSet<>();
 
     @JsonIgnore
     @ManyToOne(
@@ -50,7 +52,7 @@ public class Post implements Comparable<Post>{
             mappedBy = "repliedTo",
             fetch = FetchType.EAGER
     )
-    private Set<Post> replies = new HashSet<>();
+    private Set<Post> replies = new TreeSet<>();
 
     @JsonIgnore
     @ManyToOne(
@@ -70,10 +72,10 @@ public class Post implements Comparable<Post>{
     public Post(){}
 
     // IF POST IS NEW
-    public Post(String title, String content, long timestamp, User user, Course course) {
+    public Post(String title, String content, User user, Course course) {
         this.title = title;
         this.content = content;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
         this.user = user;
         this.repliedTo = null;
         this.course = course;
@@ -83,17 +85,17 @@ public class Post implements Comparable<Post>{
     }
 
     // IF POST IS A REPLY
-    public Post(String title, String content, long timestamp, User user, Post repliedTo) {
+    public Post(String title, String content, User user, Post repliedTo) {
         this.title = title;
         this.content = content;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
         this.user = user;
         this.repliedTo = repliedTo;
         this.course = repliedTo.getCourse();
 
         this.repliedTo.incrementNumberOfReplies();
         this.user.incrementNumberOfPosts();
-        this.course.incrementNumberOfReplies();
+        this.repliedTo.getCourse().incrementNumberOfReplies();
     }
 
 
@@ -133,9 +135,7 @@ public class Post implements Comparable<Post>{
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public void setUser(User user) { this.user = user; }
 
     public long getTimestamp() {
         return timestamp;

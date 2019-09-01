@@ -9,8 +9,8 @@ public class NewPostRequest {
     @NotNull @NotEmpty
     public String content;
     @NotNull @NotEmpty
-    public String courseName;
-    @NotNull @NotEmpty
     public String username;
+
+    public String courseName = null;
     public Long replyToPostId = null;
 }

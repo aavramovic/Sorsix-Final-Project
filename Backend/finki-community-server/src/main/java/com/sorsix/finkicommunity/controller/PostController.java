@@ -3,6 +3,7 @@ package com.sorsix.finkicommunity.controller;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
+import com.sorsix.finkicommunity.domain.responses.exceptions.PostNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.PageResponse;
@@ -24,7 +25,6 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
-
 
     /*
     GET METHODS
@@ -70,13 +70,11 @@ public class PostController {
         try{
             return ResponseEntity.status(HttpStatus.CREATED).body(postService.createNewPost(newPostRequest));
         }
-        catch(CourseNotFoundException | UserNotFoundException e){
+        catch(CourseNotFoundException | UserNotFoundException | PostNotFoundException e){
             return ResponseEntity.badRequest().build();
         }
-        catch(Exception e){
-            return ResponseEntity.badRequest().build();
-        }
-
-
+//        catch(Exception e){
+//            return ResponseEntity.badRequest().build();
+//        }
     }
 }

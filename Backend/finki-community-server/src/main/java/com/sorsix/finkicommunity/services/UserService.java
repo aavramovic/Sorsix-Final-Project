@@ -99,7 +99,8 @@ public class UserService {
                                 userDetailsPostLiked.timeOfPost = postLiked.getTimestamp();
                                 userDetailsPostLiked.courseName = postLiked.getCourse().getCourseName();
                                 userDetailsPostLiked.title = postLiked.getTitle();
-                                userDetailsPostLiked.content = postLiked.getContent().substring(0, 50);
+                                String content = postLiked.getContent();
+                                userDetailsPostLiked.content = content.substring(0, content.length() > 50 ? 50 : content.length());
 
                                 userDetailsPostsLiked.add(userDetailsPostLiked);
                             }
