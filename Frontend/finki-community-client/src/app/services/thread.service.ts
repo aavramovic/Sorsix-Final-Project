@@ -13,7 +13,7 @@ import {Authorization} from '../Models/Enumeration/Authorization';
 import {FormGroup} from '@angular/forms';
 import {CourseService} from './course.service';
 import {PostThread} from '../Models/Classes/PostThread';
-import {IPageResponse} from "../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response";
+import {IPageResponse} from '../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +43,12 @@ export class ThreadService {
             return this.getTopNPosts(numberOfPosts);
         } else {
 
-            return this.http.get<IClickedCourse>(API_URL + 'forum/courses/clicked?courseName=' + courseName + '&noOfPosts=' + numberOfPosts + '&username=' + localStorage.getItem('username'))
+            return this.http.get<IClickedCourse>(API_URL +
+                'forum/courses/clicked?courseName=' + courseName +
+                '&noOfPosts=' + numberOfPosts + (
+                    localStorage.getItem('username') ?
+                        '&username=' + localStorage.getItem('username') :
+                        ''))
                 .pipe(map(course => {
                     return this.mapIThreadsToThreads(course.posts);
                 }));
@@ -111,7 +116,7 @@ export class ThreadService {
             postPostForm.get('courseName').value,
             postPostForm.get('username').value,
             threadIdString ? parseInt(threadIdString) : null);
-        console.log(postThread);
+        // console.log(postThread);
         this.http.post(API_URL + POST_THREAD, postThread).subscribe(
             response => console.log(response),
             error => console.log('ERROR: ' + error.message)
