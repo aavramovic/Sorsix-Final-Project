@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
@@ -20,7 +20,22 @@ export class NewPostComponent implements OnInit {
         username: new FormControl('', Validators.required),
         title: new FormControl('', Validators.required),
         replyToPostId: new FormControl('')
-    });
+    }, [this.courseValidator('courseName')]);
+
+    private courseValidator(value): ValidatorFn {
+        return (group: FormGroup): ValidationErrors => {
+            const val = group.get(value);
+            if (!val) {
+                return;
+            }
+            if (this.courses && !this.courses.includes(val.value)) {
+                val.setErrors({notEquivalent: true});
+            } else {
+                val.setErrors(null);
+            }
+            return;
+        };
+    }
 
     course$ = new Subject();
     courses: string[] = [];
