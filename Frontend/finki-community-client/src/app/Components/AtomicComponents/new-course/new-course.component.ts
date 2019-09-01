@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EnumService} from '../../../services/enum.service';
-import {MAT_DIALOG_DATA, MatCheckboxChange, MatDialogRef} from '@angular/material';
-import {AdminComponent, NewCourseDialogData} from '../../Views/admin/admin.component';
-import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDialogRef} from '@angular/material';
+import {AdminComponent} from '../../Views/admin/admin.component';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CourseService} from '../../../services/course.service';
 
 @Component({
@@ -44,6 +44,7 @@ export class NewCourseComponent implements OnInit {
         // console.log(this.postCourseForm.get('programs').value);
 
         this.courseService.postCourse(this.postCourseForm);
+        this.dialogRef.close();
     }
 
     close() {

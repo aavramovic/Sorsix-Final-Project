@@ -3,17 +3,15 @@ package com.sorsix.finkicommunity.services;
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
-import com.sorsix.finkicommunity.domain.requests.NewCourseRequest;
-import com.sorsix.finkicommunity.domain.requests.NewPostLikeRequest;
 import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
+import com.sorsix.finkicommunity.domain.responses.post.PageResponse;
 import com.sorsix.finkicommunity.repository.CourseRepository;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
-import net.bytebuddy.build.Plugin;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,18 +30,30 @@ public class PostService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Post> getAllPosts() {
-        return postRepository.findAllByOrderByTimestampDescTitleAsc();
+    public PageResponse getAllPosts(Integer noOfPosts, Integer pageNumber, String username) {
+        List<Post> posts = postRepository.findPostsByRepliedToIsNullOrderByTimestampDescTitleAsc();
+        PageResponse pageResponse = new PageResponse();
+
+        pageResponse.count = posts.size();
+        pageResponse.data = convertFromPostToSimplePostResponse(posts, username);
+
+        return pageResponse;
     }
 
     public List<SimplePostResponse> getTopPosts(Integer noOfPosts, String username) {
-        if (noOfPosts == null || noOfPosts.intValue() == 10) {
-            return getTop10Posts(username);
-        } else if (noOfPosts.intValue() == 25) {
-            return getTop25Posts(username);
-        } else{
-            return getTop50Posts(username);
-        }
+//        if (noOfPosts == null || noOfPosts.intValue() == 10) {
+//            return getTop10Posts(username);
+//        } else if (noOfPosts.intValue() == 25) {
+//            return getTop25Posts(username);
+//        } else {
+//            return getTop50Posts(username);
+//        }
+        return getAllPosts(username);
+    }
+
+    public List<SimplePostResponse> getAllPosts(String username){
+        List<Post> posts = postRepository.findPostsByRepliedToIsNullOrderByTimestampDescTitleAsc();
+        return convertFromPostToSimplePostResponse(posts, username);
     }
 
     private List<SimplePostResponse> getTop10Posts(String username) {

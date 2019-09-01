@@ -161,12 +161,13 @@ public class DbInit implements CommandLineRunner {
         Post post58 = new Post("Title58","Post58 - " + content, System.currentTimeMillis(), moderator, course16);
         Post post59 = new Post("Title59","Post59 - " + content, System.currentTimeMillis(), moderator, course16);
         Post post60 = new Post("Title60","Post60 - " + content, System.currentTimeMillis(), moderator, course16);
+        Post post61 = new Post("Title61","Post61 - " + content, System.currentTimeMillis(), fisnik, course16);
 
         List<Post> posts = Arrays.asList(post0, post1, post2, post3, post4, post5, post6, post7, post8, post9, post10,
                 post11, post12, post13, post14, post15, post16, post17, post18, post19, post20, post21, post22, post23,
                 post24, post25, post26, post27, post28, post29, post30, post31, post32, post33, post34, post35, post36,
                 post37, post38, post39, post40, post41, post42, post43, post44, post45, post46, post47, post48, post49,
-                post50, post51, post52, post53, post54, post55, post56, post57, post58, post59, post60);
+                post50, post51, post52, post53, post54, post55, post56, post57, post58, post59, post60, post61);
 
         postRepository.saveAll(posts);
 

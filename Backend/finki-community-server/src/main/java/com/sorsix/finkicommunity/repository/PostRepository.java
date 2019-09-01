@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAllByOrderByTimestampDescTitleAsc();
+    List<Post> findPostsByRepliedToIsNullOrderByTimestampDescTitleAsc();
     List<Post> findTop10ByRepliedToIsNullOrderByTimestampDescTitleAsc();
     List<Post> findTop25ByRepliedToIsNullOrderByTimestampDescTitleAsc();
     List<Post> findTop50ByRepliedToIsNullOrderByTimestampDescTitleAsc();

@@ -13,6 +13,7 @@ import {Authorization} from '../Models/Enumeration/Authorization';
 import {FormGroup} from '@angular/forms';
 import {CourseService} from './course.service';
 import {PostThread} from '../Models/Classes/PostThread';
+import {IPageResponse} from "../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response";
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,11 @@ export class ThreadService {
             map(threads => this.mapIThreadsToThreads(threads)),
             tap(threads => console.log(threads))
         );
+    }
+
+    getThreads(): Observable<IPageResponse> {
+        return this.http
+            .get<IPageResponse>('http://localhost:8080/forum/posts?username=' + localStorage.getItem('username'));
     }
 
 

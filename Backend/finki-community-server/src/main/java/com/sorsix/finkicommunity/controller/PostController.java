@@ -5,6 +5,7 @@ import com.sorsix.finkicommunity.domain.requests.NewPostRequest;
 import com.sorsix.finkicommunity.domain.responses.exceptions.CourseNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.exceptions.UserNotFoundException;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
+import com.sorsix.finkicommunity.domain.responses.post.PageResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
 import com.sorsix.finkicommunity.services.PostService;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,11 @@ public class PostController {
     GET METHODS
      */
     @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts(){
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<PageResponse> getAllPosts(
+            @RequestParam(required = false) Integer noOfPosts,
+            @RequestParam(required = false) Integer pageNumber,
+            @RequestParam String username){
+        return ResponseEntity.ok(postService.getAllPosts(noOfPosts, pageNumber, username));
     }
 
     @GetMapping("/top")
@@ -47,6 +51,15 @@ public class PostController {
             @RequestParam String username
     ){
         return ResponseEntity.ok(postService.getClickedPost(postId, username));
+    }
+
+    @GetMapping("mock")
+    public ResponseEntity<PageResponse> getPageResponse(
+            @RequestParam Integer noOfPosts,
+            @RequestParam Integer pageNumber,
+            @RequestParam String username
+    ){
+        return ResponseEntity.ok(postService.getAllPosts(noOfPosts, pageNumber, username));
     }
 
     /*

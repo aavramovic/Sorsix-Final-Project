@@ -3,7 +3,6 @@ package com.sorsix.finkicommunity.domain.responses.post;
 import com.sorsix.finkicommunity.domain.enums.Role;
 
 public class SimplePostResponse implements Comparable<SimplePostResponse>{
-
     public long id;
     public long timeOfPost;
     public int noOfLikes;

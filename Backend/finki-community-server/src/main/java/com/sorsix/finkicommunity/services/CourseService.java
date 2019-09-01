@@ -87,10 +87,12 @@ public class CourseService {
                             }
 
                             if (noOfPosts != null) {
-                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(noOfPosts).collect(Collectors.toList()), user);
+                                //clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(noOfPosts).collect(Collectors.toList()), user);
+                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().collect(Collectors.toList()), user);
                             } else {
                                 // DEFAULT 10
-                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(10).collect(Collectors.toList()), user);
+                                // clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().limit(10).collect(Collectors.toList()), user);
+                                clickedCourseResponse.posts = convertFromPostToSimplePostResponse(course.getPosts().stream().collect(Collectors.toList()), user);
                             }
                             return Optional.of(clickedCourseResponse);
                         })

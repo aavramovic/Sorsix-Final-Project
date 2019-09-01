@@ -2,11 +2,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {Subject} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
 import {NavigationEnd, Router} from '@angular/router';
 import {UrlService} from '../../../services/url.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-thread-bar',
@@ -14,16 +15,19 @@ import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.compone
     styleUrls: ['./thread-bar.component.css']
 })
 export class ThreadBarComponent implements OnInit {
-    @Input() checked = true;
     threads: Thread[];
+    count: number;
     selectedCourse = '';
     numberOfPostsByPage = '10'; // TODO napravi komponenta ili delche za biranje na ova
     threadByCourse$ = new Subject();
 
+    isLoggedIn: boolean;
+
     constructor(private threadService: ThreadService,
                 private router: Router,
                 private url: UrlService,
-                public dialog: MatDialog) {
+                public dialog: MatDialog,
+                private authService: AuthenticationService) {
     }
 
     onValueChange() {
@@ -58,11 +62,17 @@ export class ThreadBarComponent implements OnInit {
             .subscribe(threads => this.threads = threads);
 
         this.threadByCourse$.next();
+
+        this.isLoggedIn = AuthenticationService.isLoggedIn();
+
+        this.authService.isLoggedIn$.subscribe(r => {
+            this.isLoggedIn = r;
+        });
     }
 
     openDialog(threadId?: string): void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
+        dialogConfig.autoFocus = false;
         dialogConfig.disableClose = true;
         dialogConfig.height = 'max-content';
 
