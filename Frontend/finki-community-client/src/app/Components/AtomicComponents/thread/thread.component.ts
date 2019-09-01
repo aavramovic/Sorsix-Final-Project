@@ -6,6 +6,8 @@ import {switchMap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Authorization} from '../../../Models/Enumeration/Authorization';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import {NewPostComponent} from '../new-post/new-post.component';
 
 @Component({
     selector: 'app-thread',
@@ -26,6 +28,7 @@ export class ThreadComponent implements OnInit {
     constructor(
         private threadService: ThreadService,
         private router: Router,
+        public dialog: MatDialog,
         private authService: AuthenticationService) {
 
     }
@@ -50,11 +53,26 @@ export class ThreadComponent implements OnInit {
 
     loadComments() {
         this.isOpen = true;
-        console.log(this.thread.threadId);
+        // console.log(this.thread.threadId);
         this.replie$.next();
     }
 
     likes(thread: Thread) {
         this.threadService.likes(localStorage.getItem('username'), thread);
+    }
+
+    openDialog(threadId?: number): void {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.autoFocus = false;
+        dialogConfig.disableClose = true;
+        dialogConfig.height = 'max-content';
+
+        dialogConfig.width = '600px';
+        dialogConfig.data = {
+            postId: threadId
+        };
+        // We don't return data back from the modal components instead they communicate themselves
+        // Maybe let it return a boolean that tells us
+        this.dialog.open(NewPostComponent, dialogConfig);
     }
 }

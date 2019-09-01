@@ -43,11 +43,13 @@ export class NewCourseComponent implements OnInit {
     onSubmit() {
         // console.log(this.postCourseForm.get('programs').value);
 
-        this.courseService.postCourse(this.postCourseForm);
+        let message = this.courseService.postCourse(this.postCourseForm);
         this.dialogRef.close();
     }
 
     close() {
         this.dialogRef.close();
     }
+
+
 }

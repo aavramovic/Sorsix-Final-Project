@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {EnumService} from './enum.service';
 import {empty} from 'rxjs/internal/Observer';
+import {MatSnackBar} from '@angular/material';
 
 
 @Injectable({
@@ -24,8 +25,11 @@ import {empty} from 'rxjs/internal/Observer';
 export class CourseService {
     programs: string[] = EnumService.getPrograms();
 
-    constructor(private http: HttpClient,
-                private router: Router) {
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private _snackBar: MatSnackBar
+    ) {
     }
 
 
@@ -41,7 +45,7 @@ export class CourseService {
         let array = [programString, yearString, semesterString, typeString];
         array = array.filter(item => item.length != 0);
         queryString += array.join('&');
-        console.log(queryString);
+        // console.log(queryString);
         getKeyByValue(yearOfStudy);
 
 
@@ -88,18 +92,21 @@ export class CourseService {
             getKeyByValue(<string> formGroup.get('year').value),
             formGroup.get('code').value
         );
-        console.log(postRequest);
         this.http.post<IPostCourse>(API_URL + POST_COURSE, postRequest)/*.pipe(
             tap(console.log),
             catchError(this.handleError('addCourse', postRequest))
-        )*/.subscribe(() => alert('Course created'),
+        )*/.subscribe(() => this.openSnackBar('Course created'),
             error => {
-                alert('There has been an error!\n');
-                console.log(error.message);
+                this.openSnackBar('An error has occurred please refresh the page and try again');
                 return of(empty);
             });
     }
 
+    openSnackBar(message: string) {
+        this._snackBar.open(message, 'Close', {
+            duration: 3000,
+        });
+    }
 
     private handleError(addCourse: string, postRequest: PostCourse) {
         return function(p1: any, p2: Observable<unknown>) {

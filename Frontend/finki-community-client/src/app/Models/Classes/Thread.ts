@@ -17,6 +17,8 @@ export class Thread {
     imageUrl: string;
     comments: Thread[];
 
+    isThread: boolean;
+
 
     constructor(threadId: number,
                 courseName: string,
@@ -30,7 +32,8 @@ export class Thread {
                 role: Authorization,
                 isLiked: boolean,
                 imageUrl: string,
-                ){
+                isThread: boolean
+    ) {
         this.threadId = threadId;
         this.courseName = courseName;
         this.timeOfPost = timeOfPost;
@@ -44,5 +47,6 @@ export class Thread {
         this.isLiked = isLiked;
         this.imageUrl = imageUrl;
         this.comments = [];
+        this.isThread = isThread;
     }
 }

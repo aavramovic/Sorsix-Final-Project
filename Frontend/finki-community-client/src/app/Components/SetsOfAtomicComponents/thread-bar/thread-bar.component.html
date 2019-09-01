@@ -23,12 +23,12 @@
         <mat-spinner class="d-flex m-auto mt-xl-5"></mat-spinner>
     </div>
     <div *ngIf="threads">
-        <ul class="list-group">
-            <li *ngIf="threads.length == 0" class="list-group-item-info list-unstyled">
+        <ul class="list-group list-unstyled">
+            <li *ngIf="threads.length == 0" class="list-group-item-info ">
                 No threads for this course yet.
             </li>
-            <li *ngFor="let thread of threads | paginate: {itemsPerPage: numberOfPostsByPage, currentPage: p}" class="list-group-item">
-                <app-thread [thread]="thread"></app-thread>
+            <li *ngFor="let thread of threads | paginate: {itemsPerPage: numberOfPostsByPage, currentPage: p}">
+                <app-thread [thread]="thread" class="list-group-item shadow-sm mb-1"></app-thread>
             </li>
         </ul>
     </div>

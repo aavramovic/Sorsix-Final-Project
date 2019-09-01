@@ -14,6 +14,7 @@ import {FormGroup} from '@angular/forms';
 import {CourseService} from './course.service';
 import {PostThread} from '../Models/Classes/PostThread';
 import {IPageResponse} from '../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response';
+import {MatSnackBar} from '@angular/material';
 
 @Injectable({
     providedIn: 'root'
@@ -22,13 +23,13 @@ export class ThreadService {
 
     constructor(private http: HttpClient,
                 private courseService: CourseService,
-                private mock: MockClassesCreationService) {
+                private mock: MockClassesCreationService,
+                private _snackBar: MatSnackBar) {
     }
 
     getTopNPosts(numberOfPosts: number): Observable<Thread[]> {
         return this.http.get<IThread[]>(API_URL + THREAD_LIST + numberOfPosts + '&username=' + localStorage.getItem('username')).pipe(
-            map(threads => this.mapIThreadsToThreads(threads)),
-            tap(threads => console.log(threads))
+            map(threads => this.mapIThreadsToThreads(threads))
         );
     }
 
@@ -75,8 +76,10 @@ export class ThreadService {
                 thread.sex,
                 Authorization[thread.role],
                 thread.isLiked,
-                thread.sex == 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG'
+                thread.sex == 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG',
+                !thread.repliedTo
             ));
+            console.log(thread.repliedTo);
         });
         return tempThreads;
     }
@@ -118,8 +121,14 @@ export class ThreadService {
             threadIdString ? parseInt(threadIdString) : null);
         // console.log(postThread);
         this.http.post(API_URL + POST_THREAD, postThread).subscribe(
-            response => console.log(response),
-            error => console.log('ERROR: ' + error.message)
+            response => this.openSnackBar('Thread posted'),
+            error => this.openSnackBar('An error has occurred please try again')
         );
+    }
+
+    openSnackBar(message: string) {
+        this._snackBar.open(message, 'Close', {
+            duration: 3000,
+        });
     }
 }
