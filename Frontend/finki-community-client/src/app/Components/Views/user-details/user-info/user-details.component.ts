@@ -72,7 +72,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     isLoggedIn(): boolean {
-        return true;
+        return localStorage.getItem('username') === null ? false : true;
     }
 
     isNotHisOwnProfile() {
