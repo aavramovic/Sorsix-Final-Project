@@ -19,7 +19,9 @@
         </div>
     </div>
     <!--TOP PART END-->
+
     <hr>
+
     <!--MIDDLE PART START-->
     <div class="row">
         <h3 *ngIf="thread.title" class="col">{{thread.title}}</h3>
@@ -29,14 +31,26 @@
         |
         <div class="col-auto font-weight-light mr-1 ml-auto">{{thread.timeOfPost | date:"dd.MM.y"}}</div>
     </div>
-    <!--MIDDLE PART END-->
-    <!--BOTTOM PART START-->
     <div *ngIf="thread && thread.content">
         <p>{{thread.content}}</p>
     </div>
+    <!--MIDDLE PART END-->
 
+    <hr>
+
+    <!--BOTTOM PART START-->
     <div *ngIf="isLoggedIn">
-        <button class="float-right font-weight-light mr-1 btn" [class.btn-primary]="thread.isLiked" [class.btn-light]="!thread.isLiked" (click)="likes(thread)">{{thread.isLiked ? 'LIKED' : 'LIKE'}}</button>
+        <button class="float-right font-weight-light mr-1 btn"
+                [class.like]="thread.isLiked"
+                [class.btn-outline-dark]="!thread.isLiked" (click)="likes(thread)">
+
+            <i *ngIf="!thread.isLiked" class="material-icons btn p-0 pr-2">
+                thumb_up
+            </i>
+            {{thread.isLiked ? 'LIKED' : 'LIKE'}}
+
+
+        </button>
     </div>
 
     <div *ngIf="thread.numberOfLikes>=0" class="float-right mr-1 mt-2">
@@ -45,9 +59,15 @@
     <div>
         Number of comments:
         {{thread.numberOfComments}}
+        <button *ngIf="isLoggedIn && thread.isThread" class="btn btn-outline-dark"
+                (click)="openDialog(thread.threadId)">
+            Leave a comment
+            <i class="material-icons btn p-0">
+                mode_comment
+            </i>
+        </button>
     </div>
 
-    <!-- TODO: ako e premnogu dolgo da se skrati so opcija da se pushti prozorec ili da se extendne-->
     <button *ngIf="!isOpen && thread.numberOfComments>0" type="button" class="btn btn-light col mt-2"
             (click)="loadComments()">
         · · · LoadComments · · ·

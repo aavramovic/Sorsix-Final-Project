@@ -68,4 +68,5 @@ export class NewPostComponent implements OnInit {
     close() {
         this.dialogRef.close();
     }
+
 }

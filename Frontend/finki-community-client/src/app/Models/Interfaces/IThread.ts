@@ -13,4 +13,5 @@ export interface IThread {
     isLiked: boolean;
 
     replies?: IThread[];
+    repliedTo: number
 }

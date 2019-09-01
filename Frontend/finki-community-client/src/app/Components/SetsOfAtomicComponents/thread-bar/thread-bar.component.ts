@@ -18,10 +18,11 @@ export class ThreadBarComponent implements OnInit {
     threads: Thread[];
     count: number;
     selectedCourse = '';
-    numberOfPostsByPage = '10'; // TODO napravi komponenta ili delche za biranje na ova
+    numberOfPostsByPage = '10';
     threadByCourse$ = new Subject();
 
     isLoggedIn: boolean;
+    p: number;
 
     constructor(private threadService: ThreadService,
                 private router: Router,
@@ -83,7 +84,6 @@ export class ThreadBarComponent implements OnInit {
         // We don't return data back from the modal components instead they communicate themselves
         // Maybe let it return a boolean that tells us
         this.dialog.open(NewPostComponent, dialogConfig);
-
     }
 }
 

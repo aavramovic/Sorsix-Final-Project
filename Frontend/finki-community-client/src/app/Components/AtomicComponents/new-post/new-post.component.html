@@ -5,6 +5,7 @@
                 clear
             </i>
         </button>
+        <mat-card-title class="mb-1 mt-1">New thread</mat-card-title>
         <div class="row">
             <mat-form-field class="col-sm-6">
                 <label>
@@ -30,6 +31,7 @@
                     <textarea matInput placeholder="Enter text here..." type="text"
                               formControlName="content"
                               matTextareaAutosize matAutosizeMinRows=10
+                              matAutosizeMaxRows="25"
                     ></textarea>
                 </label>
             </mat-form-field>

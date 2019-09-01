@@ -24,7 +24,7 @@ import {
     MatIconModule,
     MatRadioModule,
     MatSelectModule,
-    MatNativeDateModule, MatCardModule, MatAutocompleteModule
+    MatNativeDateModule, MatCardModule, MatAutocompleteModule, MatSnackBar, MatSnackBarContainer, MatSnackBarModule
 } from '@angular/material';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
@@ -41,6 +41,8 @@ import {UserFollowersComponent} from './Components/Views/user-details/user-follo
 import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-panel.component';
 import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
     declarations: [
@@ -66,7 +68,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
         UserFollowersComponent,
         AdminPanelComponent,
         SearchUserComponent,
-        NewPostComponent
+        NewPostComponent,
     ],
     imports: [
         BrowserModule,
@@ -91,7 +93,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
         MatNativeDateModule,
         MatCardModule,
         NgxPaginationModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        OverlayModule,
+        MatSnackBarModule
     ],
     providers: [MatDatepickerModule],
     bootstrap: [AppComponent],

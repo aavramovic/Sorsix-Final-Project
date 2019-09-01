@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EnumService} from '../../../services/enum.service';
 import {NewCourseComponent} from '../../AtomicComponents/new-course/new-course.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material';
 
 export interface NewCourseDialogData {
     programs: string[];
@@ -22,7 +23,8 @@ export class AdminComponent implements OnInit {
     semester: string;
     type: string;
 
-    constructor(public dialog: MatDialog) {
+    constructor(public dialog: MatDialog,
+                private _snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -30,11 +32,17 @@ export class AdminComponent implements OnInit {
 
     openDialog(): void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.autoFocus = true;
+        dialogConfig.autoFocus = false;
         dialogConfig.disableClose = true;
 
         //We don't return data back from the modal components instead they communicate by themselves
         this.dialog.open(NewCourseComponent, dialogConfig);
 
+    }
+
+    openSnackBar(message: string, action: string) {
+        this._snackBar.open(message, action, {
+            duration: 2000,
+        });
     }
 }
