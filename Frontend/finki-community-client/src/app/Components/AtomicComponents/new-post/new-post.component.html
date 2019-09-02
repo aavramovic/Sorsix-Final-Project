@@ -14,10 +14,10 @@
             </mat-form-field>
 
             <mat-form-field class="col-sm-6 mt-2">
-                <input type="text" placeholder="Pick a course" aria-label="Course Name" matInput
+                <input placeholder="Pick a course" aria-label="Course Name" matInput
                        formControlName="courseName" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let course of courses" [value]="course">
+                    <mat-option *ngFor="let course of filteredCourses | async" [value]="course">
                         {{course}}
                     </mat-option>
                 </mat-autocomplete>

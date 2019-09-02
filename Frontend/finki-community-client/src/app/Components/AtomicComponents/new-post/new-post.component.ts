@@ -3,10 +3,10 @@ import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from 
 import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Course} from '../../../Models/Classes/Course';
 import {CourseService} from '../../../services/course.service';
-import {switchMap} from 'rxjs/operators';
+import {map, startWith, switchMap} from 'rxjs/operators';
 import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
 
 @Component({
@@ -39,6 +39,7 @@ export class NewPostComponent implements OnInit {
 
     course$ = new Subject();
     courses: string[] = [];
+    filteredCourses: Observable<string[]>;
 
     constructor(private threadService: ThreadService,
                 public dialogRef: MatDialogRef<ThreadBarComponent>,
@@ -52,8 +53,16 @@ export class NewPostComponent implements OnInit {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
 
         this.course$.pipe(switchMap(() =>
-            this.courseService.getCourseNames()
-        )).subscribe(courses => this.courses = courses);
+            this.courseService.getCourseNames())).subscribe(courses =>
+            this.courses = courses
+        );
+
+        this.filteredCourses =
+            (<FormControl> this.postPostForm.get('courseName'))
+                .valueChanges
+                .pipe(
+                    startWith(''),
+                    map(course => course ? this._filterCourses(course) : this.courses.slice()));
         this.course$.next();
 
 
@@ -69,4 +78,8 @@ export class NewPostComponent implements OnInit {
         this.dialogRef.close();
     }
 
+    private _filterCourses(value: string) {
+        const filterValue = value.toLowerCase();
+        return this.courses.filter(course => course.toLowerCase().indexOf(filterValue) === 0);
+    }
 }
