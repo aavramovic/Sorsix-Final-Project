@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from 
 import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
-import {Observable, Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {Course} from '../../../Models/Classes/Course';
 import {CourseService} from '../../../services/course.service';
 import {map, startWith, switchMap} from 'rxjs/operators';
@@ -53,8 +53,10 @@ export class NewPostComponent implements OnInit {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
 
         this.course$.pipe(switchMap(() =>
-            this.courseService.getCourseNames())).subscribe(courses =>
-            this.courses = courses
+            this.courseService.getCourseNames())).subscribe(courses => {
+                this.courses = courses;
+                this.filteredCourses = of(courses);
+            }
         );
 
         this.filteredCourses =
@@ -81,5 +83,18 @@ export class NewPostComponent implements OnInit {
     private _filterCourses(value: string) {
         const filterValue = value.toLowerCase();
         return this.courses.filter(course => course.toLowerCase().indexOf(filterValue) === 0);
+    }
+
+    getErrorMessage(value: string) {
+        let errors: string[] = [];
+
+        if (this.postPostForm.get(value).hasError('required')) {
+            errors.push('You must enter a value');
+        }
+        if (this.postPostForm.get(value).hasError('notEquivalent')) {
+            errors.push('Does not match existing courses');
+        }
+
+        return errors.join(', ');
     }
 }

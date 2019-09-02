@@ -3,12 +3,12 @@
     width: 50%;
     background-color: white;
     opacity: 0.8;
-    height: 85%;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding-top: 2%;
     padding-bottom: 2%;
-    margin-top: 1%;
+    justify-content: center;
+    display: flex;
+    height: fit-content;
 }
 
 mat-form-field {
@@ -21,7 +21,7 @@ label {
 
 @media only screen and (max-width: 800px) {
     .container-fluid {
-        width: 80%;
+        width: 95%;
     }
 
     button[type="submit"] {

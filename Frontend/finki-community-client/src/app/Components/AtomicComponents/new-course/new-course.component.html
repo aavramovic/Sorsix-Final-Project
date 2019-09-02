@@ -11,11 +11,17 @@
                 <label>
                     <input matInput placeholder="Course Name" type="text" formControlName="courseName">
                 </label>
+                <mat-error *ngIf="postCourseForm.get('courseName')?.errors">
+                    {{getErrorMessage('courseName')}}
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="col-sm-4">
                 <label>
                     <input matInput placeholder="Course code" type="text" formControlName="code">
                 </label>
+                <mat-error *ngIf="postCourseForm.get('code')?.errors">
+                    {{getErrorMessage('code')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <div>
@@ -24,10 +30,18 @@
                     <textarea matInput placeholder="Course Description" name="courseDescription" type="text"
                               formControlName="courseDescription"></textarea>
                 </label>
+
+                <mat-error *ngIf="postCourseForm.get('courseDescription')?.errors">
+                    {{getErrorMessage('courseDescription')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <mat-card class="shadow-none p-0">
-            <mat-card-subtitle class="mb-0 mt-1">Programs</mat-card-subtitle>
+            <mat-card-subtitle class="mb-0 mt-1">Programs
+                <!--                <mat-error *ngIf="postCourseForm.get('programs')?.errors">-->
+                <!--                    select a program-->
+                <!--                </mat-error>-->
+            </mat-card-subtitle>
             <br>
             <div class="row">
                 <div class="col-12">
@@ -40,12 +54,16 @@
                     </div>
                 </div>
             </div>
+
         </mat-card>
         <div>
             <mat-form-field>
                 <mat-select placeholder="Year of study" formControlName="year">
                     <mat-option value="{{year}}" *ngFor="let year of years">{{year}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="postCourseForm.get('year')?.errors">
+                    {{getErrorMessage('year')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <div>
@@ -53,6 +71,9 @@
                 <mat-select placeholder="Semester" formControlName="semester">
                     <mat-option value="{{semester}}" *ngFor="let semester of semesters">{{semester}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="postCourseForm.get('semester')?.errors">
+                    {{getErrorMessage('semester')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <div>
@@ -60,6 +81,9 @@
                 <mat-select placeholder="Course Type" formControlName="courseType">
                     <mat-option value="{{type}}" *ngFor="let type of types">{{type}}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="postCourseForm.get('courseType')?.errors">
+                    {{getErrorMessage('courseType')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="row">

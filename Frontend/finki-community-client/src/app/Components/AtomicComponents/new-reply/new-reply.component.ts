@@ -53,4 +53,16 @@ export class NewReplyComponent implements OnInit {
         this.dialogRef.close();
     }
 
+    getErrorMessage(value: string) {
+        let errors: string[] = [];
+
+        if (this.postPostForm.get(value).hasError('required')) {
+            errors.push('You must enter a value');
+        }
+        if (this.postPostForm.get(value).hasError('notEquivalent')) {
+            errors.push('Does not match existing courses');
+        }
+
+        return errors.join(', ');
+    }
 }

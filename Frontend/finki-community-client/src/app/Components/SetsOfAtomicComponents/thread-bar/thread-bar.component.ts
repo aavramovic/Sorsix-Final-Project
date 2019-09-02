@@ -100,5 +100,10 @@ export class ThreadBarComponent implements OnInit {
         this.threadByCourse$.next();
         this.threadByCourse$.next();
     }
+
+    pageChanged($event) {
+        this.p = $event;
+        window.scroll(0, 0);
+    }
 }
 

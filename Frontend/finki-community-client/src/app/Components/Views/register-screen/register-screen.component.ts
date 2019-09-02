@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {Subject, throwError} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {PostUser} from '../../../Models/Classes/PostUser';
+import {UrlService} from '../../../services/url.service';
 
 @Component({
     selector: 'app-register-screen',
@@ -20,14 +21,14 @@ export class RegisterScreenComponent implements OnInit {
     today: Date;
 
     registerForm = new FormGroup({
-        username: new FormControl('Antonio', Validators.required),
-        email: new FormControl('asd@asd', [Validators.required, Validators.email]),
-        password: new FormControl('12345678', [Validators.required, Validators.minLength(8)]),
-        confirmPassword: new FormControl('12345678', [Validators.required]),
-        firstName: new FormControl('asd', [Validators.required]),
-        lastName: new FormControl('asd', [Validators.required]),
+        username: new FormControl('', Validators.required),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+        confirmPassword: new FormControl('', [Validators.required]),
+        firstName: new FormControl('', [Validators.required]),
+        lastName: new FormControl('', [Validators.required]),
         birthdate: new FormControl('', [Validators.required]),
-        sex: new FormControl('', [Validators.required])
+        sex: new FormControl('M', [Validators.required])
     }, {
         validators: [
             this.matchValidator('password', 'confirmPassword'),
@@ -51,11 +52,13 @@ export class RegisterScreenComponent implements OnInit {
         };
     }
 
-    constructor(private http: HttpClient,
-                private userService: UserService,
-                private router: Router) {
+    constructor(
+        private http: HttpClient,
+        private userService: UserService,
+        private router: Router,
+        private url: UrlService
+    ) {
     }
-
 
     ngOnInit() {
         this.registerForm.clearValidators();
@@ -63,15 +66,14 @@ export class RegisterScreenComponent implements OnInit {
         this.user$.pipe(switchMap(() =>
             this.userService.postNewUser(this.newUser)))
             .subscribe(response => {
-                    if (response.valid) {
-                        this.router.navigate(['/']).then(r => r.valueOf());
-                    } else {
-                        alert('This account exists and has been disabled');
-                    }
-                });
-
-
+                if (response.valid) {
+                    this.router.navigate(['/']).then(r => r.valueOf());
+                } else {
+                    alert('This account exists and has been disabled');
+                }
+            });
         this.today = new Date();
+        this.url.isHidden$.next(true);
     }
 
     getErrorMessage(value: string) {

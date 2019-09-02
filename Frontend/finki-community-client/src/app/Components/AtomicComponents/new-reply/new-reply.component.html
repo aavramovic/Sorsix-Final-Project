@@ -11,6 +11,9 @@
                 <label>
                     <input matInput placeholder="Title" type="text" formControlName="title">
                 </label>
+                <mat-error *ngIf="postPostForm.get('title')?.errors">
+                    {{getErrorMessage('title')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <div>
@@ -22,6 +25,9 @@
                               matAutosizeMaxRows="25"
                     ></textarea>
                 </label>
+                <mat-error *ngIf="postPostForm.get('content')?.errors">
+                    {{getErrorMessage('content')}}
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="row">

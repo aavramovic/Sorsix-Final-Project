@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {EnumService} from '../../../services/enum.service';
 import {MatDialogRef} from '@angular/material';
 import {AdminComponent} from '../../Views/admin/admin.component';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {CourseService} from '../../../services/course.service';
 
 @Component({
@@ -24,8 +24,27 @@ export class NewCourseComponent implements OnInit {
         courseDescription: new FormControl('', Validators.required),
         courseName: new FormControl('', Validators.required),
         programs: new FormGroup({}, Validators.required)
-
     });
+
+
+    // private programValidator(value): ValidatorFn {
+    //     return (group: FormGroup): ValidationErrors => {
+    //         let arrayOfPrograms: string[] = [];
+    //         this.programs.forEach(program => {
+    //             if ((<FormGroup> group.get(value)).get(program) && (<FormGroup> group.get(value)).get(program)) {
+    //                 arrayOfPrograms.push(program);
+    //
+    //                 console.log((<FormGroup> group.get(value)).get(program) && (<FormGroup> group.get(value)).get(program));
+    //             }
+    //         });
+    //         if (arrayOfPrograms.length == 0) {
+    //             group.get(value).setErrors({required: true});
+    //         } else {
+    //             group.get(value).setErrors(null);
+    //         }
+    //         return;
+    //     };
+    // }
 
     constructor(
         public dialogRef: MatDialogRef<AdminComponent>, private courseService: CourseService) {
@@ -51,5 +70,17 @@ export class NewCourseComponent implements OnInit {
         this.dialogRef.close();
     }
 
+    getErrorMessage(value: string) {
+        let errors: string[] = [];
+
+        if (this.postCourseForm.get(value).hasError('required')) {
+            errors.push('You must enter a value');
+        }
+        if (this.postCourseForm.get(value).hasError('notEquivalent')) {
+            errors.push('Does not match existing courses');
+        }
+
+        return errors.join(', ');
+    }
 
 }
