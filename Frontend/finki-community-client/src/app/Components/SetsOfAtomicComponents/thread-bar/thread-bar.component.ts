@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {Subject} from 'rxjs';
@@ -7,7 +7,7 @@ import {UrlService} from '../../../services/url.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {delay, switchMap, tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-thread-bar',
@@ -23,7 +23,6 @@ export class ThreadBarComponent implements OnInit {
 
     isLoggedIn: boolean;
     p: number;
-
 
     constructor(private threadService: ThreadService,
                 private router: Router,
@@ -61,15 +60,13 @@ export class ThreadBarComponent implements OnInit {
 
         this.threadByCourse$.pipe(switchMap(() =>
             this.threadService.getTopNThreadsByCourse(+this.numberOfPostsByPage, this.selectedCourse)))
-            .subscribe(threads => {
-                    this.threads = threads.filter(thread => {
-                        // console.log(thread.title);
-                        return !thread.repliedTo;
-                    });
-                    console.log('refreshed');
-                }
-            );
+            .subscribe(threads =>
 
+
+                this.threads = threads.filter(thread => {
+                    // console.log(thread.title);
+                    return !thread.repliedTo;
+                }));
 
         this.threadByCourse$.next();
 
@@ -77,10 +74,6 @@ export class ThreadBarComponent implements OnInit {
 
         this.authService.isLoggedIn$.subscribe(r => {
             this.isLoggedIn = r;
-        });
-
-        this.threadService.invokeEvent.subscribe(() => {
-            this.threadByCourse$.next();
         });
     }
 
@@ -98,12 +91,6 @@ export class ThreadBarComponent implements OnInit {
         // Maybe let it return a boolean that tells us
         this.dialog.open(NewPostComponent, dialogConfig);
         this.threadByCourse$.next();
-        this.threadByCourse$.next();
-    }
-
-    pageChanged($event) {
-        this.p = $event;
-        window.scroll(0, 0);
     }
 }
 

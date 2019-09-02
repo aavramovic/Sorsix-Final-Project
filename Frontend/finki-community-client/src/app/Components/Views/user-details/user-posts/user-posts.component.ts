@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserDetailsPost} from "../models/classes/user-details-post";
+import {UserDetailsPost} from '../models/classes/user-details-post';
 
 @Component({
   selector: 'app-user-posts',
@@ -14,8 +14,6 @@ export class UserPostsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // console.log(this.posts);
-    // console.log(this.numberOfPosts);
   }
 
 }

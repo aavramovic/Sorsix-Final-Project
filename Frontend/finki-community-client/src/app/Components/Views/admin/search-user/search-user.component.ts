@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {of, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, flatMap, map, switchMap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, flatMap, switchMap} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {NewFollowing} from '../../../user-details/models/classes/new-following';
-import {IUser} from '../../../../../Models/Interfaces/IUser';
-import {ChangeRole} from './models/change-role';
-import {CHANGE_ROLE_URL, SEARCH_URL} from '../../../../../Models/global-const-url-paths';
+import {ChangeRole} from '../models/change-role';
+import {CHANGE_ROLE_URL, SEARCH_URL} from '../../../../Models/global-const-url-paths';
+import {ISearchedUser} from '../models/isearched-user';
 
 @Component({
   selector: 'app-search-user',
@@ -23,7 +22,7 @@ export class SearchUserComponent implements OnInit {
   searchForm = new FormGroup({
     searchTerm: new FormControl('')
   });
-  userSearchResult: Array<IUser> = [];
+  userSearchResult: Array<ISearchedUser> = [];
 
   search$ = new Subject();
 
@@ -58,7 +57,7 @@ export class SearchUserComponent implements OnInit {
     if (!searchTerm.trim()) {
       return of([]);
     }
-    return this.httpClient.get<IUser[]>(`${SEARCH_URL}${searchTerm}`);
+    return this.httpClient.get<ISearchedUser[]>(`${SEARCH_URL}${searchTerm}`);
   }
 
   radioChangedHandler(event: any) {

@@ -90,7 +90,7 @@ export class ThreadService {
                 thread.sex,
                 Authorization[thread.role],
                 thread.isLiked,
-                thread.sex == 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG',
+                thread.sex === 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG',
                 thread.repliedTo
             ));
             // console.log(thread.repliedTo);

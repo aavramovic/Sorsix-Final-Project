@@ -1,46 +1,43 @@
+#follow-button{
+    text-align: center;
+    margin-top:20px;
+}
+
 #info{
-  text-align: center;
-  padding: 20px;
-  border: 2px green solid;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
 }
 
-.flex-container{
-  display:flex;
+#posts {
+    width: 35%;
 }
 
-#posts{
-  width:35%;
-  border: 2px black solid;
-  text-align: center;
+#posts-liked {
+    width: 35%;
 }
 
-#posts-liked{
-  width: 35%;
-  border: 2px red solid;
-  text-align: center;
+#followings {
+    width: 15%;
 }
 
-#followings{
-  width: 15%;
-  border: 2px blue solid;
-  text-align: center;
+#followers {
+    width: 15%;
 }
 
-#followers{
-  width: 15%;
-  border: 2px brown solid;
-  text-align: center;
+th{
+    text-align: center;
 }
 
-li{
-  list-style-type: none;
+.title{
+    color:red;
+    font-weight: bold;
 }
 
-.following{
-  color: blue;
-  font-weight: bold;
+.red{
+    color:red;
 }
 
-a{
-  font-size: 20px;
+.green{
+    color:green;
 }

@@ -1,7 +1,14 @@
-<div>POSTS LIKED</div>
-<div>Number of posts liked: {{numberOfPostsLiked}}</div>
-<div id="post-liked-items">
-  <div *ngFor="let postLiked of userDetailsPostsLiked">
-    {{postLiked.content}}
-  </div>
-</div>
+<table class="table-hover">
+    <tbody>
+    <tr *ngFor="let postLiked of userDetailsPostsLiked">
+        <td>
+            <div>
+                <span class="title">{{postLiked.title}}</span><span class="course-name"><a routerLink="/start/{{postLiked.courseName}}">{{postLiked.courseName}}</a></span>
+            </div>
+            <div>
+                {{postLiked.content}}
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

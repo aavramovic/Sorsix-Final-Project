@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserDetailsFollow} from "../models/classes/user-details-follow";
+import {UserDetailsFollow} from '../models/classes/user-details-follow';
 
 @Component({
   selector: 'app-user-followers',
