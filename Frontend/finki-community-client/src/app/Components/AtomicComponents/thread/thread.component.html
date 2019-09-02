@@ -24,10 +24,10 @@
     <!--MIDDLE PART START-->
     <div class="row">
         <h3 *ngIf="thread.title" class="col">{{thread.title}}</h3>
-        <div class="col-auto font-weight-light"><a
+        <div *ngIf="!thread.repliedTo" class="col-auto font-weight-light"><a
             routerLink="/start/{{thread.courseName}}">Course: {{thread.courseName}}</a>
+
         </div>
-        |
         <div class="col-auto font-weight-light mr-1 ml-auto">{{thread.timeOfPost | date:"dd.MM.y"}}</div>
     </div>
     <div *ngIf="thread && thread.content">
