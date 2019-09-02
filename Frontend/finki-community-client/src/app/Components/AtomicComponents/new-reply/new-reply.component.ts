@@ -33,10 +33,16 @@ export class NewReplyComponent implements OnInit {
 
     ngOnInit() {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
+        this.postPostForm.get('replyToPostId').setValue(this.data.postId);
+
     }
 
     onSubmit() {
-        // console.log(this.postPostForm.get('replyToPostId').value);
+        console.log(this.postPostForm.get('content').value);
+        console.log(this.postPostForm.get('username').value);
+        console.log(this.postPostForm.get('title').value);
+        console.log(this.postPostForm.get('replyToPostId').value);
+
         this.threadService.postThread(this.postPostForm);
         this.route.navigate(['/start']).then(r => {
         });
