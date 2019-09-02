@@ -65,9 +65,8 @@ export class NewPostComponent implements OnInit {
                 .pipe(
                     startWith(''),
                     map(course => course ? this._filterCourses(course) : this.courses.slice()));
+
         this.course$.next();
-
-
     }
 
     onSubmit() {

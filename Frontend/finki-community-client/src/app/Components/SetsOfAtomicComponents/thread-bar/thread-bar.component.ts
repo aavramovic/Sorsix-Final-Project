@@ -72,6 +72,10 @@ export class ThreadBarComponent implements OnInit {
         this.authService.isLoggedIn$.subscribe(r => {
             this.isLoggedIn = r;
         });
+
+        this.threadService.invokeEvent.subscribe(() => {
+            this.threadByCourse$.next();
+        });
     }
 
     openDialog(threadId?: string): void {
@@ -88,6 +92,11 @@ export class ThreadBarComponent implements OnInit {
         // Maybe let it return a boolean that tells us
         this.dialog.open(NewPostComponent, dialogConfig);
         this.threadByCourse$.next();
+    }
+
+    pageChanged($event: number) {
+        this.p = $event;
+        window.scroll(0, 0);
     }
 }
 
