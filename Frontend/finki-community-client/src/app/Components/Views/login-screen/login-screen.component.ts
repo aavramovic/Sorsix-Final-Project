@@ -48,7 +48,7 @@ export class LoginScreenComponent implements OnInit {
             },
             error => {
                 alert('Username or password is incorrect');
-                of(empty)
+                // of(empty)
             });
     }
 
