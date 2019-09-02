@@ -5,6 +5,7 @@ import {IUserDetailsResponse} from '../models/interfaces/iuser-details-response'
 import {UserDetailsFollow} from '../models/classes/user-details-follow';
 import {NewFollowing} from '../models/classes/new-following';
 import {MatSnackBar} from '@angular/material';
+import {subscribeOn} from 'rxjs/operators';
 
 @Component({
     selector: 'app-user-details',
@@ -26,7 +27,16 @@ export class UserDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        const username = this.route.snapshot.paramMap.get('username');
+
+        let username;
+        this.route
+            .paramMap
+            .subscribe(
+                value => {
+                    username = value.get('username');
+                }
+            );
+
         const url = this.URL + username + (localStorage.getItem('username') ? '&loggedInUsername=' + localStorage.getItem('username') : '');
         this.httpClient.get<IUserDetailsResponse>(url)
             .subscribe(

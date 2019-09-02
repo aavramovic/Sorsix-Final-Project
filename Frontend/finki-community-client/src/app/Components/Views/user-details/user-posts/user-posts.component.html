@@ -1,8 +1,15 @@
-<div>POSTS</div>
-<div>Number of posts: {{numberOfPosts}}</div>
-<div id="post-items">
-    <div *ngFor="let post of posts">
-      {{post.content}}
-    </div>
-</div>
+<table class="table-hover">
+    <tbody>
+        <tr *ngFor="let post of posts">
+            <td>
+                <div>
+                    <span class="title">{{post.title}}</span><span class="course-name"><a routerLink="/start/{{post.courseName}}">{{post.courseName}}</a></span>
+                </div>
+                <div>
+                    {{post.content}}
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
 

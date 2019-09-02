@@ -1,19 +1,64 @@
 <div *ngIf="user">
-  <div id="info">
-    <div *ngIf="isLoggedIn() && isNotHisOwnProfile()">
-      <button ng-model="button" [class.following]="this.user.isFollowing" (click)="followClicked(user)">{{this.user.isFollowing ? 'FOLLOWING' : 'FOLLOW'}}</button>
+    <div *ngIf="isLoggedIn() && isNotHisOwnProfile()" id="follow-button">
+        <button ng-model="button"
+                class="btn btn-lg"
+                [class.btn-outline-primary]="!this.user.isFollowing"
+                [class.btn-primary]="this.user.isFollowing"
+                (click)="followClicked(user)">
+            {{this.user.isFollowing ? 'FOLLOWING' : 'FOLLOW'}}
+        </button>
     </div>
-    <div>Username: {{user.username}}</div>
-    <div>First name: {{user.firstName}}</div>
-    <div>Last name: {{user.lastName}}</div>
-    <div>Email: {{user.email}}</div>
-    <div>Sex: {{user.sex}}</div>
-    <div>Birthdate: {{user.birthdate}}</div>
-  </div>
-  <div class="flex-container">
-      <app-user-posts id="posts" [numberOfPosts]="user.numberOfPosts" [posts]="user.userDetailsPosts"></app-user-posts>
-      <app-user-posts-liked id="posts-liked" [numberOfPostsLiked]="user.numberOfPostsLiked" [userDetailsPostsLiked]="user.userDetailsPostsLiked"></app-user-posts-liked>
-      <app-user-followings id="followings" [numberOfFollowings]="user.numberOfFollowings" [userDetailsFollowings]="user.userDetailsFollowings"></app-user-followings>
-      <app-user-followers id="followers" [numberOfFollowers]="user.numberOfFollowers" [userDetailsFollowers]="user.userDetailsFollowers"></app-user-followers>
-  </div>
+    <div id="info">
+            <div class="avatar">
+                <span class="col-auto d-flex"><img
+                    src="assets/{{this.user.sex === 'F' ? 'FEMALE_AVATAR.PNG' : 'MALE_AVATAR.PNG'}}"
+                    alt="Users image"
+                    height="100px">
+            </span>
+            </div>
+            <div>
+                <table class="table table-striped table-borderless">
+                    <thead>
+                    </thead>
+                    <tbody class="h4">
+                    <tr><td></td><td>Username:</td>
+                        <td [class.red]="user.role==='ADMIN'"
+                            [class.green]="user.role==='MODERATOR'">{{user.username}}
+                        </td>
+                    </tr>
+                    <tr><td></td><td>First name:</td><td>{{user.firstName}}</td></tr>
+                    <tr><td></td><td>Last name:</td><td>{{user.lastName}}</td></tr>
+                    <tr><td></td><td>Email:</td><td>{{user.email}}</td></tr>
+                    <tr><td></td><td>Sex:</td><td>{{user.sex}}</td></tr>
+                    <tr><td></td><td>Birthdate:</td><td>{{user.birthdate | date}}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <th width="35%">
+                <div class="h3 title">POSTS</div>
+                <div class="number-of-items">Number of posts: {{user.numberOfPosts}}</div>
+            </th>
+            <th width="35%">
+                <div class="h3 title">POSTS LIKED</div>
+                <div class="number-of-items">Number of posts liked: {{user.numberOfPostsLiked}}</div>
+            </th>
+            <th width="15%">
+                <div class="h3 title">FOLLOWINGS</div>
+                <div class="number-of-items">Number of followings: {{user.numberOfFollowings}}</div>
+            </th>
+            <th width="15%">
+                <div class="h3 title">FOLLOWERS</div>
+                <div class="number-of-items">Number of followings: {{user.numberOfFollowers}}</div>
+            </th>
+        </thead>
+        <tbody>
+            <td><app-user-posts id="posts" [posts]="user.userDetailsPosts"></app-user-posts></td>
+            <td><app-user-posts-liked id="posts-liked" [userDetailsPostsLiked]="user.userDetailsPostsLiked"></app-user-posts-liked></td>
+            <td><app-user-followings id="followings" [userDetailsFollowings]="user.userDetailsFollowings"></app-user-followings></td>
+            <td><app-user-followers id="followers" [userDetailsFollowers]="user.userDetailsFollowers"></app-user-followers></td>
+        </tbody>
+    </table>
 </div>

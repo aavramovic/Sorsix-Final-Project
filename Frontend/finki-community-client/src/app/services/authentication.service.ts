@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {API_URL, LOGIN_USER, USERS} from '../Models/global-const-url-paths';
 import * as moment from 'moment';
 import {ILoginResponse} from '../Models/Interfaces/ILoginResponse';
 import {LoginResponse} from '../Models/Classes/LoginResponse';
 import {Authorization} from '../Models/Enumeration/Authorization';
 import {Router} from '@angular/router';
-import {User} from '../Models/Classes/User';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {

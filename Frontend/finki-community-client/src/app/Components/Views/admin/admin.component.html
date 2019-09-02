@@ -1,6 +1,15 @@
-<h1>ADMIN</h1>
-<button mat-raised-button (click)="openDialog()">New Course</button>
+<br>
+<br>
+<h1 class="h1 text-center mat-title">ADMIN PANEL</h1>
 <br/>
-<br/>
-<br/>
-<app-search-user></app-search-user>
+<table class="table table-bordered">
+    <thead>
+        <th>Services</th><th></th>
+    </thead>
+    <tbody>
+        <tr><td class="w-25">Create new course:</td><td><button mat-raised-button (click)="openDialog()">New Course</button></td></tr>
+        <tr><td class="w-25">Change user role:</td><td><app-search-user></app-search-user></td></tr>
+    </tbody>
+</table>
+
+

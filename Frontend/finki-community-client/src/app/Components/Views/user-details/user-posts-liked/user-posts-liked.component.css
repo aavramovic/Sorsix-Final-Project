@@ -1,0 +1,10 @@
+.course-name{
+    display: inline-block;
+    float: right;
+    font-weight: bold;
+}
+
+.title{
+    display:inline-block;
+    font-weight: bold;
+}

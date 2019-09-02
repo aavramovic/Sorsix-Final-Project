@@ -32,13 +32,12 @@ import {MatSelectComponent} from './Components/AtomicComponents/mat-select/mat-s
 import {AdminComponent} from './Components/Views/admin/admin.component';
 import {NewCourseComponent} from './Components/AtomicComponents/new-course/new-course.component';
 import {MatDialogModule} from '@angular/material';
-import {SearchUserComponent} from './Components/Views/admin/admin-panel/search-user/search-user.component';
+import {SearchUserComponent} from './Components/Views/admin/search-user/search-user.component';
 import {UserDetailsComponent} from './Components/Views/user-details/user-info/user-details.component';
 import {UserPostsComponent} from './Components/Views/user-details/user-posts/user-posts.component';
 import {UserPostsLikedComponent} from './Components/Views/user-details/user-posts-liked/user-posts-liked.component';
 import {UserFollowingsComponent} from './Components/Views/user-details/user-followings/user-followings.component';
 import {UserFollowersComponent} from './Components/Views/user-details/user-followers/user-followers.component';
-import {AdminPanelComponent} from './Components/Views/admin/admin-panel/admin-panel.component';
 import {NewPostComponent} from './Components/AtomicComponents/new-post/new-post.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
@@ -67,7 +66,6 @@ import {NewReplyComponent} from './Components/AtomicComponents/new-reply/new-rep
         UserPostsLikedComponent,
         UserFollowingsComponent,
         UserFollowersComponent,
-        AdminPanelComponent,
         SearchUserComponent,
         NewPostComponent,
         NewReplyComponent
