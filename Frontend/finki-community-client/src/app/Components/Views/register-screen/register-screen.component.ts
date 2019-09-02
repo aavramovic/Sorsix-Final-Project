@@ -101,7 +101,7 @@ export class RegisterScreenComponent implements OnInit {
             this.registerForm.get('firstName').value,
             this.registerForm.get('lastName').value,
             this.registerForm.get('password').value,
-            new Date(this.registerForm.get('birthdate').value).getMilliseconds(),
+            new Date(this.registerForm.get('birthdate').value).getTime(),
             this.registerForm.get('email').value,
             this.registerForm.get('sex').value
         );
