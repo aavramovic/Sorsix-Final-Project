@@ -9,6 +9,7 @@ import {LoginResponse} from '../Models/Classes/LoginResponse';
 import {Authorization} from '../Models/Enumeration/Authorization';
 import {Router} from '@angular/router';
 import {LoginRequest} from '../Models/Classes/login-request';
+import {IRegisterUserResponse} from '../Models/Interfaces/IRegisterUserResponse';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
@@ -26,10 +27,9 @@ export class AuthenticationService {
         return null;
     }
 
-    login(username, password)
-    {
+    login(username, password) {
 
-        return this.http.post(
+        return this.http.post<ILoginResponse>(
             API_URL + 'login',
             new LoginRequest(username, password),
             {
