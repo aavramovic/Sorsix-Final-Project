@@ -21,4 +21,8 @@ export class UrlService {
     urlLengthInParts(): number{
         return this.location.normalize(this.location.path()).split('/').length;
     }
+
+    getUrl(): string{
+        return this.location.path();
+    }
 }

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
@@ -17,16 +17,20 @@ import {IPageResponse} from '../Components/SetsOfAtomicComponents/thread-bar/mod
 import {MatSnackBar} from '@angular/material';
 import {empty} from 'rxjs/internal/Observer';
 import {PostReply} from '../Models/Classes/PostReply';
+import {Router} from '@angular/router';
+import {UrlService} from './url.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ThreadService {
-
+    invokeEvent:Subject<any> = new Subject();
     constructor(private http: HttpClient,
                 private courseService: CourseService,
                 private mock: MockClassesCreationService,
-                private _snackBar: MatSnackBar
+                private _snackBar: MatSnackBar,
+                private route: Router,
+                private url: UrlService
     ) {
     }
 
@@ -138,9 +142,14 @@ export class ThreadService {
         }
         // console.log(postThread);
         this.http.post(API_URL + POST_THREAD, post).subscribe(
-            response => this.openSnackBar('Thread posted'),
+            response => {
+                this.openSnackBar('Thread posted');
+                this.invokeEvent.next();
+            },
             error => this.openSnackBar('An error has occurred please try again')
         );
+
+
     }
 
     openSnackBar(message: string) {

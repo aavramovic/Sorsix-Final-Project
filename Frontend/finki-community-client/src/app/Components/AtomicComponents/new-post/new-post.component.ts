@@ -62,7 +62,6 @@ export class NewPostComponent implements OnInit {
     onSubmit() {
         // console.log(this.postPostForm.get('replyToPostId').value);
         this.threadService.postThread(this.postPostForm);
-        this.route.navigate([`/start${this.postPostForm.get('courseName') ? '/' + this.postPostForm.get('courseName').value : ''}`]).then(r => {});
         this.dialogRef.close();
     }
 
