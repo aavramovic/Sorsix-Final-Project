@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {IUserDetailsResponse} from '../models/interfaces/iuser-details-response';
 import {UserDetailsFollow} from '../models/classes/user-details-follow';
 import {NewFollowing} from '../models/classes/new-following';
 import {MatSnackBar} from '@angular/material';
 import {IFollowResponse} from '../models/interfaces/ifollow-response';
+import {UrlService} from '../../../../services/url.service';
+import {Subject} from 'rxjs';
+import {flatMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-user-details',
@@ -17,38 +20,51 @@ import {IFollowResponse} from '../models/interfaces/ifollow-response';
 export class UserDetailsComponent implements OnInit {
     public user: IUserDetailsResponse;
     private URL = 'http://localhost:8080/forum/users/details?username=';
+    private userDetails$ = new Subject();
 
     constructor(
         private httpClient: HttpClient,
         private route: ActivatedRoute,
-        private _snackBar: MatSnackBar,
+        private snackBar: MatSnackBar,
         private router: Router
     ) {
     }
 
     ngOnInit() {
-
-        let username;
-        this.route
-            .paramMap
-            .subscribe(
-                value => {
-                    username = value.get('username');
+        this.router.events.subscribe(
+            e => {
+                if (e instanceof NavigationEnd) {
+                    this.urlChange();
                 }
-            );
+            }
+        );
 
-        const url = this.URL + username + (localStorage.getItem('username') ? '&loggedInUsername=' + localStorage.getItem('username') : '');
-        this.httpClient.get<IUserDetailsResponse>(url)
-            .subscribe(
-                u => {
-                    this.user = u;
-                    // console.log(this.user);
-                }, error => {
-                    this.openSnackBar('No such username');
-                    this.router.navigate(['/']).then(r => {
-                    });
+        this.userDetails$.pipe(
+            flatMap(
+                () => {
+                    const username = this.route.snapshot.paramMap.get('username');
+
+                    const userDetailsUrl = this.URL + username +
+                        (localStorage.getItem('username') ? '&loggedInUsername=' + localStorage.getItem('username') : '');
+                    console.log(userDetailsUrl);
+                    return this.httpClient.get<IUserDetailsResponse>(userDetailsUrl);
                 }
-            );
+            )
+        ).subscribe(
+            u => {
+                this.user = u;
+                // console.log(this.user);
+            }, () => {
+                this.openSnackBar('No such username');
+                this.router.navigate(['/']).then(() => {
+                });
+            }
+        );
+        this.userDetails$.next();
+    }
+
+    urlChange() {
+        this.userDetails$.next();
     }
 
     followClicked(user: IUserDetailsResponse) {
@@ -76,7 +92,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     openSnackBar(message: string) {
-        this._snackBar.open(message, 'Close', {
+        this.snackBar.open(message, 'Close', {
             duration: 3000,
         });
     }
