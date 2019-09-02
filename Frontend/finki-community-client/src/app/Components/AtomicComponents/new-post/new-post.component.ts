@@ -37,6 +37,7 @@ export class NewPostComponent implements OnInit {
         };
     }
 
+    courseNamePointer: FormControl;
     course$ = new Subject();
     courses: string[] = [];
     filteredCourses: Observable<string[]>;
@@ -51,11 +52,10 @@ export class NewPostComponent implements OnInit {
 
     ngOnInit() {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
-
+        this.courseNamePointer = <FormControl> this.postPostForm.get('courseName');
         this.course$.pipe(switchMap(() =>
             this.courseService.getCourseNames())).subscribe(courses => {
                 this.courses = courses;
-                this.filteredCourses = of(courses);
             }
         );
 
@@ -64,7 +64,8 @@ export class NewPostComponent implements OnInit {
                 .valueChanges
                 .pipe(
                     startWith(''),
-                    map(course => course ? this._filterCourses(course) : this.courses.slice()));
+                    map(course => course ? this._filterCourses(course) : this.courses.slice())
+                );
 
         this.course$.next();
     }
@@ -79,7 +80,7 @@ export class NewPostComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    private _filterCourses(value: string) {
+    private _filterCourses(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.courses.filter(course => course.toLowerCase().indexOf(filterValue) === 0);
     }
