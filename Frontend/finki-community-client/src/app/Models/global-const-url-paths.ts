@@ -1,5 +1,5 @@
 export const API_URL = 'http://localhost:8080/';
-export const COURSE_LIST = 'forum/courses/filter/';
+export const COURSE_LIST = 'forum/courses/filter';
 export const THREAD_LIST = 'forum/posts/top?noOfPosts=';
 export const THREAD_LIST_10 = 'forum/posts/top/10';
 export const THREAD_REPLIES = 'forum/posts/clicked';

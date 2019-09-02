@@ -5,27 +5,24 @@
   <div *ngIf="userSearchResult.length!=0" id="result">
     <br/>
     <table class="table">
-      <thead class="thead-dark"><td>USERNAME</td><td>ROLE</td></thead>
+      <thead class="thead-dark"><th>USERNAME</th><th>ROLE</th></thead>
       <tbody>
-        <div *ngFor="let user of userSearchResult">
-            <tr>
+            <tr *ngFor="let user of userSearchResult">
                 <td><a [routerLink]="['/details', user.username]">{{user.username}}</a></td>
                 <td>
-                <span *ngFor="let role of roles">
-                  <input
-                      type="radio"
-                      name="{{user.username}}"
-                      value="{{role}}"
-                      [checked]="user.role==role"
-                      [disabled]="user.username == loggedInUsername()"
-                      (change)="radioChangedHandler($event)"
-                      class="p-5"
-                  > {{role}}
-                </span>
+                    <span *ngFor="let role of roles">
+                      <input
+                          type="radio"
+                          name="{{user.username}}"
+                          value="{{role}}"
+                          [checked]="user.role==role"
+                          [disabled]="user.username == loggedInUsername()"
+                          (change)="radioChangedHandler($event)"
+                          class="p-5"
+                      > {{role}}
+                    </span>
                 </td>
             </tr>
-        </div>
-
       </tbody>
     </table>
   </div>

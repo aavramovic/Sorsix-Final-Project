@@ -6,7 +6,6 @@ import {UserDetailsFollow} from '../models/classes/user-details-follow';
 import {NewFollowing} from '../models/classes/new-following';
 import {MatSnackBar} from '@angular/material';
 import {IFollowResponse} from '../models/interfaces/ifollow-response';
-import {UrlService} from '../../../../services/url.service';
 import {Subject} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 
@@ -74,7 +73,8 @@ export class UserDetailsComponent implements OnInit {
             {
                 headers: new HttpHeaders(
                     {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('id_token')
                     })
             }).subscribe(
             value => {

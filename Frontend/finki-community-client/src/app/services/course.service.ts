@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Course} from '../Models/Classes/Course';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Program} from '../Models/Enumeration/Program';
 import {Type} from '../Models/Enumeration/Type';
@@ -92,7 +92,14 @@ export class CourseService {
             getKeyByValue(<string> formGroup.get('year').value),
             formGroup.get('code').value
         );
-        this.http.post<IPostCourse>(API_URL + POST_COURSE, postRequest)/*.pipe(
+        this.http.post<IPostCourse>(
+            API_URL + POST_COURSE,
+            postRequest,
+            {headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+                })}
+        )/*.pipe(
             tap(console.log),
             catchError(this.handleError('addCourse', postRequest))
         )*/.subscribe(() => this.openSnackBar('Course created'),

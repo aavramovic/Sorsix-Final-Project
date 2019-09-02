@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/forum/posts")
-@CrossOrigin(origins = "http://localhost:4200")  // Enabling Cross Origin Requests for a RESTful Web Service
+@CrossOrigin  // Enabling Cross Origin Requests for a RESTful Web Service
 public class PostController {
     private PostService postService;
 

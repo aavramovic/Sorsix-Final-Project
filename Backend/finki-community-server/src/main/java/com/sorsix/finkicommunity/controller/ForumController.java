@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value="/forum")
-@CrossOrigin(origins = "http://localhost:4200")  // Enabling Cross Origin Requests for a RESTful Web Service
+@CrossOrigin  // Enabling Cross Origin Requests for a RESTful Web Service
 public class ForumController {
 
     @GetMapping

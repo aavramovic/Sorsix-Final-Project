@@ -111,7 +111,8 @@ export class ThreadService {
                 {
                     headers: new HttpHeaders(
                         {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('id_token')
                         })
                 }
             )
@@ -143,7 +144,15 @@ export class ThreadService {
             console.log('Error with the post');
         }
         // console.log(postThread);
-        this.http.post(API_URL + POST_THREAD, post).subscribe(
+        this.http.post(
+            API_URL + POST_THREAD,
+            post,
+            {headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+                })}
+            )
+            .subscribe(
             response => {
                 this.openSnackBar('Thread posted');
                 this.invokeEvent.next();

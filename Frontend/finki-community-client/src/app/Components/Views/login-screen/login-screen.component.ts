@@ -3,8 +3,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {Subject} from 'rxjs';
+import {empty, of, Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
+import {LoginResponse} from '../../../Models/Classes/LoginResponse';
 
 @Component({
     selector: 'app-login-screen',
@@ -29,14 +30,26 @@ export class LoginScreenComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.subject()
+    }
+
+    // MUST FOR NOW :S, TOO MUCH TIME WASTED
+    // WHEN THE ERROR IS THROWN SUBJECT'S next() NOT LISTENS ANYMORE
+    subject(){
         this.login$.pipe(switchMap(() =>
             this.authService.login(this.username, this.password))).subscribe(response => {
-            if (response.valid) {
                 this.router.navigate(['/']).then(r => r.valueOf());
-            } else {
-                alert(response.errorMessage);
-            }
-        });
+                // @ts-ignore
+                // if (response.valid) {
+                //
+                // } else {
+                //     //alert(response.body.errorMessage);
+                // }
+            },
+            error => {
+                alert('Username or password is incorrect');
+                of(empty)
+            });
     }
 
     getErrorMessage(value: string) {
@@ -53,8 +66,11 @@ export class LoginScreenComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log('submit');
         this.username = this.loginForm.get('username').value;
         this.password = this.loginForm.get('password').value;
+        // this.login$.next();
         this.login$.next();
+        this.subject();
     }
 }

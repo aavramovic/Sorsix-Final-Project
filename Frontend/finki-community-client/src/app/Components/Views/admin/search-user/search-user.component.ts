@@ -57,7 +57,15 @@ export class SearchUserComponent implements OnInit {
     if (!searchTerm.trim()) {
       return of([]);
     }
-    return this.httpClient.get<ISearchedUser[]>(`${SEARCH_URL}${searchTerm}`);
+      console.log(localStorage.getItem('id_token'))
+    return this.httpClient.get<ISearchedUser[]>(
+        `${SEARCH_URL}${searchTerm}`,
+        {headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+            })
+        })
+
   }
 
   radioChangedHandler(event: any) {
@@ -70,14 +78,15 @@ export class SearchUserComponent implements OnInit {
       new ChangeRole(event.target.name, event.target.value),
       { headers: new HttpHeaders(
           {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('id_token')
           })
       }).subscribe(
-    );
+        );
   }
 
   loggedInUsername(){
-      return localStorage.getItem('username');
+      return localStorage.getItem('username')
   }
 
 }

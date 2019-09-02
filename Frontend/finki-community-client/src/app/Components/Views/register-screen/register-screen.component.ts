@@ -105,7 +105,6 @@ export class RegisterScreenComponent implements OnInit {
             this.registerForm.get('email').value,
             this.registerForm.get('sex').value
         );
-
         this.user$.next();
     }
 }

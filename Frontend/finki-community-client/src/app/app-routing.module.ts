@@ -4,7 +4,6 @@ import {CourseBarComponent} from './Components/SetsOfAtomicComponents/course-bar
 import {ThreadBarComponent} from './Components/SetsOfAtomicComponents/thread-bar/thread-bar.component';
 import {LoginScreenComponent} from './Components/Views/login-screen/login-screen.component';
 import {MainViewComponent} from './Components/Views/main-view/main-view.component';
-import {UserBarComponent} from './Components/SetsOfAtomicComponents/user-bar/user-bar.component';
 import {RegisterScreenComponent} from './Components/Views/register-screen/register-screen.component';
 import {AdminComponent} from './Components/Views/admin/admin.component';
 import {UserDetailsComponent} from './Components/Views/user-details/user-info/user-details.component';

@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {API_URL, LOGIN_USER, USERS} from '../Models/global-const-url-paths';
 import * as moment from 'moment';
 import {ILoginResponse} from '../Models/Interfaces/ILoginResponse';
 import {LoginResponse} from '../Models/Classes/LoginResponse';
 import {Authorization} from '../Models/Enumeration/Authorization';
 import {Router} from '@angular/router';
+import {LoginRequest} from '../Models/Classes/login-request';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
@@ -25,22 +26,32 @@ export class AuthenticationService {
         return null;
     }
 
-    login(username, password): Observable<ILoginResponse> {
+    login(username, password)
+    {
 
-        return this.http.post<ILoginResponse>(API_URL + USERS + LOGIN_USER, {username, password})
+        return this.http.post(
+            API_URL + 'login',
+            new LoginRequest(username, password),
+            {
+                headers: new HttpHeaders(
+                    {
+                        'Content-Type': 'application/json'
+                    }),
+                observe: 'response'
+            })
             .pipe(
                 map(response => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    if (response.valid) {
-                        const expiresAt = moment().add(response.expiresIn, 'second');
-                        localStorage.setItem('id_token', response.idToken);
+                    if (response.status == 200) {
+                        const expiresAt = moment().add(response.body.expiresIn, 'second');
+                        localStorage.setItem('id_token', response.body.idToken);
                         localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
-                        localStorage.setItem('role', response.role.toString());
-                        localStorage.setItem('username', response.username);
+                        localStorage.setItem('role', response.body.role.toString());
+                        localStorage.setItem('username', response.body.username);
                         this.isLoggedIn$.next(true);
-                        return response;
+                        return response.body;
                     }
-                    return new LoginResponse('0', '', Authorization.VISITOR, response.valid, response.errorMessage);
+                    return new LoginResponse('0', '', Authorization.VISITOR, false, 'Incorrect password');
                 }));
     }
 

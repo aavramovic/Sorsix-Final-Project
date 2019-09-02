@@ -165,41 +165,42 @@ public class UserService {
     }
 
     public UserResponse findExistingUser(LoginViewModel loginViewModel){
-        String encodedPassword;
-        String rawPassword;
-        UserResponse userResponse = new UserResponse();
-        Optional<User> user;
-        try {
-            user = userRepository.findByUsername(loginViewModel.getUsername());
-            encodedPassword = user
-                    .map(
-                            u -> u.getPassword()
-                    ).orElseThrow(
-                            () -> new UsernameNotFoundException("No user found with username " + loginViewModel.getUsername())
-                    );
-
-            rawPassword = loginViewModel.getPassword();
-
-            if (passwordEncoder.matches(rawPassword, encodedPassword)) {
-                userResponse.setIdToken(encodedPassword);
-                userResponse.setExpiresIn(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME);
-                user
-                        .map(u -> {
-                            userResponse.setRole(u.getRole());
-                            return u;
-                        })
-                        .orElseThrow(() -> new RuntimeException());
-                userResponse.setUsername(loginViewModel.getUsername());
-                userResponse.setValid(true);
-            } else {
-                userResponse.setErrorMessage("Incorrect password");
-                userResponse.setValid(false);
-            }
-        } catch (Exception someException) {
-            userResponse.setErrorMessage("Username not found");
-            userResponse.setValid(false);
-        }
-        return userResponse;
+//        String encodedPassword;
+//        String rawPassword;
+//        UserResponse userResponse = new UserResponse();
+//        Optional<User> user;
+//        try {
+//            user = userRepository.findByUsername(loginViewModel.getUsername());
+//            encodedPassword = user
+//                    .map(
+//                            u -> u.getPassword()
+//                    ).orElseThrow(
+//                            () -> new UsernameNotFoundException("No user found with username " + loginViewModel.getUsername())
+//                    );
+//
+//            rawPassword = loginViewModel.getPassword();
+//
+//            if (passwordEncoder.matches(rawPassword, encodedPassword)) {
+//                userResponse.idToken = encodedPassword;
+//                userResponse.expiresIn = System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME;
+//                user
+//                        .map(u -> {
+//                            userResponse.role = u.getRole();
+//                            return u;
+//                        })
+//                        .orElseThrow(() -> new RuntimeException());
+//                userResponse.username = loginViewModel.getUsername();
+//                userResponse.valid = true;
+//            } else {
+//                userResponse.errorMessage = "Incorrect password";
+//                userResponse.valid = false;
+//            }
+//        } catch (Exception someException) {
+//            userResponse.errorMessage = "Username not found";
+//            userResponse.valid = false;
+//        }
+//        return userResponse;
+        return null;
     }
 
     public Optional<User> createNewUser(NewUserRequest newUserRequest) {

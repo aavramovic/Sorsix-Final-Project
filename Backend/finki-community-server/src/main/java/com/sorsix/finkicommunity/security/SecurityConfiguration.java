@@ -12,6 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -29,8 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Override protected void configure(HttpSecurity http) throws Exception {
+        http.cors();
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -38,13 +43,49 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.POST, "/login","/forum/users/register").permitAll()
-                .anyRequest().permitAll();
-//                .antMatchers(HttpMethod.GET, "/forum").permitAll()
-//                .antMatchers("/forum/courses/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/forum/users/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/forum/posts/**").permitAll()
-//                .anyRequest().authenticated();
+                .antMatchers(
+                        "/login",
+
+                        "/forum/users/register",
+                        "/forum/users/details**",
+
+                        "/forum/posts/top",
+                        "/forum/posts/clicked**",
+
+                        "/forum/courses/filter**",
+                        "/forum/courses/clicked**",
+                        "/forum/courses/coursenames",
+
+                        "/forum").permitAll()
+                .antMatchers(
+                        "/forum/courses/new",
+
+                        "/forum/users/search**",
+                        "/forum/users/role",
+                        "/forum/users/{userId}",
+
+                        "forum/posts",
+                        "forum/posts/mock"
+                ).hasRole("ADMIN")
+                .antMatchers(
+                        "/forum/users/follow",
+                        "/forum/users/likes",
+
+                        "/forum/posts/new"
+                ).hasAnyRole("USER","MODERATOR","ADMIN")
+                .anyRequest().authenticated();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
