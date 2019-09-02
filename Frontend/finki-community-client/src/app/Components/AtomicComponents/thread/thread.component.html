@@ -3,12 +3,11 @@
     <div class="container-fluid">
         <div class="row">
             <span *ngIf="thread.imageUrl" class="col-auto d-flex"><img
-                src="assets/{{thread.imageUrl}}"
+                src="assets/{{thread.sex === 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG'}}"
                 alt="Users image"
                 width="50px"
                 height="60px">
             </span>
-
             <span *ngIf="thread.username" class="col d-flex p-0">
                 <a [routerLink]="['/details/', thread.username]"
                    [class.admin-color]="thread.role===admin"

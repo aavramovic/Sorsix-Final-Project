@@ -81,6 +81,7 @@ export class ThreadService {
             tempThreads.push(new Thread(
                 thread.id,
                 thread.courseName,
+                thread.courseCode,
                 new Date(thread.timeOfPost),
                 thread.noOfLikes,
                 thread.noOfComments,

@@ -15,6 +15,8 @@ public class SimplePostResponse implements Comparable<SimplePostResponse>{
     public boolean isLiked;
 
     public String courseName;
+    public String courseCode;
+
     public String title;
     public String content;
 

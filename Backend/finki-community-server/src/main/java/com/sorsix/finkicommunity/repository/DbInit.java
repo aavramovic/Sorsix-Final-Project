@@ -69,25 +69,24 @@ public class DbInit implements CommandLineRunner {
         // ADD COURSES  TOTAL = 16
         String programs = "";
         programs = Program.KNI.toString() + "," + Program.IKI.toString();
-        Course course1 = new Course("code1", "course1", "courseDescription1", programs, StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
-        Course course2 = new Course("code2", "course2", "courseDescription2", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course1 = new Course("sp", "StrukturnoProgramiranje", "courseDescription1", programs, StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
+        Course course2 = new Course("vvi", "VovedVoInformatika", "courseDescription2", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
         programs = Program.KNI.toString() + "," + Program.IKI.toString() + "," + Program.MT.toString();
-        Course course3 = new Course("code3", "course3", "courseDescription3", programs, StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
-        Course course4 = new Course("code4", "course4", "courseDescription4", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.OPTIONAL);
+        Course course3 = new Course("dm1", "DiskretnaMatematika 1", "courseDescription3", programs, StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
+        Course course4 = new Course("oop", "Objektno-orientiranoProgramiranje", "courseDescription4", Program.KNI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
         programs = Program.KNI.toString() + "," + Program.IKI.toString() + "," + Program.KN.toString();
-        Course course5 = new Course("code5", "course5", "courseDescription5", programs, StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
-        Course course6 = new Course("code6", "course6", "courseDescription6", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course7 = new Course("code7", "course7", "courseDescription7", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
-        Course course8 = new Course("code8", "course8", "courseDescription8", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
-
-        Course course9 = new Course("code9", "course9", "courseDescription9", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.MANDATORY);
-        Course course10 = new Course("code10", "course10", "courseDescription10", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course11 = new Course("code11", "course11", "courseDescription11", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.MANDATORY);
-        Course course12 = new Course("code12", "course12", "courseDescription12", Program.IKI.toString(), StudyYear.FRESHMAN, Semester.WINTER, CourseType.OPTIONAL);
-        Course course13 = new Course("code13", "course13", "courseDescription13", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
-        Course course14 = new Course("code14", "course14", "courseDescription14", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
-        Course course15 = new Course("code15", "course15", "courseDescription15", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
-        Course course16 = new Course("code16", "course16", "courseDescription16", Program.IKI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
+        Course course5 = new Course("onvd", "OsnoviNaVebDizajn", "courseDescription5", programs, StudyYear.FRESHMAN, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course6 = new Course("aips", "AlgoritmiIPodatocniStrukturi", "courseDescription6", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.MANDATORY);
+        Course course7 = new Course("np", "NaprednoProgramiranje", "courseDescription7", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.WINTER, CourseType.OPTIONAL);
+        Course course8 = new Course("os", "OperativniSistemi", "courseDescription8", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.MANDATORY);
+        Course course9 = new Course("it", "InternetTehnologii", "courseDescription9", Program.KNI.toString(), StudyYear.SOPHOMORE, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course10 = new Course("bnp", "BaziNaPodatoci", "courseDescription10", Program.KNI.toString(), StudyYear.JUNIOR, Semester.WINTER, CourseType.MANDATORY);
+        Course course11 = new Course("mu", "MashinskoUcenje", "courseDescription11", Program.KNI.toString(), StudyYear.JUNIOR, Semester.WINTER, CourseType.OPTIONAL);
+        Course course12 = new Course("k", "Kriptografija", "courseDescription12", Program.KNI.toString(), StudyYear.JUNIOR, Semester.WINTER, CourseType.OPTIONAL);
+        Course course13 = new Course("r", "Robotika", "courseDescription13", Program.KNI.toString(), StudyYear.JUNIOR, Semester.SUMMER, CourseType.OPTIONAL);
+        Course course14 = new Course("ke", "KompjuterskaEtika", "courseDescription14", Program.KNI.toString(), StudyYear.SENIOR, Semester.WINTER, CourseType.OPTIONAL);
+        Course course15 = new Course("vbs", "VebBaziraniSistemi", "courseDescription15", Program.KNI.toString(), StudyYear.SENIOR, Semester.WINTER, CourseType.OPTIONAL);
+        Course course16 = new Course("vvb", "VovedVoBioinformatika", "courseDescription16", Program.KNI.toString(), StudyYear.SENIOR, Semester.SUMMER, CourseType.OPTIONAL);
 
 
         List<Course> courses = Arrays.asList(course1, course2, course3, course4, course5, course6, course7, course8, course9, course10, course11, course12, course13, course14, course15, course16);

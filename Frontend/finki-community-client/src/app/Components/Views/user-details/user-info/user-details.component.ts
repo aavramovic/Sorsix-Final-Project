@@ -5,7 +5,7 @@ import {IUserDetailsResponse} from '../models/interfaces/iuser-details-response'
 import {UserDetailsFollow} from '../models/classes/user-details-follow';
 import {NewFollowing} from '../models/classes/new-following';
 import {MatSnackBar} from '@angular/material';
-import {subscribeOn} from 'rxjs/operators';
+import {IFollowResponse} from '../models/interfaces/ifollow-response';
 
 @Component({
     selector: 'app-user-details',
@@ -52,7 +52,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     followClicked(user: IUserDetailsResponse) {
-        this.httpClient.post(
+        this.httpClient.post<IFollowResponse>(
             'http://localhost:8080/forum/users/follow',
             new NewFollowing(localStorage.getItem('username'), user.userId),
             {
@@ -63,10 +63,10 @@ export class UserDetailsComponent implements OnInit {
             }).subscribe(
             value => {
                 if (!this.user.isFollowing) {
-                    this.user.userDetailsFollowers.push((new UserDetailsFollow(user.userId, 'fisnik', 'Fisnik', 'Limani')));
+                    this.user.userDetailsFollowers.push((new UserDetailsFollow(value.id, value.username, value.firstName, value.lastName)));
                     this.user.numberOfFollowers++;
                 } else {
-                    const index = this.user.userDetailsFollowers.findIndex(u => u.username === 'fisnik');
+                    const index = this.user.userDetailsFollowers.findIndex(u => u.username === value.username);
                     this.user.userDetailsFollowers.splice(index, 1);
                     this.user.numberOfFollowers--;
                 }

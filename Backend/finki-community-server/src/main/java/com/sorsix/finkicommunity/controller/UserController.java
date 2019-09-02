@@ -2,6 +2,7 @@ package com.sorsix.finkicommunity.controller;
 
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.requests.*;
+import com.sorsix.finkicommunity.domain.responses.user.FollowResponse;
 import com.sorsix.finkicommunity.domain.responses.user.SearchUserResponse;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
@@ -82,11 +83,11 @@ public class UserController {
     }
 
     @PostMapping("/follow")
-    public ResponseEntity<NewFollowingRequest> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
+    public ResponseEntity<FollowResponse> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
         return userService
                 .addNewFollowing(newFollowingRequest)
                 .map(
-                        res -> ResponseEntity.status(HttpStatus.CREATED).body(newFollowingRequest)
+                        res -> ResponseEntity.status(HttpStatus.CREATED).body(res)
                 )
                 .orElseGet(
                         ()-> ResponseEntity.status(HttpStatus.BAD_REQUEST).build()

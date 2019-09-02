@@ -1,6 +1,9 @@
 export interface IThread {
     id: number;
+
     courseName: string;
+    courseCode: string;
+
     timeOfPost: Date;
     noOfLikes: number;
     noOfComments: number;
@@ -13,5 +16,5 @@ export interface IThread {
     isLiked: boolean;
 
     replies?: IThread[];
-    repliedTo: number
+    repliedTo: number;
 }
