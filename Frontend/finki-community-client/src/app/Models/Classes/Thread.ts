@@ -2,7 +2,10 @@ import {Authorization} from '../Enumeration/Authorization';
 
 export class Thread {
     threadId: number;
+
     courseName: string;
+    courseCode: string;
+
     timeOfPost: Date;
     numberOfLikes: number;
     numberOfComments: number;
@@ -22,6 +25,7 @@ export class Thread {
 
     constructor(threadId: number,
                 courseName: string,
+                courseCode: string,
                 timeOfPost: Date,
                 numberOfLikes: number,
                 numberOfComments: number,
@@ -36,6 +40,7 @@ export class Thread {
     ) {
         this.threadId = threadId;
         this.courseName = courseName;
+        this.courseCode = courseCode;
         this.timeOfPost = timeOfPost;
         this.numberOfLikes = numberOfLikes;
         this.numberOfComments = numberOfComments;

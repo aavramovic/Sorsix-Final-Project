@@ -161,13 +161,21 @@ public class CourseService {
         SimplePostResponse postResponse = new SimplePostResponse();
 
         postResponse.id = post.getPostId();
-        postResponse.content = post.getContent();
-        postResponse.courseName = post.getCourse().getCourseName();
-        postResponse.noOfComments = post.getNumberOfReplies();
-        postResponse.noOfLikes = post.getNumberOfLikes();
         postResponse.timeOfPost = post.getTimestamp();
+        postResponse.noOfLikes = post.getNumberOfLikes();
+        postResponse.noOfComments = post.getNumberOfReplies();
+
+        postResponse.courseName = post.getCourse().getCourseName();
+        postResponse.courseCode = post.getCourse().getCode();
+
         postResponse.title = post.getTitle();
-        postResponse.username = post.getUser().getUsername();
+        postResponse.content = post.getContent();
+
+        User u = post.getUser();
+        postResponse.username = u.getUsername();
+        postResponse.sex = u.getSex();
+        postResponse.role = u.getRole();
+
         if(user!= null)
             postResponse.isLiked = user.getPostsLiked().contains(post);
 

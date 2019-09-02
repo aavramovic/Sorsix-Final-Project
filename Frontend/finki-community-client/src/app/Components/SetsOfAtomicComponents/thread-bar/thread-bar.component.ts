@@ -16,7 +16,6 @@ import {switchMap, tap} from 'rxjs/operators';
 })
 export class ThreadBarComponent implements OnInit {
     threads: Thread[];
-    count: number;
     selectedCourse = '';
     numberOfPostsByPage = '10';
     threadByCourse$ = new Subject();
@@ -61,8 +60,6 @@ export class ThreadBarComponent implements OnInit {
         this.threadByCourse$.pipe(switchMap(() =>
             this.threadService.getTopNThreadsByCourse(+this.numberOfPostsByPage, this.selectedCourse)))
             .subscribe(threads =>
-
-
                 this.threads = threads.filter(thread => {
                     // console.log(thread.title);
                     return !thread.repliedTo;

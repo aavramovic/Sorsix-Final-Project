@@ -13,11 +13,7 @@ import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
 import com.sorsix.finkicommunity.domain.responses.post.ClickedPostResponse;
 import com.sorsix.finkicommunity.domain.responses.post.SimplePostResponse;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.*;
 
 @Service
@@ -156,7 +152,10 @@ public class PostService {
 
         postResponse.id = post.getPostId();
         postResponse.content = post.getContent();
+
         postResponse.courseName = post.getCourse().getCourseName();
+        postResponse.courseCode = post.getCourse().getCode();
+
         postResponse.noOfComments = post.getNumberOfReplies();
         postResponse.noOfLikes = post.getNumberOfLikes();
         postResponse.timeOfPost = post.getTimestamp();

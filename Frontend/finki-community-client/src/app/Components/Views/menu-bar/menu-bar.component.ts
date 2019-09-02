@@ -32,6 +32,10 @@ export class MenuBarComponent implements OnInit {
         });
     }
 
+    getUsername() {
+        return localStorage.getItem('username');
+    }
+
     logout() {
         this.authService.logout();
     }

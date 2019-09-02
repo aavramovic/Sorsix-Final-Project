@@ -4,6 +4,7 @@ import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
 import com.sorsix.finkicommunity.domain.enums.Role;
 import com.sorsix.finkicommunity.domain.requests.*;
+import com.sorsix.finkicommunity.domain.responses.user.FollowResponse;
 import com.sorsix.finkicommunity.domain.responses.user.SearchUserResponse;
 import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollow;
@@ -220,7 +221,7 @@ public class UserService {
         }
     }
 
-    public Optional<NewFollowingRequest> addNewFollowing(NewFollowingRequest newFollowingRequest) {
+    public Optional<FollowResponse> addNewFollowing(NewFollowingRequest newFollowingRequest) {
 
        User userFollowing = userRepository
                .findByUsername(newFollowingRequest.usernameFollowing)
@@ -255,7 +256,14 @@ public class UserService {
         try {
             userRepository.save(userFollowing);
             userRepository.save(userFollowed);
-            return Optional.of(newFollowingRequest);
+
+            FollowResponse followResponse = new FollowResponse();
+            followResponse.id = userFollowing.getUserId();
+            followResponse.username = userFollowing.getUsername();
+            followResponse.firstName = userFollowing.getFirstName();
+            followResponse.lastName = userFollowing.getLastName();
+
+            return Optional.of(followResponse);
         }catch(Exception ex) {
             return Optional.empty();
         }
