@@ -24,7 +24,8 @@ import {UrlService} from './url.service';
     providedIn: 'root'
 })
 export class ThreadService {
-    invokeEvent:Subject<any> = new Subject();
+    invokeEvent: Subject<any> = new Subject();
+
     constructor(private http: HttpClient,
                 private courseService: CourseService,
                 private mock: MockClassesCreationService,

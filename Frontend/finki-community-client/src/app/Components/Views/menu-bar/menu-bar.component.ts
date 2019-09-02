@@ -12,6 +12,7 @@ export class MenuBarComponent implements OnInit {
     // token: string;
     role: string;
     username: string;
+
     constructor(private authService: AuthenticationService) {
 
     }
@@ -26,6 +27,7 @@ export class MenuBarComponent implements OnInit {
             this.isLoggedIn = r;
             if (this.isLoggedIn) {
                 this.role = localStorage.getItem('role');
+                this.username = localStorage.getItem('username');
             }
         });
     }
