@@ -64,7 +64,7 @@ export class ThreadBarComponent implements OnInit {
 
 
                 this.threads = threads.filter(thread => {
-                    console.log(thread.title);
+                    // console.log(thread.title);
                     return !thread.repliedTo;
                 }));
 

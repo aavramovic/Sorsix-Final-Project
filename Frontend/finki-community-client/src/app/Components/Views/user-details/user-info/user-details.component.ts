@@ -42,7 +42,7 @@ export class UserDetailsComponent implements OnInit {
             .subscribe(
                 u => {
                     this.user = u;
-                    console.log(this.user);
+                    // console.log(this.user);
                 }, error => {
                     this.openSnackBar('No such username');
                     this.router.navigate(['/']).then(r => {
