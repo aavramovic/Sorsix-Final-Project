@@ -76,4 +76,8 @@ export class SearchUserComponent implements OnInit {
     );
   }
 
+  loggedInUsername(){
+      return localStorage.getItem('username');
+  }
+
 }
