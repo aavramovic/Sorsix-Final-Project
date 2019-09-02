@@ -43,15 +43,19 @@ export class AuthenticationService {
                 map(response => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     if (response.status == 200) {
+                        // @ts-ignore
                         const expiresAt = moment().add(response.body.expiresIn, 'second');
+                        // @ts-ignore
                         localStorage.setItem('id_token', response.body.idToken);
                         localStorage.setItem('expires_at', (expiresAt.valueOf() - (new Date()).getMilliseconds()).toString());
+                        // @ts-ignore
                         localStorage.setItem('role', response.body.role.toString());
+                        // @ts-ignore
                         localStorage.setItem('username', response.body.username);
                         this.isLoggedIn$.next(true);
                         return response.body;
                     }
-                    return new LoginResponse('0', '', Authorization.VISITOR, false, 'Incorrect password');
+                    return new LoginResponse('0', '', Authorization.VISITOR, false, 'Incorrect username or password');
                 }));
     }
 
