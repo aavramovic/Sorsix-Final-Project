@@ -51,7 +51,7 @@ export class AuthenticationService {
                         this.isLoggedIn$.next(true);
                         return response.body;
                     }
-                    return new LoginResponse('0', '', Authorization.VISITOR, false, 'Incorrect password');
+                    return new LoginResponse('0', '', Authorization.VISITOR, false, 'Incorrect username or password');
                 }));
     }
 

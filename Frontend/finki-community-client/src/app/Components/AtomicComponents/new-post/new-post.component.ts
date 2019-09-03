@@ -4,10 +4,9 @@ import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
 import {Observable, of, Subject} from 'rxjs';
-import {Course} from '../../../Models/Classes/Course';
 import {CourseService} from '../../../services/course.service';
 import {map, startWith, switchMap} from 'rxjs/operators';
-import {ActivatedRoute, Route, Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-new-post',
