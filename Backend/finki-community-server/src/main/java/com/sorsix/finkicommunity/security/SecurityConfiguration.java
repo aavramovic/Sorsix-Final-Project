@@ -30,11 +30,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth){     // throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {     // throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    @Override protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http.cors();
         http
                 .csrf().disable()
@@ -58,6 +59,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                         "/forum").permitAll()
                 .antMatchers(
+                        "/forum/users/follow",
+                        "/forum/users/likes",
+
+                        "/forum/posts/new"
+                ).hasAnyRole("USER", "MODERATOR", "ADMIN")
+                .antMatchers(
                         "/forum/courses/new",
 
                         "/forum/users/search**",
@@ -67,12 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "forum/posts",
                         "forum/posts/mock"
                 ).hasRole("ADMIN")
-                .antMatchers(
-                        "/forum/users/follow",
-                        "/forum/users/likes",
 
-                        "/forum/posts/new"
-                ).hasAnyRole("USER","MODERATOR","ADMIN")
                 .anyRequest().authenticated();
     }
 
@@ -89,7 +91,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    DaoAuthenticationProvider authenticationProvider(){
+    DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
@@ -98,7 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
