@@ -11,7 +11,6 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // add authorization header with basic auth credentials if available
         const token = this.authenticationService.getToken();
         if (AuthenticationService.isLoggedIn()) {
             request = request.clone({
@@ -20,12 +19,10 @@ export class BasicAuthInterceptor implements HttpInterceptor {
                 }
             });
         }
-        console.log(request);
         return next.handle(request)
             .pipe(catchError(error => {
                 if (error.status === 401) {
                     this.authenticationService.logout();
-                    // redirect to sign in
                 }
                 return throwError(error);
             }));

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
 import {MatOptionSelectionChange} from '@angular/material';
 
@@ -24,7 +24,6 @@ export class MatSelectComponent implements OnInit {
     setOption(option: MatOptionSelectionChange) {
         if (option && option.source.selected === true) {
             this.option.next(option.source.value ? option.source.value : null);
-            // console.log('Mat-select; ' + option.source.value);
         }
     }
 }

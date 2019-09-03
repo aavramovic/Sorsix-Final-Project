@@ -13,7 +13,6 @@ export class CourseComponent implements OnInit {
     programs;
 
     @HostListener('click') onClick() {
-        // console.log('User Click using Host Listener: ' + this.course.courseName);
     }
 
     constructor() {
@@ -21,7 +20,6 @@ export class CourseComponent implements OnInit {
 
     ngOnInit() {
         this.programs = this.course.program.keys();
-        // console.log(this.course.program);
     }
 
 

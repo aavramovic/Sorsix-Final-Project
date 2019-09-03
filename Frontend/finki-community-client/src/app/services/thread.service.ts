@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
 import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {API_URL, THREAD_LIST, THREAD_REPLIES, USER_LIKES_POST, USERS, POST_THREAD} from '../Models/global-const-url-paths';
 import {IClickedCourse} from '../Models/Interfaces/IClickedCourse';
 import {IGetRepliesByPostId} from '../Models/Interfaces/IGetRepliesByPostId';
@@ -15,7 +15,6 @@ import {CourseService} from './course.service';
 import {PostThread} from '../Models/Classes/PostThread';
 import {IPageResponse} from '../Components/SetsOfAtomicComponents/thread-bar/model/ipage-response';
 import {MatSnackBar} from '@angular/material';
-import {empty} from 'rxjs/internal/Observer';
 import {PostReply} from '../Models/Classes/PostReply';
 import {Router} from '@angular/router';
 import {UrlService} from './url.service';
@@ -66,7 +65,6 @@ export class ThreadService {
 
     // noinspection JSMethodCanBeStatic
     private handleError(error): Observable<Thread[]> {
-        console.log(error);
         this.openSnackBar('error');
         return of([]);
     }
@@ -95,15 +93,11 @@ export class ThreadService {
                 thread.sex === 'M' ? 'MALE_AVATAR.PNG' : 'FEMALE_AVATAR.PNG',
                 thread.repliedTo
             ));
-            // console.log(thread.repliedTo);
         });
         return tempThreads;
     }
 
     likes(username: string, thread: Thread) {
-        // console.log('LIKE clicked');
-        // console.log('Username:', username);
-        // console.log('Thread:', thread.threadId);
         return this.http
             .post<NewPostLikeRequest>(
                 API_URL + USERS + USER_LIKES_POST,
@@ -141,9 +135,8 @@ export class ThreadService {
         } else if (courseName !== null) {
             post = new PostThread(content, title, username, courseName);
         } else {
-            console.log('Error with the post');
+            this.openSnackBar('Error with the post');
         }
-        // console.log(postThread);
         this.http.post(
             API_URL + POST_THREAD,
             post,

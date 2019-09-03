@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {Subject} from 'rxjs';
@@ -7,7 +7,7 @@ import {UrlService} from '../../../services/url.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {NewPostComponent} from '../../AtomicComponents/new-post/new-post.component';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {switchMap, tap} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-thread-bar',
@@ -61,7 +61,6 @@ export class ThreadBarComponent implements OnInit {
             this.threadService.getTopNThreadsByCourse(+this.numberOfPostsByPage, this.selectedCourse)))
             .subscribe(threads =>
                 this.threads = threads.filter(thread => {
-                    // console.log(thread.title);
                     return !thread.repliedTo;
                 }));
 
@@ -88,8 +87,7 @@ export class ThreadBarComponent implements OnInit {
         dialogConfig.data = {
             postId: threadId
         };
-        // We don't return data back from the modal components instead they communicate themselves
-        // Maybe let it return a boolean that tells us
+
         this.dialog.open(NewPostComponent, dialogConfig);
         this.threadByCourse$.next();
     }

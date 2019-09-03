@@ -27,25 +27,6 @@ export class NewCourseComponent implements OnInit {
     });
 
 
-    // private programValidator(value): ValidatorFn {
-    //     return (group: FormGroup): ValidationErrors => {
-    //         let arrayOfPrograms: string[] = [];
-    //         this.programs.forEach(program => {
-    //             if ((<FormGroup> group.get(value)).get(program) && (<FormGroup> group.get(value)).get(program)) {
-    //                 arrayOfPrograms.push(program);
-    //
-    //                 console.log((<FormGroup> group.get(value)).get(program) && (<FormGroup> group.get(value)).get(program));
-    //             }
-    //         });
-    //         if (arrayOfPrograms.length == 0) {
-    //             group.get(value).setErrors({required: true});
-    //         } else {
-    //             group.get(value).setErrors(null);
-    //         }
-    //         return;
-    //     };
-    // }
-
     constructor(
         public dialogRef: MatDialogRef<AdminComponent>, private courseService: CourseService) {
     }
@@ -60,7 +41,6 @@ export class NewCourseComponent implements OnInit {
 
 
     onSubmit() {
-        // console.log(this.postCourseForm.get('programs').value);
 
         let message = this.courseService.postCourse(this.postCourseForm);
         this.dialogRef.close();

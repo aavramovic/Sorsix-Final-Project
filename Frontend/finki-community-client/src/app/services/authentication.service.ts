@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
-import {API_URL, LOGIN_USER, USERS} from '../Models/global-const-url-paths';
+import {API_URL} from '../Models/global-const-url-paths';
 import * as moment from 'moment';
 import {ILoginResponse} from '../Models/Interfaces/ILoginResponse';
 import {LoginResponse} from '../Models/Classes/LoginResponse';
 import {Authorization} from '../Models/Enumeration/Authorization';
 import {Router} from '@angular/router';
 import {LoginRequest} from '../Models/Classes/login-request';
-import {IRegisterUserResponse} from '../Models/Interfaces/IRegisterUserResponse';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
@@ -41,7 +40,6 @@ export class AuthenticationService {
             })
             .pipe(
                 map(response => {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
                     if (response.status == 200) {
                         const expiresAt = moment().add(response.body.expiresIn, 'second');
                         localStorage.setItem('id_token', response.body.idToken);
@@ -59,7 +57,6 @@ export class AuthenticationService {
         if (!AuthenticationService.isLoggedIn()) {
             return;
         }
-        // remove user from local storage and set current user to null
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
         localStorage.removeItem('role');
