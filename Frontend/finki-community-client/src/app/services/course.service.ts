@@ -2,11 +2,10 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Course} from '../Models/Classes/Course';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MockClassesCreationService} from './mock-classes-creation.service';
 import {Program} from '../Models/Enumeration/Program';
 import {Type} from '../Models/Enumeration/Type';
 import {ICourse} from '../Models/Interfaces/ICourse';
-import {catchError, map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {getKeyByValue, YearOfStudy} from '../Models/Enumeration/YearOfStudy';
 import {Semester} from '../Models/Enumeration/Semester';
 import {API_URL, COURSE_LIST, COURSE_NAMES, POST_COURSE} from '../Models/global-const-url-paths';
@@ -45,7 +44,6 @@ export class CourseService {
         let array = [programString, yearString, semesterString, typeString];
         array = array.filter(item => item.length != 0);
         queryString += array.join('&');
-        // console.log(queryString);
         getKeyByValue(yearOfStudy);
 
 
@@ -101,10 +99,7 @@ export class CourseService {
                     'Authorization': 'Bearer ' + localStorage.getItem('id_token')
                 })
             }
-        )/*.pipe(
-            tap(console.log),
-            catchError(this.handleError('addCourse', postRequest))
-        )*/.subscribe(() => this.openSnackBar('Course created'),
+        ).subscribe(() => this.openSnackBar('Course created'),
             error => {
                 this.openSnackBar('An error has occurred please refresh the page and try again');
                 return of(empty);

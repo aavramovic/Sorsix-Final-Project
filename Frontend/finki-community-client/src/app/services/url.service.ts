@@ -31,13 +31,10 @@ export class UrlService {
 
     urlEndsWith(args: string[]): boolean {
         args.forEach(arg => {
-            console.log(this.location.normalize(this.location.path()).slice(1) + ' <-> ' + arg);
             if (this.location.normalize(this.location.path()).slice(1) === arg) {
-                console.log('true');
                 return true;
             }
         });
-        console.log('false');
         return false;
     }
 }

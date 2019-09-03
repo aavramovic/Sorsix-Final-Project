@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Course} from '../../../Models/Classes/Course';
 
 @Component({
     selector: 'app-main-view',

@@ -35,7 +35,6 @@ export class AdminComponent implements OnInit {
         dialogConfig.autoFocus = false;
         dialogConfig.disableClose = true;
         dialogConfig.maxHeight = 'fit-content';
-        //We don't return data back from the modal components instead they communicate by themselves
         this.dialog.open(NewCourseComponent, dialogConfig);
 
     }

@@ -97,6 +97,6 @@ export class MockClassesCreationService {
     }*/
 
     /*async delay() {
-        await new Promise(resolve => setTimeout(() => resolve(), 150)).then(() => console.log('fired'));
+        await new Promise(resolve => setTimeout(() => resolve(), 150)).then(() => {});
     }*/
 }

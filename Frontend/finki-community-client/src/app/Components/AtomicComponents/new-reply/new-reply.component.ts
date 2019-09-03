@@ -1,12 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ThreadService} from '../../../services/thread.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {ThreadBarComponent} from '../../SetsOfAtomicComponents/thread-bar/thread-bar.component';
-import {Subject} from 'rxjs';
-import {Course} from '../../../Models/Classes/Course';
 import {CourseService} from '../../../services/course.service';
-import {switchMap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 @Component({
@@ -38,10 +35,7 @@ export class NewReplyComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.postPostForm.get('content').value);
-        console.log(this.postPostForm.get('username').value);
-        console.log(this.postPostForm.get('title').value);
-        console.log(this.postPostForm.get('replyToPostId').value);
+
 
         this.threadService.postThread(this.postPostForm);
         this.route.navigate(['/start']).then(r => {

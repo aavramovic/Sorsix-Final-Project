@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {User} from '../Models/Classes/User';
 import {Observable, of} from 'rxjs';
 import {API_URL} from '../Models/global-const-url-paths';
-import {FormGroup} from '@angular/forms';
 import {IRegisterUserResponse} from '../Models/Interfaces/IRegisterUserResponse';
 import {PostUser} from '../Models/Classes/PostUser';
 import {catchError, flatMap, tap} from 'rxjs/operators';
@@ -35,12 +34,6 @@ export class UserService {
 
     // noinspection JSMethodCanBeStatic
     private handleError(error: HttpErrorResponse): Observable<never> | any {
-        console.log(error.error);
         return of(empty);
-    }
-
-
-    loginUser(newUser: FormGroup) {
-
     }
 }

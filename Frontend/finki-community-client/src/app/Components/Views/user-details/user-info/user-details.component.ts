@@ -45,14 +45,12 @@ export class UserDetailsComponent implements OnInit {
 
                     const userDetailsUrl = this.URL + username +
                         (localStorage.getItem('username') ? '&loggedInUsername=' + localStorage.getItem('username') : '');
-                    console.log(userDetailsUrl);
                     return this.httpClient.get<IUserDetailsResponse>(userDetailsUrl);
                 }
             )
         ).subscribe(
             u => {
                 this.user = u;
-                // console.log(this.user);
             }, () => {
                 this.openSnackBar('No such username');
                 this.router.navigate(['/']).then(() => {

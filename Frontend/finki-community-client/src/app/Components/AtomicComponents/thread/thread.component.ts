@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Thread} from '../../../Models/Classes/Thread';
 import {ThreadService} from '../../../services/thread.service';
 import {Subject} from 'rxjs';
-import {delay, switchMap, tap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Authorization} from '../../../Models/Enumeration/Authorization';
@@ -40,7 +40,7 @@ export class ThreadComponent implements OnInit {
             this.role = localStorage.getItem('role');
         }
 
-        this.replie$.pipe(tap(console.log),
+        this.replie$.pipe(
             switchMap(() =>
                 this.threadService.getReplies(this.thread.threadId)
             )).subscribe(replies => this.replies = replies);
@@ -56,7 +56,6 @@ export class ThreadComponent implements OnInit {
 
     loadComments() {
         this.isOpen = true;
-        // console.log(this.thread.threadId);
         this.replie$.next();
     }
 
@@ -74,16 +73,12 @@ export class ThreadComponent implements OnInit {
         dialogConfig.data = {
             postId: threadId,
         };
-        // We don't return data back from the modal components instead they communicate themselves
-        // Maybe let it return a boolean that tells us
 
         if (threadId) {
-            console.log('Post was a reply');
             this.dialog.open(NewReplyComponent, dialogConfig);
 
         }
         if (courseName) {
-            console.log('Post was a new thread');
             this.dialog.open(NewPostComponent, dialogConfig);
         }
 

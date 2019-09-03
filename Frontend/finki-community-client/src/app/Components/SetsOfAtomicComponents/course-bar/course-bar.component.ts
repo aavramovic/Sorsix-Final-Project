@@ -40,12 +40,10 @@ export class CourseBarComponent implements OnInit {
 
     setProgram($event?: string) {
         this.program = $event;
-        // console.log('Program: ' + this.program);
     }
 
     setYear($event?: string) {
         this.year = $event;
-        // console.log('Year: ' + this.year);
     }
 
     setSemester($event: string) {
@@ -54,7 +52,6 @@ export class CourseBarComponent implements OnInit {
 
     setType($event?: string) {
         this.type = $event;
-        // console.log('Type: ' + this.type);
     }
 
 

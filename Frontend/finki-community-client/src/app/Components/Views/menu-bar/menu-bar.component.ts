@@ -9,7 +9,6 @@ import {Authorization} from '../../../Models/Enumeration/Authorization';
 })
 export class MenuBarComponent implements OnInit {
     isLoggedIn: boolean;
-    // token: string;
     role: string;
     username: string;
 

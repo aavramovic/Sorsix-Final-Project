@@ -59,7 +59,6 @@ export class SearchUserComponent implements OnInit {
         if (!searchTerm.trim()) {
             return of([]);
         }
-        console.log(localStorage.getItem('id_token'));
         return this.httpClient.get<ISearchedUser[]>(
             `${SEARCH_URL}${searchTerm}`,
             {
@@ -72,11 +71,7 @@ export class SearchUserComponent implements OnInit {
     }
 
     radioChangedHandler(event: MatRadioChange, username: string) {
-        // console.log('Username:' + event.target.name);
-        // console.log('Value:' + event.target.value);
-        // console.log(new ChangeRole(event.target.name, event.target.value));
-        // console.log('Value: ' + event.value);
-        // console.log('Username: ' + username);
+
         this.httpClient.post(
             CHANGE_ROLE_URL,
             new ChangeRole(username, event.value),
