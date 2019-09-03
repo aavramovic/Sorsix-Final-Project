@@ -1,8 +1,6 @@
 package com.sorsix.finkicommunity.domain.responses.post;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 

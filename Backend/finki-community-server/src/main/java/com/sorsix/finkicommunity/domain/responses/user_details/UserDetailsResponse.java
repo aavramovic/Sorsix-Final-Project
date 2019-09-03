@@ -1,7 +1,6 @@
 package com.sorsix.finkicommunity.domain.responses.user_details;
 
 import com.sorsix.finkicommunity.domain.enums.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 

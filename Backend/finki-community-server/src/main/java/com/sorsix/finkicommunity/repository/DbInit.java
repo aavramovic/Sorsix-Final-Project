@@ -53,7 +53,6 @@ public class DbInit implements CommandLineRunner {
 
         List<User> users = Arrays.asList(fisnik, antonio, admin, moderator,user5, user6, user7, user8, user9, user10, user11, user12, user13, user14, user15);
 
-
         // ADD FOLLOWINGS   TOTAL = 5
         fisnik.addNewFollowing(antonio);
         fisnik.addNewFollowing(admin);

@@ -75,11 +75,6 @@ public class UserController {
                 );
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<UserResponse> UserLogin(@RequestBody @Valid LoginViewModel loginViewModel) {
-//        return ResponseEntity.ok(userService.findExistingUser(loginViewModel));
-//    }
-
     @PostMapping("/follow")
     public ResponseEntity<FollowResponse> addNewFollowing(@RequestBody NewFollowingRequest newFollowingRequest) {
         return userService

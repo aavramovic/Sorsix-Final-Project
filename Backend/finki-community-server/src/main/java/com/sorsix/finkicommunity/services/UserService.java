@@ -6,17 +6,14 @@ import com.sorsix.finkicommunity.domain.enums.Role;
 import com.sorsix.finkicommunity.domain.requests.*;
 import com.sorsix.finkicommunity.domain.responses.user.FollowResponse;
 import com.sorsix.finkicommunity.domain.responses.user.SearchUserResponse;
-import com.sorsix.finkicommunity.domain.responses.user.UserResponse;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsFollow;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsPost;
 import com.sorsix.finkicommunity.domain.responses.user_details.UserDetailsResponse;
 import com.sorsix.finkicommunity.repository.PostRepository;
 import com.sorsix.finkicommunity.repository.UserRepository;
-import com.sorsix.finkicommunity.security.JwtProperties;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -164,45 +161,6 @@ public class UserService {
                 );
     }
 
-    public UserResponse findExistingUser(LoginViewModel loginViewModel){
-//        String encodedPassword;
-//        String rawPassword;
-//        UserResponse userResponse = new UserResponse();
-//        Optional<User> user;
-//        try {
-//            user = userRepository.findByUsername(loginViewModel.getUsername());
-//            encodedPassword = user
-//                    .map(
-//                            u -> u.getPassword()
-//                    ).orElseThrow(
-//                            () -> new UsernameNotFoundException("No user found with username " + loginViewModel.getUsername())
-//                    );
-//
-//            rawPassword = loginViewModel.getPassword();
-//
-//            if (passwordEncoder.matches(rawPassword, encodedPassword)) {
-//                userResponse.idToken = encodedPassword;
-//                userResponse.expiresIn = System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME;
-//                user
-//                        .map(u -> {
-//                            userResponse.role = u.getRole();
-//                            return u;
-//                        })
-//                        .orElseThrow(() -> new RuntimeException());
-//                userResponse.username = loginViewModel.getUsername();
-//                userResponse.valid = true;
-//            } else {
-//                userResponse.errorMessage = "Incorrect password";
-//                userResponse.valid = false;
-//            }
-//        } catch (Exception someException) {
-//            userResponse.errorMessage = "Username not found";
-//            userResponse.valid = false;
-//        }
-//        return userResponse;
-        return null;
-    }
-
     public Optional<User> createNewUser(NewUserRequest newUserRequest) {
         User user = new User();
 
@@ -226,9 +184,6 @@ public class UserService {
 
        User userFollowing = userRepository
                .findByUsername(newFollowingRequest.usernameFollowing)
-               .map(
-                       user ->  user
-               )
                .orElseGet(
                        null
                );
@@ -238,9 +193,6 @@ public class UserService {
 
        User userFollowed = userRepository
                .findById(newFollowingRequest.userIdFollowed)
-               .map(
-                       user ->  user
-               )
                .orElseGet(
                        null
                );
@@ -273,9 +225,6 @@ public class UserService {
     public Optional<NewPostLikeRequest> newPostLike(NewPostLikeRequest newPostLikeRequest) {
         User user = userRepository
                 .findByUsername(newPostLikeRequest.username)
-                .map(
-                        u ->  u
-                )
                 .orElseGet(
                         null
                 );
@@ -285,9 +234,6 @@ public class UserService {
 
         Post post = postRepository
                 .findById(newPostLikeRequest.postId)
-                .map(
-                        u ->  u
-                )
                 .orElseGet(
                         null
                 );

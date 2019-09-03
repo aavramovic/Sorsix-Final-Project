@@ -37,12 +37,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-//        if (CorsUtils.isPreFlightRequest(request)) {
-//            response.setStatus(HttpServletResponse.SC_OK);
-//            return authenticationManager.authenticate() ; //whatever your token implementation class is - return an instance of it
-//        }
-
         LoginViewModel credentials = null;
 
         try{
