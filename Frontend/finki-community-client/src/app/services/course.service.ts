@@ -95,10 +95,12 @@ export class CourseService {
         this.http.post<IPostCourse>(
             API_URL + POST_COURSE,
             postRequest,
-            {headers: new HttpHeaders({
+            {
+                headers: new HttpHeaders({
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-                })}
+                })
+            }
         )/*.pipe(
             tap(console.log),
             catchError(this.handleError('addCourse', postRequest))

@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../../services/authentication.service';
 import {empty, of, Subject} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {LoginResponse} from '../../../Models/Classes/LoginResponse';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-login-screen',
@@ -25,17 +26,18 @@ export class LoginScreenComponent implements OnInit {
 
     constructor(private userService: UserService,
                 private router: Router,
+                private _snackBar: MatSnackBar,
                 private authService: AuthenticationService) {
 
     }
 
     ngOnInit() {
-        this.subject()
+        this.subject();
     }
 
     // MUST FOR NOW :S, TOO MUCH TIME WASTED
     // WHEN THE ERROR IS THROWN SUBJECT'S next() NOT LISTENS ANYMORE
-    subject(){
+    subject() {
         this.login$.pipe(switchMap(() =>
             this.authService.login(this.username, this.password))).subscribe(response => {
                 this.router.navigate(['/']).then(r => r.valueOf());
@@ -47,9 +49,15 @@ export class LoginScreenComponent implements OnInit {
                 // }
             },
             error => {
-                alert('Username or password is incorrect');
+                this.openSnackBar('Username or password is incorrect');
                 // of(empty)
             });
+    }
+
+    openSnackBar(message: string) {
+        this._snackBar.open(message, 'Close', {
+            duration: 3000
+        });
     }
 
     getErrorMessage(value: string) {

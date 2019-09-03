@@ -7,6 +7,7 @@ import {Subject, throwError} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {PostUser} from '../../../Models/Classes/PostUser';
 import {UrlService} from '../../../services/url.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-register-screen',
@@ -56,7 +57,8 @@ export class RegisterScreenComponent implements OnInit {
         private http: HttpClient,
         private userService: UserService,
         private router: Router,
-        private url: UrlService
+        private url: UrlService,
+        private _snackBar: MatSnackBar
     ) {
     }
 
@@ -69,11 +71,17 @@ export class RegisterScreenComponent implements OnInit {
                 if (response.valid) {
                     this.router.navigate(['/']).then(r => r.valueOf());
                 } else {
-                    alert('This account exists and has been disabled');
+                    this.openSnackBar('An account with this username or email exists');
                 }
             });
         this.today = new Date();
         this.url.isHidden$.next(true);
+    }
+
+    openSnackBar(message: string) {
+        this._snackBar.open(message, 'Close', {
+            duration: 3000
+        });
     }
 
     getErrorMessage(value: string) {
