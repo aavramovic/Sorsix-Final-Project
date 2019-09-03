@@ -9,6 +9,7 @@
     justify-content: center;
     display: flex;
     height: fit-content;
+    margin-top: 5%;
 }
 
 mat-form-field {

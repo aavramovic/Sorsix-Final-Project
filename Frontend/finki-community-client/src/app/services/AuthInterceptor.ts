@@ -20,7 +20,7 @@ export class BasicAuthInterceptor implements HttpInterceptor {
                 }
             });
         }
-
+        console.log(request);
         return next.handle(request)
             .pipe(catchError(error => {
                 if (error.status === 401) {
