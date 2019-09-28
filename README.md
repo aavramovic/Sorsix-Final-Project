@@ -1,1 +1,1 @@
-# Sorsix-Final-Project
+# Sorsix Final Project
