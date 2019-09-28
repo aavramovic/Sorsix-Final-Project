@@ -12,3 +12,7 @@ https://github.com/TheRuinKing/Sorsix-Final-Project/blob/master/SORSIX%20FINAL%2
 - PostgreSQL RDBMS
 - Gradle  
 - Git
+
+### Contributors:
+- [Antonio Avramovikj](https://github.com/TheRuinKing)
+- [Fisnik Limani](https://github.com/FisnikL)
